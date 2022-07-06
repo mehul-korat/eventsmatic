@@ -1,0 +1,250 @@
+<div class="order-view">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="">
+        <div class="modal-header p-0 border-0">
+            <p class="font-weight-bold">Order : {{singleOrderDetail.order_id}}</p>
+            <button type="button" data-dismiss="modal" aria-label="Close" class="close-btn" (click)="onNoClick()">
+        <span aria-hidden="true" class="white-text">&times;</span>
+      </button>
+        </div>
+        <div class="modal-body p-0">
+            <div>
+                <div class="book-order">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <button mat-raised-button class="comm-btn mr-2 px-4" (click)="fnResendTicket()">
+                Resend Ticket
+              </button>
+                            <!-- *ngIf="orderDetail.order_status=='P' || orderDetail.order_status=='CO'" -->
+                            <!-- <button mat-raised-button class="comg-btn mr-2"  (click)="fnEditorder()" >
+                Edit Order
+              </button> -->
+                            <button mat-raised-button class="comg-btn mr-2" (click)="fnCancelorder()" *ngIf="singleOrderDetail.order_status!='C'">
+                Cancel Order
+              </button>
+                        </div>
+                        <div class="print-order col-md-4 px-0">
+                            <a target="_blank" class="" href="{{url.apiUrl}}/stream-invoice-pdf?order_id={{orderDetail.order_id}}">
+                                <span class="">
+                  <mat-icon aria-hidden="false" aria-label="" class="link mr-2">print</mat-icon>
+                </span> Print order confirmation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-details">
+                    <div class="order-head row">
+                        <p>Order details</p>
+                        <a class="dwnld-invoice" download="pdf" target="_blank" href="{{url.apiUrl}}/stream-invoice-pdf?order_id={{orderDetail.order_id}}">Download invoice</a>
+                    </div>
+                    <div class="order-desc">
+                        <div class="row m-0">
+                            <label class="col-md-4">Date / time of order:</label>
+                            <p class="col-md-8">
+                                {{dateFormate(orderDetail.order_date +' '+orderDetail.order_time)}}
+                            </p>
+                        </div>
+                        <div class="row m-0">
+                            <label class="col-md-4">Payment method:</label>
+                            <p class="col-md-8">{{orderDetail.order.payment ? orderDetail.order.payment.payment_method : '-' }}</p>
+                        </div>
+                        <div class="row m-0">
+                            <label class="col-md-4">Transaction ID:</label>
+                            <p class="col-md-8">{{orderDetail.order.payment ? orderDetail.order.payment.transaction_id : '-'}}</p>
+                        </div>
+                    </div>
+                    <div class="order-table">
+                        <div class="service-listing">
+                            <div class="main-table-content main-cust-table-content">
+                                <div class="">
+                                    <div class="heads main-heading-content drageble" fxLayout="row">
+                                        <div class="th-data" fxFlex="50">Item</div>
+                                        <div class="th-data" fxFlex="30">PRICE</div>
+                                        <div class="th-data" fxFlex="20">Fee</div>
+                                        <div class="th-data" fxFlex="30">Qty</div>
+                                        <div class="th-data" fxFlex="20">Subtotal</div>
+                                    </div>
+                                    <!-- <div class="order-details">
+                                        <div class="order-head row">
+                                            <p>Order details</p>
+                                            <a class="dwnld-invoice" download="pdf " href="{{url.apiUrl}}/stream-invoice-pdf?order_id={{orderDetail.order_id}}">Download invoice</a>
+                                        </div>
+                                    </div> -->
+                                    <div class="content" class="drageble-list">
+                                        <div class="drageble-box" fxLayout="row">
+                                            <div class="tb-data" fxFlex="80">{{eventDate}}: {{singleOrderDetail.events ? singleOrderDetail.events.event_title : ''}}</div>
+                                            <div class="tb-data" fxFlex="20"></div>
+                                        </div>
+                                    </div>
+                                    <div class="content" class="drageble-list" *ngFor="let eventTicket of singleOrderDetail.order_item">
+                                        <div class="drageble-box fw-600" fxLayout="row">
+                                            <div class="tb-data order-item fw-100" fxFlex="50">{{eventTicket.ticket.ticket_name}}</div>
+                                            <div class="tb-data" fxFlex="30">{{eventTicket.ticket.prize}}</div>
+                                            <div class="tb-data" fxFlex="20">{{ (eventTicket.ticket ? eventTicket.ticket.booking_fee : 0)}}</div>
+                                            <div class="tb-data" fxFlex="30">1</div>
+                                            <div class="tb-data align-end" fxFlex="30">{{eventTicket.sub_total}}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="content" class="drageble-list">
+                                        <div class="drageble-box" fxLayout="row">
+                                            <div class="tb-data fw-600" fxFlex="50">Transaction fee</div>
+                                            <div class="tb-data" fxFlex="30"></div>
+                                            <div class="tb-data" fxFlex="20"></div>
+                                            <div class="tb-data" fxFlex="30"></div>
+                                            <div class="tb-data fw-600" fxFlex="20">{{singleOrderDetail.transaction_fee}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="content" class="drageble-list">
+                                        <div class="drageble-box" fxLayout="row">
+                                            <div class="tb-data fw-600" fxFlex="50">Sales Tax</div>
+                                            <div class="tb-data" fxFlex="30"></div>
+                                            <div class="tb-data" fxFlex="20"></div>
+                                            <div class="tb-data" fxFlex="30"></div>
+                                            <div class="tb-data fw-600" fxFlex="20">{{singleOrderDetail.tax}}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="content" *ngIf="singleOrderDetail.donation != null" class="drageble-list">
+                                        <div class="drageble-box" fxLayout="row">
+                                            <div class="tb-data fw-600" fxFlex="50">Donation</div>
+                                            <div class="tb-data" fxFlex="30"></div>
+                                            <div class="tb-data" fxFlex="20"></div>
+                                            <div class="tb-data" fxFlex="30"></div>
+                                            <div class="tb-data fw-600" fxFlex="20">{{singleOrderDetail.donation}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="content" class="drageble-list" *ngIf="singleOrderDetail.voucher_amt && singleOrderDetail.coupon_amt">
+                                        <div class="drageble-box" fxLayout="row">
+                                            <div class="tb-data fw-600" fxFlex="50">Discount Amount</div>
+                                            <div class="tb-data" fxFlex="30"></div>
+                                            <div class="tb-data" fxFlex="20"></div>
+                                            <div class="tb-data" fxFlex="30"></div>
+                                            <div class="tb-data fw-600" fxFlex="20">-{{ ( singleOrderDetail.voucher_amt ? singleOrderDetail.voucher_amt : singleOrderDetail.coupon_amt )}}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="content" class="drageble-list">
+                                        <div class="drageble-box" fxLayout="row">
+                                            <div class="tb-data fw-600" fxFlex="50">Grand Total</div>
+                                            <div class="tb-data" fxFlex="30"></div>
+                                            <div class="tb-data" fxFlex="20"></div>
+                                            <div class="tb-data" fxFlex="30"></div>
+                                            <div class="tb-data fw-600" fxFlex="20">{{singleOrderDetail.grand_total | currency:currencycode:'symbol' }}</div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="content" class="drageble-list" *ngFor="let value of singleOrderDetail.order_item;let i=index">
+                                        <div class="drageble-box" fxLayout="row">
+                                            <div class="tb-data border-right p-2" fxFlex="40">
+                                                {{value.ticket?.ticket_name}}
+                                            </div>
+                                            <div class="tb-data border-right p-2" fxFlex="20">
+                                                {{ value.amount | currency:currencycode:'symbol' }}
+                                            </div>
+                                            <div class="tb-data border-right p-2" fxFlex="15">
+                                                {{value.ticket?.booking_fee}}
+                                            </div>
+                                            <div class="tb-data border-right p-2" fxFlex="10">
+                                                1
+                                            </div>
+                                            <div class="tb-data p-2" fxFlex="15">
+                                                {{ value.sub_total | currency:currencycode:'symbol' }}
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="content" class="drageble-list">
+                                        <div class="drageble-box" fxLayout="row">
+                                            <div class="tb-data border-right p-2 fw-600" fxFlex="40">
+                                                Grand Total
+                                            </div>
+                                            <div class="tb-data border-right p-2" fxFlex="20"></div>
+                                            <div class="tb-data border-right p-2" fxFlex="15"></div>
+                                            <div class="tb-data border-right p-2" fxFlex="10"></div>
+                                            <div class="tb-data p-2 fw-600" fxFlex="15">
+                                               
+                                                {{ singleOrderDetail.grand_total | currency:currencycode:'symbol' }}
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="buyer-details">
+                                        <div class="buyer-head row">
+                                            <p>Buyer details</p>
+                                            <a target="_blank" class="dwnld-invoice"></a>
+                                        </div>
+                                        <div class="buyer-desc">
+                                            <div class="row m-0">
+                                                <label class="col-md-4">Name:</label>
+                                                <p class="col-md-8">{{orderDetail.customer.firstname?orderDetail.customer.firstname:''}} {{orderDetail.customer.lastname?orderDetail.customer.lastname:''}}</p>
+                                            </div>
+                                            <div class="row m-0">
+                                                <label class="col-md-4">E-mail:</label>
+                                                <a class="col-md-8" target="_blank">{{orderDetail.customer.email?orderDetail.customer.email:'-'}} </a>
+                                            </div>
+                                            <div class="row m-0">
+                                                <label class="col-md-4">Transaction ID:</label>
+                                                <p class="col-md-8">{{orderDetail.order.payment.transaction_id}}</p>
+                                            </div>
+                                            <div class="row m-0">
+                                                <label class="col-md-4">Address:</label>
+                                                <p class="col-md-8">
+                                                    {{orderDetail.customer.address?orderDetail.customer.address:'-'}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="ticket-details border-bottom">
+                                        <div *ngFor="let value of singleOrderDetail.order_item;let i=index">
+                                            <div class="ticket-head row">
+                                                <p>Ticket details</p>
+                                                <a target="_blank" class="dwnld-invoice" (click)="fnDownloadTicket(value)">Download ticket as PDF</a>
+                                            </div>
+                                            <div class="ticket-desc">
+                                                <div class="row m-0">
+                                                    <label class="col-md-4">Ticket code:</label>
+                                                    <a class="col-md-8" target="_blank">{{value.unique_code}}</a>
+                                                </div>
+                                                <div class="row m-0">
+                                                    <label class="col-md-4">Name:</label>
+                                                    <p class="col-md-8">{{singleOrderDetail.customer.firstname?singleOrderDetail.customer.firstname:''}} {{singleOrderDetail.customer.lastname?singleOrderDetail.customer.lastname:''}}</p>
+                                                </div>
+                                                <div class="row m-0">
+                                                    <label class="col-md-4">Status:</label>
+                                                    <p class="col-md-8">{{value.order_status=="OS" ? 'Order sale' : value.order_status=="C" ? 'Cancel' : value.order_status=="CO" ? 'Completed' : value.order_status=="P" ? 'Pending' : 'Void'}}</p>
+                                                </div>
+                                                <div class="row m-0">
+                                                    <label class="col-md-4">Ticket type:</label>
+                                                    <p class="col-md-8">{{value.ticket?.ticket_name}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="ticket-details" *ngFor="let val of order_item_data;let i=index">
+                                        <div class="ticket-head row">
+                                            <p>Ticket details</p>
+                                            <a target="javascript:;" class="dwnld-invoice" (click)="fnDownloadTicket(val.unique_code)">Download ticket as PDF</a>
+                                        </div>
+                                        <div class="ticket-desc">
+                                            <div class="row">
+                                                <label class="col-md-4">Ticket code:</label>
+                                                <a class="col-md-8" target="_blank">
+                                              {{val.ticket ? val.ticket.unique_code : '-'}}
+                                            </a>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-md-4">Name:</label>
+                                                <p class="col-md-8">{{attendeeData[i][0].value}}</p>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-md-4">Status:</label>
+                                                <p [ngStyle]="{'color': val.order_status=='P' ? '#2BB800' : val.order_status=='C' ? '#FF0000' :  val.order_status=='CO' ? '#2BB800' : '#FF0000'}" class="col-md-8">{{ val.order_status== 'P' ? 'Pending' : val.order_status== 'CO' ? 'complete' : val.order_status== 'C' ? 'Cancel' : 'Void'}}</p>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-md-4">Ticket type:</label>
+                                                <p class="col-md-8">
+                                                    {{val.ticket ? val.ticket.ticket_name : '-'}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>

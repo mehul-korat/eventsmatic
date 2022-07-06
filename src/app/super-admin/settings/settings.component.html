@@ -1,0 +1,123 @@
+<div class="container-fluid">
+    <div class="row sub-container">
+        <div class="py-3 bg-light setting-left-menu" *ngIf="sidebar">
+            <div class="settins-title py-2">
+                <span>Resource Management</span>
+            </div>
+            <div class="py-2 common-setting-menu" (click)=toggleDisplayDiv() (click)="fnPostUrl('')" [ngClass]="{'active': pageName == '' || pageName ==  'websites-embed-codes' || pageName ==  'referral-codes'}" routerLink="/super-admin/settings">
+                <div class="setting-menu-icon d-inline-block mr-2">
+                    <img [ngStyle]="{'display':pageName === ''  || pageName == 'websites-embed-codes' || pageName == 'referral-codes' ? 'none' : 'block'}" src="../../../assets/images/settings/menu-icons/event-appearance.svg" class="w-100" alt="">
+                    <img [ngStyle]="{'display':pageName === '' || pageName == 'websites-embed-codes' || pageName == 'referral-codes' ? 'block' : 'none'}" src="../../../assets/images/settings/menu-icons/event-appearance_active.svg" class="w-100" alt="">
+                </div> <span>Event Page Appearance</span><i class="fa fa-angle-down ml-auto"></i>
+            </div>
+            <div [hidden]="isShowDiv">
+                <div (click)="fnPostUrl('event-page-design')" [ngClass]="{'active': pageName == 'event-page-design'}" routerLink="/super-admin/settings/event-page-design" class="py-2 common-sub-menu">
+                    <span class="pl-4">Event Page Design</span>
+                </div>
+                <div (click)="fnPostUrl('')" [ngClass]="{'active': pageName == '' || pageName == 'websites-embed-codes'}" routerLink="/super-admin/settings" class="py-2 common-sub-menu">
+                    <span class="pl-4">Website Embed Codes</span>
+                </div>
+
+                <div (click)="fnPostUrl('referral-codes')" [ngClass]="{'active': pageName == 'referral-codes'}" routerLink="/super-admin/settings/referral-codes" class="py-2 common-sub-menu">
+                    <span class="pl-4">Referral Codes</span>
+                </div>
+            </div>
+
+            <div>
+                <div (click)="fnPostUrl('contact-preferences')" [ngClass]="{'active': pageName == 'contact-preferences'}" class="py-2 common-setting-menu" routerLink="/super-admin/settings/contact-preferences">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'contact-preferences' ? 'none' : 'block'}" src="../../../assets/images/settings/menu-icons/contact-preferences.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'contact-preferences' ? 'block' : 'none'}" src="../../../assets/images/settings/menu-icons/contact-preferences_active.svg" class="w-100" alt="">
+                    </div><span>Contact Preferences</span>
+                </div>
+
+                <div class="py-2 common-setting-menu" routerLink="/super-admin/settings/checkout-form" (click)="fnPostUrl('checkout-form')" [ngClass]="{'active': pageName == 'checkout-form'}">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'checkout-form' ? 'none' : 'block'}" src="../../../assets/images/settings/menu-icons/checkout-form.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'checkout-form' ? 'block' : 'none'}" src="../../../assets/images/settings/menu-icons/checkout-form_active.svg" class="w-100" alt="">
+                    </div> <span>Checkout form</span>
+                </div>
+
+
+                <div (click)="fnPostUrl('order-confirmation')" [ngClass]="{'active': pageName == 'order-confirmation'}" class="py-2 common-setting-menu" routerLink="/super-admin/settings/order-confirmation">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'order-confirmation' ? 'none' : 'block'}" src="../../../assets/images/settings/menu-icons/order-confirmation.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'order-confirmation' ? 'block' : 'none'}" src="../../../assets/images/settings/menu-icons/order-confirmation_active.svg" class="w-100" alt="">
+                    </div> <span>Order Confirmation</span>
+                </div>
+
+                <div (click)="fnPostUrl('team-access')" [ngClass]="{'active': pageName == 'team-access'}" class="py-2 common-setting-menu" routerLink="/super-admin/settings/team-access" *ngIf="teamAccessAllowed">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'team-access' ? 'none' : 'block'}" src="../../../assets/images/settings/menu-icons/team-access.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'team-access' ? 'block' : 'none'}" src="../../../assets/images/settings/menu-icons/team-access_active.svg" class="w-100" alt="">
+                    </div> <span>Team access</span>
+
+                </div>
+                <div class="settins-title py-2">
+                    <span>Account</span>
+                </div>
+
+                <div (click)="fnPostUrl('box-office')" [ngClass]="{'active': pageName == 'box-office'}" class="py-2 common-setting-menu" routerLink="/super-admin/settings/box-office">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'box-office' ? 'none' : 'block'}" src="../../../assets/images/settings/menu-icons/box-office.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'box-office' ? 'block' : 'none'}" src="../../../assets/images/settings/menu-icons/box-office_active.svg" class="w-100" alt="">
+                    </div> <span>Box Office</span>
+                </div>
+
+
+                <div class="settins-title py-2">
+                    <span>Payment</span>
+                </div>
+
+                <div (click)="fnPostUrl('payment-systems')" [ngClass]="{'active': pageName == 'payment-systems'}" class="py-2 common-setting-menu" routerLink="/super-admin/settings/payment-systems">
+                    <div class="setting-menu-icon d-inline-block mr-2">
+                        <img [ngStyle]="{'display':pageName === 'payment-systems' ? 'none' : 'block'}" src="../../../assets/images/settings/menu-icons/payment.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'payment-systems' ? 'block' : 'none'}" src="../../../assets/images/settings/menu-icons/payment_active.svg" class="w-100" alt="">
+                    </div> <span>Payment Systems</span>
+                </div>
+
+                <div (click)="fnPostUrl('billing')" [ngClass]="{'active': pageName == 'billing'}" class="py-2 common-setting-menu" routerLink="/super-admin/settings/billing">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'billing' ? 'none' : 'block'}" src="../../../assets/images/settings/menu-icons/billing.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'billing' ? 'block' : 'none'}" src="../../../assets/images/settings/menu-icons/billing_active.svg" class="w-100" alt="">
+                    </div> <span>Billing</span>
+                </div>
+
+                <div (click)="fnPostUrl('sales-tax')" [ngClass]="{'active': pageName == 'sales-tax'}" class="py-2 common-setting-menu" routerLink="/super-admin/settings/sales-tax">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'sales-tax' ? 'none' : 'block'}" src="../../../assets/images/settings/menu-icons/sales-tax.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'sales-tax' ? 'block' : 'none'}" src="../../../assets/images/settings/menu-icons/sales-tax_active.svg" class="w-100" alt="">
+                    </div> <span>Sales tax</span>
+                </div>
+
+                <div class="settins-title py-2">
+                    <span>General Setting</span>
+                </div>
+                <div (click)="fnPostUrl('app-users')" [ngClass]="{'active': pageName == 'app-users'}" class="py-2 common-setting-menu" routerLink="/super-admin/settings/app-users">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'app-users' ? 'none' : 'block'}" src="../../../assets/images/settings/menu-icons/app-user.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'app-users' ? 'block' : 'none'}" src="../../../assets/images/settings/menu-icons/app-user_active.svg" class="w-100" alt="">
+                    </div> <span>Check in app users</span>
+                </div>
+
+                <div (click)="fnPostUrl('privacy-policy')" [ngClass]="{'active': pageName == 'privacy-policy'}" class="py-2 common-setting-menu" routerLink="/super-admin/settings/privacy-policy">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'privacy-policy' ? 'none' : 'block'}" src="../../../assets/images/settings/menu-icons/privacy-policy.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'privacy-policy' ? 'block' : 'none'}" src="../../../assets/images/settings/menu-icons/privacy-policy_active.svg" class="w-100" alt="">
+                    </div> <span>Privacy Policy</span>
+                </div>
+                <div (click)="fnPostUrl('reminders')" [ngClass]="{'active': pageName == 'reminders'}" class="py-2 common-setting-menu" routerLink="/super-admin/settings/reminders">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'reminders' ? 'none' : 'block'}" src="../../../assets/images/events/shout.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'reminders' ? 'block' : 'none'}" src="../../../assets/images/events/shout_active.svg" class="w-100" alt="">
+                    </div> <span>Reminders</span>
+                </div>
+            </div>
+        </div>
+
+        <div [ngClass]="{'no-sidebar' : !sidebar}" class="setting-right-container p-0 bg-white">
+            <router-outlet></router-outlet>
+        </div>
+
+    </div>
+</div>

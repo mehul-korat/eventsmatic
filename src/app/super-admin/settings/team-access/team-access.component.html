@@ -1,0 +1,126 @@
+<div id="team_access" class="main">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="team-access">
+        <div class="page-title">
+            Team access
+
+        </div>
+        <div class="page-descp">
+            <div class="row">
+                <p class="col-sm-12 col-12 col-lg-9 col-md-9 col-xl-9 float-left">Team access allows you to invite your teammates to access and help manage your Eventsmatic box office. This is useful if you work within a team and multiple people need access.</p>
+                <div class="col-sm-12 col-12 col-lg-3 col-md-3 col-xl-3 float-left">
+                    <button mat-raised-button color="primary" (click)="inviteTeammate()" class="cd-code-btn ml-auto  d-flex">Invite Teammate</button>
+                </div>
+            </div>
+            <div class="row code-tab">
+                <mat-tab-group class="col-sm-12 col-12 col-lg-12 col-md-12 col-xl-12 float-left">
+                    <mat-tab label="Teammates ({{approvedInviterData.length}})" class="">
+                        <div class="members-listing teammates">
+                            <div class="main-table-content main-cust-table-content">
+                                <div class="">
+                                    <div class="heads main-heading-content drageble" fxLayout="row">
+                                        <div class="" fxFlex="5"></div>
+                                        <div class="" fxFlex="20">Name</div>
+                                        <div class="" fxFlex="25">Roles</div>
+                                        <div class="" fxFlex="20">Email address</div>
+                                        <div class="" fxFlex="20">Last Seen</div>
+                                        <div class="" fxFlex="10">Action</div>
+                                    </div>
+
+                                    <div *ngFor="let val of approvedInviterData; let i=index">
+                                        <div class="content" class="drageble-list">
+                                            <div class="drageble-box" fxLayout="row">
+                                                <div class="tb-data" fxFlex="5">
+                                                    <div class="user-details">
+                                                        <img *ngIf="val.image" src="{{val.image}}" class="user-profile" alt="">
+                                                        <img *ngIf="!val.image" src="../assets/images/settings/profile.png" class="user-profile" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="tb-data" fxFlex="20">
+                                                    {{val.name}}
+                                                </div>
+                                                <div class="tb-data cpn-code" fxFlex="25">
+                                                    <!-- <p *ngIf="approvedInviterData.role === 'A'">Admin</p>
+                                                    <p *ngIf="approvedInviterData.role === 'EO'">Event organisers </p>
+                                                    <p *ngIf="approvedInviterData.role === 'OM'">Event manager</p>
+                                                    <p *ngIf="approvedInviterData.role === 'OV'">Over view</p> -->
+                                                    <p>{{permissionCheck(val.permission)}}</p>
+                                                </div>
+                                                <div class="tb-data" fxFlex="25">{{val.email_id}}</div>
+                                                <div class="tb-data" fxFlex="25">{{val.updated_at}}</div>
+                                                <div class="tb-data" fxFlex="10">
+                                                    <mat-icon placement="left" [ngbPopover]="popContent" aria-hidden="false" aria-label="" class="action-icon">more_horiz</mat-icon>
+                                                    <ng-template class="popover" #popContent>
+                                                        <div (click)="fnEditRole(i)" class="px-3 pointer pb-1 border-bottom">
+                                                            <i class="fa fa-repeat mr-2"></i><span>Edit Role</span>
+                                                        </div>
+                                                        <div (click)="fnRemoveInviter(val.unique_code)" class="px-3 pt-1 pointer">
+                                                            <i class="fa fa-trash mr-2"></i><span>Remove</span>
+                                                        </div>
+                                                    </ng-template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </mat-tab>
+                    <mat-tab label="Invites ({{pendingInviterData.length}})">
+                        <div class="members-listing invites">
+                            <div class="main-table-content main-cust-table-content">
+                                <div class="">
+                                    <div class="heads main-heading-content drageble" fxLayout="row">
+                                        <div class="" fxFlex="25">Email Address</div>
+                                        <div class="" fxFlex="30">Roles</div>
+                                        <div class="" fxFlex="25">Last Seen</div>
+                                        <div class="" fxFlex="10">Status</div>
+                                        <div class="" fxFlex="10"></div>
+                                    </div>
+                                    <div *ngFor="let val of pendingInviterData">
+                                        <div class="content" class="drageble-list">
+                                            <div class="drageble-box" fxLayout="row">
+                                                <div class="tb-data cpn-title" fxFlex="25">{{val.email_id}}</div>
+                                                <div class="tb-data cpn-code" fxFlex="30">
+                                                    <!-- <p *ngIf="pendingInviterData.role === 'A'">Admin</p>
+                                                    <p *ngIf="pendingInviterData.role === 'EO'">Event organisers </p>
+                                                    <p *ngIf="pendingInviterData.role === 'OM'">Event manager</p>
+                                                    <p *ngIf="pendingInviterData.role === 'OV'">Over view</p> -->
+                                                    <!-- {{pendingInviterData.permission}} -->
+                                                    <p>{{permissionCheck(val.permission)}}</p>
+                                                    <p *ngFor="let subPer of val.sub_permission; let i=index">{{subPermissionCheck(subPer)}}</p>
+
+                                                </div>
+                                                <div class="tb-data" fxFlex="25">{{val.updated_at}}</div>
+                                                <div class="tb-data status" fxFlex="10">
+                                                    <p *ngIf="val.status === 'APR'" [ngStyle]="{'color':val.status === 'APR' ? '#2BB800':'' }">Approved</p>
+                                                    <p *ngIf="val.status === 'R'" [ngStyle]="{'color':val.status === 'R' ? '#FF0000':'' }">Rejected</p>
+                                                    <p *ngIf="val.status === 'P'" [ngStyle]="{'color':val.status === 'P' ? '#FF7700':'' }">Pending</p>
+                                                </div>
+                                                <div class="tb-data" fxFlex="10">
+                                                    <mat-icon placement="left" [ngbPopover]="popContent" aria-hidden="false" aria-label="" class="action-icon">more_horiz</mat-icon>
+                                                    <ng-template class="popover" #popContent>
+                                                        <div (click)="fnResendInviter(val.unique_code)" class="px-3 pb-1 pointer border-bottom">
+                                                            <i class="fa fa-repeat mr-2"></i><span>Resend</span>
+                                                        </div>
+                                                        <div (click)="fnDeleteInviter(val.unique_code)" class="px-3 pt-1 pointer">
+                                                            <i class="fa fa-trash mr-2"></i><span>Delete</span>
+                                                        </div>
+                                                    </ng-template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

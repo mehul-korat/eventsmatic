@@ -1,0 +1,125 @@
+:root {
+    --headerColor: '#3986fa';
+    --headerTextColor: '#3986fa';
+    --pageColor: '#38b7fb';
+    --pageTextColor: '#38b7fb';
+    --btnColor: '#38b7fb';
+    --btnTextColor: '#38b7fb';
+    --bgColor: '#38b7fb';
+    --font: 'Roboto';
+}
+
+$headerColor: var(--headerColor);
+$headerTextColor: var(--headerTextColor);
+$pageColor: var(--pageColor);
+$pageTextColor: var(--pageTextColor);
+$btnColor: var(--btnColor);
+$btnTextColor: var(--btnTextColor);
+$bgColor: var(--bgColor);
+$fontFamily: var(--font);
+$error: #f1552f;
+$lightcolor: #00367130;
+// AECI
+$first-alt-lighter: rgb(95, 95, 95);
+$first-alt-darker: rgb(24, 21, 21);
+$second-alt-lighter: #e75a55;
+$second-alt-darker: #ab1531;
+//$third: #4D4D4D;
+$fourth: #ffffff;
+// different Var
+$shadow: 0px 2px 2px -1px rgba(0, 0, 0, 0.1),
+0px 4px 12px 0px rgba(0, 0, 0, 0.1) !important;
+// color var
+$primary-color: #973C56;
+$secondary-color: #010101;
+$black: #000000;
+$dec-grey: #606060;
+$grey-1: #4c4c4c;
+$grey-2: #929292;
+$grey-3: #e0e0e0;
+$red: #ed2f2f;
+$green: #16bc2c;
+// for font size
+$fs-12: 12px;
+$fs-14: 14px;
+$fs-16: 16px;
+$fs-18: 18px;
+$fs-20: 20px;
+$fs-22: 22px;
+$fs-24: 24px;
+$fs-26: 26px;
+$fs-28: 28px;
+$fs-30: 30px;
+$fs-32: 32px;
+$fs-34: 34px;
+$fs-36: 36px;
+$fs-38: 38px;
+$fs-40: 40px;
+// for font weight
+$fw-300: 300;
+$fw-400: 400;
+$fw-500: 500;
+$fw-600: 600;
+$fw-700: 700;
+$fw-800: 800;
+$fw-900: 900;
+$fwb: bold;
+
+/* for tab color */
+
+$tab-colors:#FFE6C8;
+
+/*for button color*/
+
+$btnlightgrey:#d6d6d6;
+$btnlightblue:#bcd8ff;
+$btnlightred:#fa8888;
+$btnlightgreen:#a0da8d;
+$lightbtn:#fabb88;
+$iconcolors:#295792;
+$bgblue:#dce9ff;
+$bgdarkblue:#973c56;
+$bgdarkorange:#ff9037;
+$bgdarkgreen:#149a5b;
+
+/*for font-family*/
+
+$ff-poppins: 'Poppins',
+sans-serif;
+
+/*slide header */
+
+$bg-darkblue:#eef5ff;
+$bg-header:#cfe3fc;
+
+.header-color {
+    color: $headerTextColor;
+}
+
+.header-bgcolor {
+    background-color: $headerColor;
+}
+
+.page-color {
+    color: $pageTextColor;
+}
+
+.page-bgcolor {
+    background-color: $pageColor;
+}
+
+.btn-color {
+    color: $btnTextColor;
+}
+
+.btn-bgcolor {
+    background-color: $btnColor;
+}
+
+.bg-color {
+    background-color: $bgColor;
+}
+
+.SelectedFont {
+    font-family: $fontFamily;
+}

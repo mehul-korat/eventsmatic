@@ -1,0 +1,101 @@
+<div class="main p-3">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="modal-header pl-3 py-0 border-0">
+        <p class="font-weight-bold">Export doorlist</p>
+        <button type="button" data-dismiss="modal" aria-label="Close" class="close-btn" (click)="onNoClick()">
+        <span aria-hidden="true" class="white-text">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body ">
+        <p>A doorlist lists all of your attendees and their entitled tickets. Print it out and use it to check people in at the door.</p>
+
+        <div class="row m-0">
+            <div class="export-door-list-field">
+                <label for="">Group list by <span class="text-danger"> * </span></label>
+                <mat-select class="form-control" (selectionChange)="fnChangeGroupBy($event)" [(ngModel)]="exportArr.group_by">
+                    <mat-option value="ATT">Attendee name</mat-option>
+                    <mat-option value="BUY">Buyer name</mat-option>
+                </mat-select>
+            </div>
+
+            <div class="export-door-list-field ml-auto">
+                <label for="">Sort by <span class="text-danger"> * </span></label>
+                <mat-select class="form-control" [(ngModel)]="exportArr.sort_by">
+                    <mat-option value="firstname">Ordered by first name</mat-option>
+                    <mat-option value="lastname">Ordered by last name</mat-option>
+                </mat-select>
+            </div>
+
+            <div class="export-door-list-field mt-2">
+                <label for="">Format <span class="text-danger"> * </span></label>
+                <mat-select class="form-control" [(ngModel)]="exportArr.format_by">
+                    <mat-option value="pdf">Download as formatted PDF</mat-option>
+                    <mat-option value="csv">Download CSV</mat-option>
+                    <mat-option value="print">Print form here</mat-option>
+                </mat-select>
+            </div>
+
+            <div class="export-door-list-field ml-auto mt-2" *ngIf=" exportArr.format_by!='csv' ">
+                <label for="">Print Size</label>
+                <mat-select class="form-control" [(ngModel)]="exportArr.size_by">
+                    <mat-option value="30">Small typeface (30 name per page)</mat-option>
+                    <mat-option value="20">Large typeface (20 name per page)</mat-option>
+                </mat-select>
+            </div>
+
+        </div>
+
+        <div class="row m-0 mt-3">
+            <small *ngIf="totalQuestionExportCount > 5" class="error">Warning: a maximum of 5 questions will be shown</small>
+            <div class="question-list pr-2">
+                <label for="">Buyer questions</label>
+                <div *ngFor="let buyerQtion of buyerQtionList; let i=index" class="ques-checkbox w-100">
+                    <div *ngIf="buyerQtion.addressForamteStyle && buyerQtion.addressForamteStyle == 'Cadadian'" class="">
+                        <mat-checkbox class="d-flex" (change)="fnAddCustomerFields($event,'address1')">Address 1</mat-checkbox>
+                        <mat-checkbox class="d-flex" (change)="fnAddCustomerFields($event,'city')">City</mat-checkbox>
+                        <mat-checkbox class="d-flex" (change)="fnAddCustomerFields($event,'province')">Province</mat-checkbox>
+                        <mat-checkbox class="d-flex" (change)="fnAddCustomerFields($event,'postalcode')">Postal code</mat-checkbox>
+                    </div>
+                    <div *ngIf="buyerQtion.addressForamteStyle && buyerQtion.addressForamteStyle == 'UK'" class="">
+                        <mat-checkbox class="d-flex" (change)="fnAddCustomerFields($event,'address1')">Address 1</mat-checkbox>
+                        <mat-checkbox class="d-flex" (change)="fnAddCustomerFields($event,'address2')">Address 2</mat-checkbox>
+                        <mat-checkbox class="d-flex" (change)="fnAddCustomerFields($event,'address3')">Address 3</mat-checkbox>
+                        <mat-checkbox class="d-flex" (change)="fnAddCustomerFields($event,'zipcode')">Zipcode</mat-checkbox>
+                    </div>
+                    <div *ngIf="buyerQtion.addressForamteStyle && buyerQtion.addressForamteStyle == 'US'" class="">
+                        <mat-checkbox class="d-flex" (change)="fnAddCustomerFields($event,'address1')">Address 1</mat-checkbox>
+                        <mat-checkbox class="d-flex" (change)="fnAddCustomerFields($event,'city')">City</mat-checkbox>
+                        <mat-checkbox class="d-flex" (change)="fnAddCustomerFields($event,'state')">State</mat-checkbox>
+                        <mat-checkbox class="d-flex" (change)="fnAddCustomerFields($event,'zipcode')">Zipcode</mat-checkbox>
+                    </div>
+                    <div *ngIf="((!buyerQtion.addressForamteStyle) && buyerQtion.controlName != 'name') && ((!buyerQtion.addressForamteStyle) && buyerQtion.controlName != 'email') && ((!buyerQtion.addressForamteStyle) && buyerQtion.controlName != 'phone')">
+                        <mat-checkbox (change)="fnAddBuyerQtion($event,buyerQtion.label)">{{buyerQtion.label}}</mat-checkbox>
+                    </div>
+                    <div *ngIf="buyerQtion.controlName== 'email' || buyerQtion.controlName == 'phone'">
+                        <mat-checkbox (change)="fnAddCustomerFields($event,buyerQtion.controlName)">{{buyerQtion.label}}</mat-checkbox>
+                    </div>
+                    <div *ngIf="exportArr.group_by == 'ATT' && buyerQtion.controlName == 'name'">
+                        <mat-checkbox (change)="fnAddCustomerFields($event,buyerQtion.controlName)">{{buyerQtion.label}}</mat-checkbox>
+                    </div>
+
+                </div>
+            </div>
+            <div class="question-list pl-2">
+                <label for="">Attendee questions</label>
+                <div *ngFor="let attendeeQtion of attendeeQtionList; let i=index" class="ques-checkbox w-100">
+                    <mat-checkbox *ngIf="exportArr.group_by == 'BUY' && attendeeQtion.default == true" (change)="fnAddAttendeeQtion($event,attendeeQtion.label)">{{attendeeQtion.label}}</mat-checkbox>
+                    <mat-checkbox *ngIf="attendeeQtion.default != true" (change)="fnAddAttendeeQtion($event,attendeeQtion.label)">{{attendeeQtion.label}}</mat-checkbox>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="modal-footer border-0">
+        <button mat-flat-button (click)="onNoClick()" class="cancel-btn mr-1">Cancel</button>
+        <button mat-flat-button class="export-btn ml-1" (click)="fnExportTickets()">Export Doorlist</button>
+    </div>
+
+</div>

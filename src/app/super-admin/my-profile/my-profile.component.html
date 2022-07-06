@@ -1,0 +1,128 @@
+<div class="main bg-white main-work-area main">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="row mx-0 mb-4 mt-2">
+        <div class="col-12  mt-2">
+            <div class="page-title">
+                My Profile
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mx-0 main-content">
+        <div class="col-6">
+            <div class="row mx-0 mt-2 align-items-center">
+
+                <!-- <img  src="{{myProfileData && myProfileData.image ? myProfileData.image : profileImageUrl}}" alt=""> -->
+                <div *ngIf="(!profileImageUrl && myProfileData) && myProfileData.image_name != 'default_image.png'" class="my-profile-img" [ngStyle]="{'backgroundImage': 'url(' + myProfileData.image + ')'}"></div>
+                <div *ngIf="profileImageUrl" class="my-profile-img" [ngStyle]="{'backgroundImage': 'url(' + profileImageUrl + ')'}"></div>
+                <!-- <img *ngIf="(!profileImageUrl && myProfileData) && myProfileData.image_name != 'default_image.png'" src="{{myProfileData.image}}" alt="">
+                <img *ngIf="profileImageUrl" src="{{profileImageUrl}}" alt=""> -->
+                <div class="col-4 py-2">
+                    <button *ngIf="myProfileData && myProfileData.image_name != 'default.png'" mat-flat-button (click)="fnChangeImage()" class="change-photo">Change Image</button>
+                    <button *ngIf="myProfileData && myProfileData.image_name == 'default.png'" mat-flat-button (click)="fnChangeImage()" class="change-photo">Upload Image</button>
+                    <button *ngIf="myProfileData && myProfileData.image_name != 'default.png'" mat-flat-button class="remove-photo mt-2" (click)="fnRemoveImage()">Remove Image</button>
+                </div>
+            </div>
+
+
+            <div class="p-2">
+                <div class="form-group">
+                    <form [formGroup]="myProfileForm" class="with-validation">
+                        <div class="row mx-0 mt-4">
+                            <div class="col-12">
+                                <label for="first-name" class="">Name</label>
+                                <input type="text" class="form-control" formControlName="firstname">
+                                <span class="error-wrap" *ngIf="myProfileForm.get('firstname').touched || myProfileForm.get('firstname').dirty">
+                        <small *ngIf="myProfileForm.get('firstname').hasError('required')" class="error">Full Name is required.</small>
+                        <small *ngIf="myProfileForm.get('firstname').hasError('maxlength')" class="error">Full Name should be maximum 15 character.</small>
+                        </span>
+                            </div>
+
+                            <!-- <div class="col-6">
+                        <label for="last-name" class="">Last Name</label>
+                        <input type="text" class="form-control" formControlName="lastname" placeholder="Ansari">
+                        <span class="error-wrap" *ngIf="myProfileForm.get('lastname').touched || myProfileForm.get('lastname').dirty">
+                        <small *ngIf="myProfileForm.get('lastname').hasError('required')" class="error">Last Name is required.</small>
+                        <small *ngIf="myProfileForm.get('lastname').hasError('maxlength')" class="error">Last Name should be maximum 15 character.</small>
+                        </span>
+                    </div> -->
+
+                            <div class="col-6">
+                                <label for="email" class="mt-4">Email</label>
+                                <input type="text" class="form-control" formControlName="email" disabled>
+                                <span class="error-wrap" *ngIf="myProfileForm.get('email').touched || myProfileForm.get('email').dirty">
+                        <small *ngIf="myProfileForm.get('email').hasError('required')" class="error">Email is required.</small>
+                        <small *ngIf="myProfileForm.get('email').hasError('email') || myProfileForm.get('email').hasError('pattern')" class="error">Enter a valid email address.</small>
+                        </span>
+                            </div>
+
+                            <div class="col-6">
+                                <label for="first-name" class="mt-4">Phone</label>
+                                <input type="text" class="form-control" formControlName="phone">
+                                <span class="error-wrap" *ngIf="myProfileForm.get('phone').touched || myProfileForm.get('phone').dirty">
+                        <small *ngIf="myProfileForm.get('phone').hasError('required')" class="error">Phone Number is required.</small>
+                        <small *ngIf="myProfileForm.get('phone').hasError('pattern') || (myProfileForm.get('phone').hasError('pattern') && (myProfileForm.get('phone').hasError('maxlength') || myProfileForm.get('phone').hasError('minlength')))" class="error">Phone Number Should in numbers</small>
+                        <small *ngIf="!myProfileForm.get('phone').hasError('pattern') && (myProfileForm.get('phone').hasError('maxlength') || myProfileForm.get('phone').hasError('minlength'))" class="error">Phone Number Should Minimum 6 and Maximum 15 digits.</small>
+                        </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="change-password-container">
+
+                <form [formGroup]="changePwd" class="with-validation">
+                    <div class="row mx-0 mt-4">
+                        <div class="col-12 mb-3">
+                            <label for="old-pwd" class="">Old Password</label>
+                            <div class="input-with-icon">
+                                <input [type]="hide1 ? 'text' : 'password'" class="form-control" formControlName="oldPassword">
+                                <mat-icon class="hide-show-pswd pointer" (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">{{hide1 ? 'visibility' : 'visibility_off'}}</mat-icon>
+                            </div>
+                            <span class="error-wrap" *ngIf="changePwd.get('oldPassword').touched || changePwd.get('oldPassword').dirty">
+                            <small *ngIf="changePwd.get('oldPassword').hasError('required')" class="error">Old password is required.</small>
+                        </span>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="new-pwd" class="">New Password</label>
+                            <div class="input-with-icon">
+                                <input [type]="hide2 ? 'text' : 'password'" class="form-control" formControlName="newPassword">
+                                <mat-icon class="hide-show-pswd pointer" (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">{{hide2 ? 'visibility' : 'visibility_off'}}</mat-icon>
+                            </div>
+                            <span class="error-wrap" *ngIf="changePwd.get('newPassword').touched || changePwd.get('newPassword').dirty">
+                            <small *ngIf="changePwd.get('newPassword').hasError('required')" class="error">New Password is required.</small>
+                            <small *ngIf="changePwd.get('newPassword').hasError('minlength')" class="error">New Password should be minimum 8 character.</small>
+                        </span>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="new-pwd" class="">Confirm New Password</label>
+                            <input type="password" formControlName="ReNewPassword" placeholder="Re-Enter New Password" class="common-input form-control" />
+                            <span class="error-wrap" *ngIf="changePwd.get('ReNewPassword').dirty || changePwd.get('ReNewPassword').touched">
+                            <small *ngIf="changePwd.get('ReNewPassword').hasError('required') && changePwd.hasError('notSame')" class="error text-left">Confirm password is required.</small>
+                            <small *ngIf="!changePwd.get('ReNewPassword').hasError('required') && changePwd.hasError('notSame')" class="error text-left">Passwords do not match.</small>
+                        </span>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <div class="ml-auto">
+                                <button mat-flat-button class=" px-3 mr-2 bg-primary text-light" (click)="fnChangePassword()">Change Password</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer-btn">
+
+    <div class="can-save">
+        <button mat-raised-button class="cancel-btn" (click)="onCancel()">Cancel</button>
+        <button mat-raised-button (click)=" fnOnSubmitMyProfile()" class="save-btn">Save</button>
+    </div>
+</div>

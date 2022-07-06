@@ -1,0 +1,121 @@
+@import '../../../../styling/variables';
+::ng-deep #paymentgateway {
+    .mat-expansion-panel-header-description,
+    .mat-expansion-panel-header-title {
+        display: block;
+    }
+     ::ng-deep .mat-expansion-panel-header {
+        height: 140px;
+        padding: 20px;
+    }
+    mat-icon {
+        line-height: 1.5;
+    }
+   
+    h6 {
+        color: #808080;
+        font-size: 16px;
+    }
+    .top-border {
+        border-top: 1px solid #ededed;
+        padding: 15px 0px;
+    }
+    .action-btn {
+        margin-left: auto;
+        display: flex;
+        .payment-cancel-btn {
+            width: 100px;
+            height: 39px;
+            border-radius: 7px;
+            background-color: #dddddd;
+        }
+        .payment-save-btn {
+            width: 109px;
+            height: 39px;
+            border-radius: 7px;
+            background-color: #1173f4;
+            color: white;
+        }
+    }
+    .mat-accordion .mat-expansion-panel {
+        margin-bottom: 18px;
+    }
+}
+
+::ng-deep .payment-gateways {
+    padding: 30px 30px;
+    .mat-accordion {
+        margin-bottom: 10px;
+        .mat-expansion-indicator {
+            display: none;
+        }
+        .mat-expansion-panel-header-description {
+            display: none !important;
+        }
+        .mat-expansion-panel-header-title {
+            margin-right: 0 !important;
+            .payment-image{
+                // width: 130px;
+                height: 50px;
+            }
+        }
+        .payment-toggle-btn {
+            margin-left: auto;
+        }
+        .mat-expansion-panel-header{
+            .payment-expand-icon{
+                width: 30px;
+                height: 30px;
+                border-radius: 100px;
+                background-color: #973c56;
+                color: #fff;
+                transition: all 0.3s;
+                svg {
+                    path{
+                        fill: #fff;
+                    }
+                }
+            }
+            &.mat-expanded{
+                .payment-expand-icon{
+                    transform: rotate(180deg);
+                }
+            }
+        }
+    }
+}
+
+.btn {
+    background: #973c56;
+    border-radius: 5px;
+    opacity: 1;
+    margin-left: auto;
+    color: #FFFFFF;
+}
+
+.common-filed-center {
+    .payment-label {
+        margin-bottom: 0px;
+    }
+}
+
+// for Error messages
+::ng-deep .with-validation {
+    .form-group {
+        position: relative;
+        padding-bottom: 20px;
+        margin-bottom: 5px;
+        .error-wrap {
+            position: absolute;
+            bottom: 0;
+        }
+    }
+    .error {
+        color: $error;
+        font-size: 12px;
+        display: block;
+    }
+    .error-wrap {
+        width: 100%;
+    }
+}

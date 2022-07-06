@@ -1,0 +1,58 @@
+<div id="contact_preferences" class="main-section">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <form [formGroup]="contactPreferenceFrom" class="with-validation">
+        <div class="contact-prefrences main-work-area main">
+            <div class="page-title col-md-12 p-0">Customer Contact Preferences</div>
+            <div class="account-info">
+                <div class="col-md-12 p-0">
+                    <p class="sub-head">Where should contact form submissions and replies to ticket emails go?
+                        <span class="info" matTooltip="When your customers have a question they can either contact you via a contact form that forwards on to you, or you can specify your own contact instructions."><i class="fa fa-question" aria-hidden="true"></i></span>
+                    </p>
+                </div>
+
+                <div class="form-group col-md-8 p-0">
+                    <mat-select formControlName="contact_pre_option" class="form-control" (selectionChange)="fnSelectionChange($event)" id="">
+                        <mat-option value="my_account">To my account email address</mat-option>
+                        <mat-option value="diffrent_email">To a different email address</mat-option>
+                        <!-- <mat-option value="I would like to provide instructions">I would like to provide instructions</mat-option> -->
+                    </mat-select>
+                </div>
+
+                <div class="form-group mt-3 col-md-8 p-0" *ngIf="contactPreferenceOption === 'diffrent_email'">
+                    <label class="sub-head">Please enter the email address for customer contact enquires</label>
+                    <input type="email" formControlName="email_id" class="form-control" placeholder="Enter email address">
+                    <span class="error-wrap" *ngIf="contactPreferenceFrom.get('email_id').touched || contactPreferenceFrom.get('email_id').dirty">
+                        <small *ngIf="contactPreferenceFrom.get('email_id').hasError('required')" class="error">Email id is required.</small>
+                        <small *ngIf="contactPreferenceFrom.get('email_id').hasError('email')" class="error">Enter Valid Email id.</small>
+                    </span>
+                </div>
+
+                <!-- <div class="form-group col-md-8" *ngIf="contactPreferenceOption === 'I would like to provide instructions'">
+                    <label  class="sub-head">Please enter contact instructions</label>
+                    <textarea formControlName="instructions" class="form-control"></textarea>
+                    <span class="error-wrap" *ngIf="contactPreferenceFrom.get('instructions').touched || contactPreferenceFrom.get('instructions').dirty">
+                        <small *ngIf="contactPreferenceFrom.get('instructions').hasError('required')" class="error">Instructions is required.</small>
+                    </span>
+                    <p>Some basic HTML is allowed so you can add links and headings</p>
+                </div> -->
+
+                <div class="col-md-8 mt-4 p-0" *ngIf="contactPreferenceOption === 'my_account' || contactPreferenceOption === 'diffrent_email'">
+                    <div class="note-theme m-0">
+                        <div class="notification">
+                            <mat-icon aria-hidden="false" aria-label="Example home icon" class="notif-icon">notifications</mat-icon>
+                        </div>
+                        <div>
+                            <p class="note-message"><span class="notes">Please note : </span> The email address specified will be exposed to ticket buyers in the 'reply-to' field of the ticket emails that get sent out. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-action-btn">
+            <div class="can-save">
+                <button mat-raised-button class="cancel-btn">Cancel</button>
+                <button mat-raised-button (click)="fnSubmitContactPreference()" class="save-btn">Save</button>
+            </div>
+        </div>
+    </form>
+</div>

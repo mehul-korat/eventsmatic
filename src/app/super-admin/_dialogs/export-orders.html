@@ -1,0 +1,266 @@
+<div class="modal-dialog modal-notify modal-info export-order modal-lg" role="document">
+    <div class="modal-content ">
+        <div class="modal-header modal-bcolor-primary px-0">
+            <p class="heading lead  work-content">Export orders</p>
+            <button type="button" class="close-btn" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+        <span aria-hidden="true" class="white-text">&times;</span>
+      </button>
+        </div>
+
+        <div class="modal-body pb-0 px-0">
+            <div class="row">
+                <div class="overview">
+                    <div class="">
+
+                        <mat-radio-group (change)="fnExportOrderType($event)" class="d-flex">
+                            <div class="overview-report d-flex">
+                                <mat-radio-button value="overview" [checked]="reportType === 'overview'" name="optradio">
+                                    <div class="ovr">
+                                        <div class="overview">
+                                            <p class="wd-60"></p>
+                                            <p class="wd-80"></p>
+                                            <p class="wd-60"></p>
+                                            <p class="wd-80"></p>
+                                        </div>
+                                        <p>Overview Report</p>
+                                    </div>
+                                </mat-radio-button>
+                            </div>
+                            <div class="lineitem-report d-flex">
+                                <mat-radio-button value="lineItem" [checked]="reportType === 'lineItem'" name="optradio">
+                                    <div class="lir">
+                                        <div class="line-item">
+                                            <p class="wd-90"></p>
+                                            <p class="wd-60"></p>
+                                            <p class="wd-70"></p>
+                                            <p class="wd-90"></p>
+                                            <p class="wd-60"></p>
+                                            <p class="wd-70"></p>
+                                            <p class="wd-90"></p>
+                                        </div>
+                                        <p>Line Item Report</p>
+                                    </div>
+                                </mat-radio-button>
+                            </div>
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overview-details" *ngIf="reportType === 'overview'">
+                <h5 class="mb-0">Overview details to include in the report</h5>
+                <mat-accordion class="" multi>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <section class="tab-checkbox">
+                                    <mat-checkbox class="" (change)="fnOrdersDetails($event,'main')" [(ngModel)]="orderDetails">ORDER DETAILS</mat-checkbox>
+                                </section>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <section class="row">
+                            <mat-checkbox class="col-md-4" *ngFor="let value of ExorderDetails;let i=index" (change)="fnOrdersDetails($event,'single')" [(ngModel)]="value.value">{{value.lable}}</mat-checkbox>
+
+                            <!-- <mat-checkbox class="col-md-4"  (change)="fnOrdersDetailsOrder_id($event)"  >Order ID</mat-checkbox> -->
+                            <!-- <mat-checkbox class="col-md-4"  (change)="fnOrdersDetailsticket_check($event)" >Tickets checked in</mat-checkbox>
+              <mat-checkbox class="col-md-4"  (change)="fnOrdersDetailsOrder_cancel($event)" >Order cancelled</mat-checkbox>
+              <mat-checkbox class="col-md-4"  (change)="fnOrdersDetailsOrder_date($event)">Order date</mat-checkbox>
+              <mat-checkbox class="col-md-4"  (change)="fnOrdersDetailsTax_amont($event)">Tax amount</mat-checkbox>
+              <mat-checkbox class="col-md-4"  (change)="fnOrdersDetailsVoucherCode($event)">Voucher codes amount</mat-checkbox>
+              <mat-checkbox class="col-md-4"  (change)="fnOrdersDetailsTicket_charge($event)">Ticket charges</mat-checkbox> -->
+                        </section>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+
+                <mat-accordion class="" multi>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <section class="tab-checkbox">
+                                    <mat-checkbox class="" (change)="fnEventDetails($event,'main')" [(ngModel)]="eventDetails">EVENT DETAILS</mat-checkbox>
+                                </section>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <section class=" row">
+
+                            <mat-checkbox class="col-md-4" *ngFor="let value of exEventDetails;let i=index" (change)="fnEventDetails($event,'single')" [(ngModel)]="value.value">{{value.lable}}</mat-checkbox>
+
+                            <!-- <mat-checkbox class=" col-md-4" (change)="fnEventDetailsEvent_id($event)">Event ID</mat-checkbox>
+              <mat-checkbox class=" col-md-4" (change)="fnEventDetailsEvent_name($event)">Event name</mat-checkbox>
+              <mat-checkbox class=" col-md-4" (change)="fnEventDetailsEvent_start($event)">Event start</mat-checkbox>
+             <mat-checkbox class=" col-md-4" (change)="fnEventDetailsEvent_end($event)">Event end</mat-checkbox> -->
+                        </section>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <mat-accordion class="" multi>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <section class=" tab-checkbox">
+                                    <mat-checkbox class="" (change)="fnBuyersDetails($event,'main')" [(ngModel)]="buyerDetails">BUYER DETAILS</mat-checkbox>
+                                </section>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <section class=" row">
+                            <mat-checkbox class="col-md-4" *ngFor="let value of exBuyerDetails;let i=index" (change)="fnBuyersDetails($event,'single')" [(ngModel)]="value.value">{{value.lable}}</mat-checkbox>
+
+                            <!-- <mat-checkbox class=" col-md-4" (change)="fnBuyersDetailsFirstname($event)">FirstName</mat-checkbox>
+              <mat-checkbox class=" col-md-4" (change)="fnBuyersDetailsLastname($event)">LastName</mat-checkbox>
+              <mat-checkbox class=" col-md-4" (change)="fnBuyersDetailsEmail($event)">Email</mat-checkbox>
+              <mat-checkbox class=" col-md-4" (change)="fnBuyersDetailsPhone($event)">Mobile number</mat-checkbox>
+              <mat-checkbox class=" col-md-4" (change)="fnBuyersDetailsAdd($event)">Address</mat-checkbox>
+              <mat-checkbox class=" col-md-4" (change)="fnBuyersDetailsAdd2($event)">Address 2</mat-checkbox>
+              <mat-checkbox class=" col-md-4" (change)="fnBuyersDetailsAdd3($event)">Address 3</mat-checkbox>
+              <mat-checkbox class=" col-md-4" (change)="fnBuyersDetailsPostcode($event)">Postcode / Zip</mat-checkbox>
+              <mat-checkbox class=" col-md-4">Postcode / Zip</mat-checkbox> -->
+                        </section>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <div class="d-flex mt-4">
+                    <button mat-raised-button (click)="onNoClick()" class="cancel-btn ml-auto">Cancel</button>
+                    <button mat-raised-button class="ml-3 comm-btn" (click)="exportOrder()">Download Report</button>
+                </div>
+            </div>
+
+            <div class="linereport-details" *ngIf="reportType === 'lineItem'">
+                <div class="linereport-details-col">
+                    <h5>Line items to include in report (rows)</h5>
+                    <mat-accordion class="" multi>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <mat-checkbox class="fw-600" (change)="fnLineitem_type($event,'main')" [(ngModel)]="lineitem_type">LINE ITEM TYPES</mat-checkbox>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <section class=" row">
+                                <mat-checkbox class="col-md-4" (change)="fnLineitem_type($event,'single')" *ngFor="let value of lineitemType;let i=index" [(ngModel)]="value.value">{{value.lable}}</mat-checkbox>
+                                <!-- 
+                <mat-checkbox class=" col-md-4" (change)="fnLineitem_ticket($event)">Tickets</mat-checkbox>
+                <mat-checkbox class=" col-md-4" (change)="fnLineitem_Voidticket($event)">Voided tickets</mat-checkbox>
+                <mat-checkbox class=" col-md-4" (change)="fnLineitemTransactionCharge($event)">Transaction charges</mat-checkbox>
+                <mat-checkbox class=" col-md-4" (change)="fnLineitemTaxes($event)">Taxes</mat-checkbox>
+                <mat-checkbox class=" col-md-4" (change)="fnLineitemGift_cards($event)">Gift cards</mat-checkbox>
+                <mat-checkbox class=" col-md-4" (change)="fnLineitem_donation($event)">Donations</mat-checkbox> -->
+                            </section>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    <mat-accordion class="" multi>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <P class="fw-600 my-2">TICKET TYPES</P>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <section class="row">
+                                <mat-checkbox class="col-md-4" checked  *ngFor="let value of selectedEventTickets;let i=index" (change)="fnSelectTicket($event,value.ticket_id,i)" [(ngModel)]="value.selected">{{value.tickets.ticket_name}}</mat-checkbox>
+                                <div *ngIf="!selectedEventTickets || selectedEventTickets.length == 0" class="col-md-12 px-0 my-3">
+                                    <div class="note-theme m-0">
+                                        <div class="notification">
+                                            <mat-icon aria-hidden="false" aria-label="Example home icon" class="notif-icon">notifications</mat-icon>
+                                        </div>
+                                        <div>
+                                            <p class="note-message">Select an event in the order list to filter by ticket type </p>
+                                        </div>
+                                    </div>
+            
+                                </div>
+                                <!-- <mat-checkbox class=" col-md-4" (change)="fnLine_type($event)">Type</mat-checkbox>
+                                    <mat-checkbox class=" col-md-4" (change)="fnline_Description($event)">Description</mat-checkbox>
+                                    <mat-checkbox class=" col-md-4" (change)="fnline_Value($event)">Value</mat-checkbox>
+                                    <mat-checkbox class=" col-md-4" (change)="fnlineBooking_fee($event)">Booking fee</mat-checkbox> -->
+                            </section>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    
+
+                    <div class="linereport-details-col">
+                        <h5>Line item details to include in the report (columns)</h5>
+                        <mat-accordion class="" multi>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <section class="tab-checkbox">
+                                            <mat-checkbox class="" (change)="fnLineitem_details($event,'main')" [(ngModel)]="lineitem_details">LINE ITEM DETAILS</mat-checkbox>
+                                        </section>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <section class="row">
+                                    <mat-checkbox class="col-md-4" *ngFor="let value of lineitemDetail;let i=index" (change)="fnLineitem_details($event,'single')" [(ngModel)]="value.value">{{value.lable}}</mat-checkbox>
+
+                                    <!-- <mat-checkbox class=" col-md-4" (change)="fnLine_type($event)">Type</mat-checkbox>
+                                        <mat-checkbox class=" col-md-4" (change)="fnline_Description($event)">Description</mat-checkbox>
+                                        <mat-checkbox class=" col-md-4" (change)="fnline_Value($event)">Value</mat-checkbox>
+                                        <mat-checkbox class=" col-md-4" (change)="fnlineBooking_fee($event)">Booking fee</mat-checkbox> -->
+                                </section>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <mat-accordion class="" multi>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <section class=" tab-checkbox">
+                                            <mat-checkbox class="" (change)="fnTicket_details($event,'main')" [(ngModel)]="Liticketdetail">TICKET DETAILS</mat-checkbox>
+                                        </section>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <section class=" row">
+                                    <mat-checkbox class="col-md-4" *ngFor="let value of ticketDetails;let i=index" (change)="fnTicket_details($event,'single')" [(ngModel)]="value.value">{{value.lable}}</mat-checkbox>
+                                </section>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <mat-accordion class="" multi>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <section class=" tab-checkbox">
+                                            <mat-checkbox class="" (change)="fnLiOrdersDetails($event,'main')" [(ngModel)]="Liorder_details">ORDER DETAILS</mat-checkbox>
+                                        </section>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <section class=" row">
+                                    <mat-checkbox class="col-md-4" *ngFor="let value of LiOrderDetails;let i=index" (change)="fnLiOrdersDetails($event,'single')" [(ngModel)]="value.value">{{value.lable}}</mat-checkbox>
+                                </section>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <mat-accordion class="" multi>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <section class="tab-checkbox">
+                                            <mat-checkbox class="" (change)="fnLiEventDetailsEvent($event,'main')" [(ngModel)]="LiEvent_detail">EVENT DETAILS</mat-checkbox>
+                                        </section>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <section class=" row">
+                                    <mat-checkbox class="col-md-4" *ngFor="let value of LiEventDetails;let i=index" (change)="fnLiEventDetailsEvent($event,'single')" [(ngModel)]="value.value">{{value.lable}}</mat-checkbox>
+                                </section>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <mat-accordion class="" multi>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <section class=" tab-checkbox">
+                                            <mat-checkbox class="" (change)="fnLiBuyersDetails($event,'main')" [(ngModel)]="LiBuyerDetail">BUYER DETAILS</mat-checkbox>
+                                        </section>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <section class=" row">
+                                    <mat-checkbox class="col-md-4" *ngFor="let value of LiBuyerDetails;let i=index" (change)="fnLiBuyersDetails($event,'single')" [(ngModel)]="value.value">{{value.lable}}</mat-checkbox>
+                                </section>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+
+                <div class="d-flex mt-4">
+                    <button mat-raised-button (click)="onNoClick()" class="cancel-btn ml-auto">Cancel</button>
+                    <button mat-raised-button class="ml-3 comm-btn" (click)="exportOrder()">Download Report</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

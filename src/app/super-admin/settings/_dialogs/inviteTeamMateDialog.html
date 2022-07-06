@@ -1,0 +1,52 @@
+<div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+
+<div class="modal-dialog modal-notify modal-info modal-lg team-mate" role="document">
+    <div class="modal-content add-buyer-qn ">
+        <div class="modal-header modal-bcolor-primary">
+            <p class="heading lead  work-content">Team Access</p>
+            <button type="button" class="close-btn" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+        </div>
+
+        <div class="modal-body">
+            <form>
+                <div class="row">
+                    <div *ngIf="!singleInviter" class="form-group  col-md-12">
+                        <label for="">Email  <span><i class="fa fa-asterisk"></i></span> </label>
+                        <input type="email" [(ngModel)]="email_id" name="email_id" class="form-control" id="" placeholder="">
+                    </div>
+                    <div class="roles">
+                        <div class="col-md-12 form-group">
+                            <p class="mb-0 team-role">Roles</p>
+                        </div>
+                        <section class="col-md-12 form-group">
+                            <mat-checkbox [checked]="admin_permission" name="permission" (change)="fnOnchecked($event,'admin_permission')" class="mb-0">Admin</mat-checkbox>
+                            <p class="pl-25">Access everything except team access (cannot delete account owner)</p>
+                        </section>
+                        <section class="col-md-12 form-group">
+                            <mat-checkbox [checked]="em_permission" name="permission" (change)="fnOnchecked($event,'em_permission')" class="mb-0">Event Manager</mat-checkbox>
+                            <p class="pl-25">Create, edit and manage anything related to an event</p>
+                            <mat-checkbox value="AACD" [checked]="em_sub_permission" (change)="fnOncheckedEM($event)" class="mb-0 pl-25">Allow access to customer data (Doorlist, Waitlists, Broadcasts)</mat-checkbox>
+                        </section>
+                        <section class="col-md-12 form-group">
+                            <mat-checkbox [checked]="om_permission" name="permission" (change)="fnOnchecked($event,'om_permission')" class="mb-0">Order manager</mat-checkbox>
+                            <p class="pl-25">View, search orders and resend tickets</p>
+                            <mat-checkbox value="AUEC" name="AUEC" class="mb-0 pl-25" [checked]="om_AUEC_permission" (change)="fnOncheckedOM($event,'AUEC')">Allow user to edit and cancel orders</mat-checkbox>
+                            <mat-checkbox value="AUER" name="AUER" class="mb-0 pl-25" [checked]="om_AUER_permission" (change)="fnOncheckedOM($event,'AUER')">Allow user to export reports</mat-checkbox>
+                        </section>
+                        <section class="col-md-12 form-group">
+                            <mat-checkbox [checked]="view_permission" name="permission" (change)="fnOnchecked($event,'view_permission')" class="mb-0">Overview</mat-checkbox>
+                            <p class="pl-25">View sales and revenue figures</p>
+                        </section>
+                    </div>
+                    <div class="ml-auto mt-3">
+                        <button *ngIf="!singleInviter" mat-raised-button (click)="fnOnSubmit()" class="mx-3 invite-btn">Invite</button>
+                        <button *ngIf="singleInviter" mat-raised-button (click)="fnOnSubmit()" class="mx-3 invite-btn">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,150 @@
+<div class="vatinfo-main">
+    <!-- <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div> -->
+    <div class="modal-header pl-3 py-0 border-0">
+        <p class="">Update Vat Information</p>
+        <button class="close-btn" type="button" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+            <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="mt-3">
+            <div class="main-vat-info-wrap">
+                <div class="common-payment-card">
+                    <div class="top-title-heading">
+                        <h3> Payment Mode </h3>
+                    </div>
+                    <div class="main-payment-body p-3">
+                        <div class="note-theme">
+                            <div class="notification">
+                                <mat-icon aria-hidden="false" aria-label="Example home icon" class="notif-icon">help_outline
+                                </mat-icon>
+                            </div>
+                            <div>
+                                <p class="note-message">If a valid card is not present when a new invoice is generated, the subscription will be cancelled. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="common-payment-card">
+                    <div class="top-title-heading">
+                        <h3> Payment method information </h3>
+                        <button (click)="addCardDetail('new')" mat-flat-button class="mat-blue" *ngIf="singleBoxofficeDetails && !singleBoxofficeDetails.subscription"> Add</button>
+                        <button (click)="addCardDetail('update')" mat-flat-button class="mat-blue" *ngIf="singleBoxofficeDetails && singleBoxofficeDetails.subscription"> Update</button>
+                    </div>
+                    <div class="main-payment-body p-3">
+                        <div class="note-theme" *ngIf="singleBoxofficeDetails && !singleBoxofficeDetails.subscription">
+                            <div class="notification">
+                                <mat-icon aria-hidden="false" aria-label="Example home icon" class="notif-icon">help_outline
+                                </mat-icon>
+                            </div>
+                            <div>
+                                <p class="note-message">You have not added your payment method details. Use the add option to update your payment method details. </p>
+                            </div>
+                        </div>
+                        <div class="card-details-wrap" *ngIf="singleBoxofficeDetails && singleBoxofficeDetails.subDetails">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p class="mb-1"><span>Name:</span> {{singleBoxofficeDetails.subDetails.subscription[singleBoxofficeDetails.subDetails.subscription.length-1].cards[0].cardFirstName}} {{singleBoxofficeDetails.subDetails.subscription[singleBoxofficeDetails.subDetails.subscription.length-1].cards[0].cardLastName}}</p>
+                                       
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="mb-1"><span>Card Number:</span> {{singleBoxofficeDetails.subDetails.subscription[singleBoxofficeDetails.subDetails.subscription.length-1].cards[0].cardMaskedNumber}}</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="mb-1"><span>Expiry:</span> {{singleBoxofficeDetails.subDetails.subscription[singleBoxofficeDetails.subDetails.subscription.length-1].cards[0].cardExpiryMonth}}/{{singleBoxofficeDetails.subDetails.subscription[singleBoxofficeDetails.subDetails.subscription.length-1].cards[0].cardExpiryYear}}</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="mb-1"><span>CVV:</span> ***</p>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="common-payment-card">
+                    <div class="top-title-heading">
+                        <h3> Billing Information </h3>
+                        <button mat-flat-button class="mat-blue"> Edit</button>
+                    </div>
+                    <div class="main-payment-body p-3">
+                        <p> United States </p>
+                    </div>
+                </div> -->
+                <div class="common-payment-card">
+                    <div class="top-title-heading">
+                        <h3> Payment History </h3>
+                    </div>
+                    <div class="main-payment-body p-3">
+                        <div class="mt-3">
+                            <div class="main-white-label">
+                                <div class="invoices-listing">
+                                    <div class="main-table-content main-cust-table-content ">
+                                        <div class="listing-table">
+                                            <div class="heads main-heading-content drageble py-3" fxLayout="row">
+                                                <div class="" fxFlex="25">Status</div>
+                                                <div class="" fxFlex="25">Date</div>
+                                                <div class="" fxFlex="25">Invoice Number</div>
+                                                <div class="" fxFlex="25">Amount</div>
+                                            </div>
+        
+                                            <div class="drageble-list" *ngIf="invoiceList.length > 0">
+                                                <div class="drageble-box" *ngFor="let invoice of invoiceList; let i=index;" fxLayout="row">
+                                                    <div class="tb-data " fxFlex="25">
+                                                        <p class="mb-0" [ngStyle]="{'color': invoice.invoiceStatus == 'success' ? '#2BB800' : '#FF0000'}"> {{invoice.invoiceStatus == 'success'?'Paid':'Unpaid'}}</p>
+                                                    </div>
+                                                    <div class="tb-data " fxFlex="25">
+                                                        <p class="mb-0">  {{invoice.invoiceDate * 1000 | date:'MMM d, y'}}</p>
+                                                    </div>
+                                                    <div class="tb-data " fxFlex="25">
+                                                        <p class="mb-0"> {{invoice.invoiceId}}  </p>
+                                                    </div>
+                                                    <div class="tb-data " fxFlex="25">
+                                                        <p class="mb-0"> ${{invoice.invoiceTotal}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="common-payment-card">
+                    <div class="top-title-heading">
+                        <h3> Subscription </h3>
+                    </div>
+                    <div class="main-payment-body p-3">
+                        <div class="note-theme">
+                            <div class="notification">
+                                <mat-icon aria-hidden="false" aria-label="Example home icon" class="notif-icon">help_outline
+                                </mat-icon>
+                            </div>
+                            <div>
+                                <p class="note-message">Your next billing is on {{overviewUsageData.nextBillDate?overviewUsageData.nextBillDate:''}} </p>
+                            </div>
+                        </div>
+                        <!-- <div class="bottom-recurring-charge">
+                            <p> Your recurring charges every 1 Month(s) <span> $0.00</span> </p>
+
+                        </div> -->
+                    </div>
+                </div>
+                <div class="common-payment-card">
+                    <div class="top-title-heading">
+                        <h3> Timeline </h3>
+                    </div>
+                    <div class="main-payment-body p-3">
+                        <p class="mb-2"> Your recurring charges every 1 Month(s) </p>
+                        <p class="mb-2"> Your next billing will be on {{overviewUsageData.nextBillDate | date :'MMM d, y'}}. </p>
+                        <p *ngIf="creditDetails.auto_renew && creditDetails.auto_renew == 'Yes'" class="mb-2"> Your current billing term is {{subStartDate | date :'MMM d, y'}} to {{overviewUsageData.nextBillDate | date :'MMM d, y'}}. </p>
+                        <p class="mb-2" *ngIf="singleBoxofficeDetails && singleBoxofficeDetails.subscription"> Your subscription was activated on {{singleBoxofficeDetails.subscription.created_at | date :'MMM d, y'}}. </p>
+                        <p class="mb-2" *ngIf="currentUser"> Signed up on {{currentUser.created_at | date :'MMM d, y'}}. </p>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+    <div class="text-right">
+        <button mat-flat-button class="popup-cancel-btn" (click)="onNoClick()"> Cancel </button>
+    </div>
+</div>

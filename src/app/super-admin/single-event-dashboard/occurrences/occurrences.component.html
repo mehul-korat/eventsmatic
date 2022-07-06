@@ -1,0 +1,113 @@
+<div id="occurrence" class="main">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="occurrence-deatails">
+        <div class="">
+            <div class="page-top-head d-flex">
+                <div class="top-heading-main">
+                    <h4 class="page-title"> Occurrence </h4>
+                    <p>Occurrences are the date and time your recurring event takes place.</p>
+                </div>
+
+                <div class=" occurrence-action">
+                    <p class="selected-label">Select multiple occurrence</p>
+                    <!-- <p class="selected-label">With {{selectedOccurrenceAarry.length}} selected:</p> -->
+                    <mat-form-field appearance="outline" class="my-2 w-100">
+                        <mat-label>Actions</mat-label>
+                        <mat-select [disabled]="selectedOccurrenceAarry.length < 1" [(ngModel)]="selectedfilter" (selectionChange)="fnChangeOccuStatus($event.value)" class="col-12 d-flex">
+                            <mat-option value="UNAVI">Set unavailable</mat-option>
+                            <mat-option value="AVI">Set available</mat-option>
+                            <mat-option value="HIDD">Set hidden</mat-option>
+                            <mat-option value="VIS">Set visible</mat-option>
+                            <mat-option value="DEL">Delete</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="bottom-occurrence-wrap">
+                <!-- <div class="occurrence-notification">
+                    <i class="fa fa-bell" aria-hidden="true"></i>
+                    <p>Occurrences are the dates and times your recurring event takes place.</p>
+
+                </div> -->
+                <div class="manage-occurrence-table">
+                    <div class="main-table-content main-cust-table-content">
+                        <div class="add-occurrence-main">
+                            <h3>
+                                Manage occurrences
+                            </h3>
+                            <div class="top-add-btns ml-auto">
+                                <button class="mr-2" mat-flat-button color="primary" (click)="fnCreateRepeatOccurrence()"> Add repeating occurrences</button>
+                                <button mat-flat-button color="primary" (click)="fnCreateSingleOccurrence()"> Add single occurrence </button>
+                            </div>
+
+                        </div>
+                        <div class="">
+                            <div class="heads main-heading-content drageble" fxLayout="row">
+                                <div class="heading-table" fxFlex="40">
+                                    <mat-checkbox [checked]="selectAll" (change)="checkAll($event)"></mat-checkbox>
+                                    Date and Time
+                                </div>
+                                <div class="heading-table" fxFlex="15">Sold</div>
+                                <div class="heading-table" fxFlex="15">Remaining</div>
+                                <div class="heading-table" fxFlex="15">Revenue</div>
+                                <div class="heading-table" fxFlex="15">Action</div>
+                            </div>
+                            <div class="content" *ngIf="allOccurrenceList && allOccurrenceList.length > 0" class="drageble-list occurrence-list">
+                                <div class="drageble-box" fxLayout="row" *ngFor="let element of allOccurrenceList; let i=index;">
+                                    <div class="tb-data" fxFlex="40">
+                                        <mat-checkbox [checked]="element.is_selected" (change)="fnAddOccurrenceId($event.checked, element.unique_code,i)"></mat-checkbox>
+                                        <span *ngIf="element.occurance_start_date!=element.occurance_end_date">
+                                            {{element.occurance_start_date |date :'mediumDate'}} {{element.occurance_start_time_modified}} To {{element.occurance_end_date |date :'mediumDate':''}} {{element.occurance_end_time_modified}}
+                                        </span>
+                                        <span *ngIf="element.occurance_start_date==element.occurance_end_date">
+                                            {{element.occurance_start_date |date :'mediumDate'}} {{element.occurance_start_time_modified}} {{element.occurance_start_time_modified?'-':''}} {{element.occurance_end_time_modified}}
+                                        </span>
+                                        <span *ngIf="element.status_availability == 'UNAVI'" class="material-icons status-icon">block</span>
+                                        <i *ngIf="element.status_visibility == 'HIDD'" class="fa fa-eye-slash status-icon"></i>
+                                    </div>
+                                    <div class="tb-data" fxFlex="15" *ngIf="element.soldout == 'Tickets are not available'">{{element.soldout}}</div>
+                                    <div class="tb-data" fxFlex="15" *ngIf="element.soldout !== 'Tickets are not available'">{{element.soldout[0].Sold}}</div>
+                                    <div class="tb-data" fxFlex="15" *ngIf="element.remaining == 'Tickets are not available'">{{element.remaining}}</div>
+                                    <div class="tb-data" fxFlex="15" *ngIf="element.remaining !== 'Tickets are not available'">{{element.remaining[0].Remaining}}</div>
+                                    <div class="tb-data" fxFlex="15" *ngIf="element.final_revenue == 'Tickets are not available'">{{element.final_revenue}}</div>
+                                    <div class="tb-data" fxFlex="15" *ngIf="element.final_revenue !== 'Tickets are not available'">{{(element.final_revenue[0].Revenue)| currency:currencycode:'symbol'}}</div>
+                                    <div class="tb-data" fxFlex="15">
+                                        <mat-icon [ngbPopover]="popContentForStatus" placement="left" aria-hidden="false" aria-label="Example home icon" class="action-icon">more_horiz</mat-icon>
+                                        <!-- <i class="fa fa-ellipsis-h action-icon" aria-hidden="true"></i> -->
+                                        <ng-template class="popover custom-popover" #popContentForStatus>
+                                            <div *ngIf="element.status_availability == 'AVI'" class="px-3 border-bottom" (click)="singleStatusUpdate(element.unique_code,'UNAVI')">
+                                                <span class="material-icons">block</span><span>Set Unavailable</span>
+                                            </div>
+                                            <div *ngIf="element.status_availability == 'UNAVI'" class="px-3 border-bottom" (click)="singleStatusUpdate(element.unique_code,'AVI')">
+                                                <span class="material-icons">block</span><span>Set Available</span>
+                                            </div>
+                                            <div *ngIf="element.status_visibility == 'HIDD'" class="px-3 border-bottom" (click)="singleStatusUpdate(element.unique_code,'VIS')">
+                                                <i class="fa fa-eye"></i><span>Set Visible</span>
+                                            </div>
+                                            <div *ngIf="element.status_visibility == 'VIS'" class="px-3 border-bottom" (click)="singleStatusUpdate(element.unique_code,'HIDD')">
+                                                <i class="fa fa-eye-slash"></i><span>Set Hidden</span>
+                                            </div>
+                                            <div class="px-3  border-bottom" (click)="editSingleOccurence(i)">
+                                                <i class="fa fa-pencil mr-2"></i><span>Edit</span>
+                                            </div>
+                                            <div class="px-3  border-bottom" (click)="singleStatusUpdate(element.unique_code,'DEL')">
+                                                <i class="fa fa-trash mr-2"></i><span>Delete</span>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="no-data-label" *ngIf="allOccurrenceList.length == 0">
+                                <div class="no-data-view">
+                                    <img src="../../../assets/images/no-data-found.svg" />
+                                    <label> No data available.</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

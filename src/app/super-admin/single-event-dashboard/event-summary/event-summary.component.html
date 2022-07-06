@@ -1,0 +1,330 @@
+<div class="main">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="page-title d-flex">
+        Event Summary
+        <mat-select (selectionChange)="fnChangeOccurrence($event.value)" [(ngModel)]="selectedOccurrence" *ngIf="recurringEvent == 'Y'" class="form-control col-4 ml-auto">
+            <mat-option value="all">All Occurrences</mat-option>
+            <mat-option *ngFor="let element of allOccurrenceList; let i=index;" value="{{element.unique_code}}">{{element.occurance_start_date |date :'mediumDate'}} {{element.occurance_start_time}} - {{element.occurance_end_time}}</mat-option>
+        </mat-select>
+    </div>
+    <div class="set-up-payment p-3">
+        <div>
+            <i class="fa fa-bell mr-2"></i><span class="font-weight-bold">Set up your payment system</span>
+        </div>
+        <div class="mt-2">
+            To allow customers to buy tickets for your event, choose how you want to accept payments. We support the following options:
+        </div>
+
+
+        <!-- <div *ngIf="!setupStripe">
+            <div class="mt-3 font-weight-bold">
+               #Stripe (Recommended)
+            </div>
+            <div class="mt-2">
+                Easy to set up, wholehearted support, and a direct purchase experience for your customers to pay by card. Stripe has low fees and typically pays out your bank account 7 days after the customer completes payment.
+            </div>
+            <div class="mt-3">
+                <button mat-flat-button color="primary" class="mr-3">Set up Stripe to take payments</button> <a class="setup-link">Learn more about Stripe</a>
+            </div>
+        </div>
+
+        <div *ngIf="!setupPayPal">
+            <div class="mt-3 font-weight-bold">
+                # PayPal
+            </div>
+            <div class="mt-2">
+                Gives your customers the option to pay via PayPal or card. A convenient option if you already have a PayPal account set up.
+            </div>
+            <div class="mt-3">
+                <button mat-flat-button color="primary" class="mr-3">Set up Paypal to take payments</button> <a class="setup-link"> Learn more about PayPal</a>
+            </div>
+        </div> -->
+
+        <div class="mt-3 font-weight-bold">
+            # Setup your payments gateways
+        </div>
+        <div class="mt-2">
+            Allow your customers to pay by bank transfer, cheque, or any other .
+        </div>
+        <div class="mt-3">
+            <button mat-flat-button color="primary" class="mr-3" [routerLink]="['/super-admin/settings/payment-systems']">Set up payments gateways</button> <a class="setup-link"> Learn more about payments gateways</a>
+        </div>
+
+        <div class="mt-3">
+            <a class="setup-link" [routerLink]="['/super-admin/settings/payment-systems']"> Learn more about processing card payments.</a>
+        </div>
+    </div>
+
+
+    <div *ngIf="(selectedOccurrence != 'all' && recurringEvent == 'Y') || recurringEvent == 'N'" class="total-summary border p-3" fxLayout="row">
+
+        <div class="total-ticket-summary text-center border-right" fxFlex="25">
+            <div class="title">
+                TOTAL ISSUED TICKETS
+            </div>
+            <div class="count">
+                {{eventSummery && eventSummery.totalTicket ? eventSummery.totalTicket.issueTicket : 0}}
+            </div>
+            <div class="more-link">
+                <a (click)="FnRouteViewIssueTicekets()">View issued tickets</a>
+            </div>
+        </div>
+        <div class="total-ticket-summary text-center border-right" fxFlex="25">
+            <div class="title">
+                TICKET SALES REVENUE
+            </div>
+            <div class="count">
+                {{ ( eventSummery && eventSummery.totalTicket ? eventSummery.totalTicket.salesRevenue : 0 )| currency:currencycode:'symbol'}}
+            </div>
+            <div class="more-link">
+                <a routerLink="/super-admin/single-event-dashboard/issued-ticket">View orders</a>
+            </div>
+        </div>
+        <div class="total-ticket-summary text-center border-right" fxFlex="25">
+            <div class="title">
+                DAYS TO GO
+            </div>
+            <div *ngIf="recurringEvent == 'N'" class="count ">
+                {{eventSummery && eventSummery.totalTicket ? eventSummery.totalTicket.daysToGo : 0}} Days
+            </div>
+            <div *ngIf="recurringEvent == 'Y'" class="count ">
+                -
+            </div>
+        </div>
+        <div class="total-ticket-summary text-center" fxFlex="25">
+            <div class="title">
+                Event Views
+            </div>
+            <div class="count">
+                {{eventSummery && eventSummery.totalTicket ? eventSummery.totalTicket.eventView : 0}}
+            </div>
+            <div class="more-link">
+                <a (click)="redirectTOEventChart()">View Chart</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="event-page-link border p-3">
+        <div class="row m-0">
+            <div class="title">
+                Event page link
+            </div>
+            <div class="ml-auto">
+                <button mat-flat-button color="primary" (click)="PreviewPage();">Preview Event Page</button>
+            </div>
+        </div>
+        <div class="row m-0">
+            <div class=" input-div mt-3">
+                <input type="text" class="form-control bg-light" placeholder="{{eventURL}}" readonly>
+            </div>
+            <div class="mt-3 ml-2">
+                <a href="javascript:;" (click)="fnShare('facebook');" class="ml-3 "><i class="fa fa-facebook mr-2"></i>Share it</a>
+                <a href="javascript:;" (click)="fnShare('twitter');" class="ml-3 "><i class="fa fa-twitter mr-2"></i>Tweet it</a>
+                <a href="javascript:;" [routerLink]="['/super-admin/settings/referral-codes']" class="ml-3 "><i class="fa fa-link mr-2"></i>Create tracking Link and View</a><br class="m-0">
+                <a href="javascript:;" class="ml-3 " [routerLink]="['/super-admin/settings/websites-embed-codes']"><i class="fa fa-code mr-2"></i>Embed booking Widget</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="manage-occurrence-table d-flex" *ngIf="selectedOccurrence == 'all' && recurringEvent == 'Y'">
+        <div class="main-table-content main-cust-table-content w-100">
+            <div class="add-occurrence-main">
+                <div class="top-add-btns ml-auto">
+                    <button mat-flat-button color="primary" routerLink="/super-admin/single-event-dashboard/manage-occurrences"> Manage Occurrences </button>
+                </div>
+
+            </div>
+            <mat-tab-group (selectedTabChange)="onTabChange($event)" class="col-sm-12 col-12 col-lg-12 col-md-12 col-xl-12 float-left p-0 occurrence-tabs">
+                <mat-tab label="Upcoming" class="">
+                    <div class="heads main-heading-content drageble" fxLayout="row">
+                        <div class="heading-table" fxFlex="40">
+                            Date and Time
+                        </div>
+                        <div class="heading-table" fxFlex="15">Sold</div>
+                        <div class="heading-table" fxFlex="15">Remaining</div>
+                        <div class="heading-table" fxFlex="15">Revenue</div>
+                        <div class="heading-table" fxFlex="15">Action</div>
+                    </div>
+                    <div class="content" class="drageble-list" *ngIf="upcomingOccurrenceList">
+                        <div class="drageble-box" fxLayout="row" *ngFor="let element of upcomingOccurrenceList; let i=index;">
+                            <div class="tb-data" fxFlex="40">
+                                <span (click)="fnChangeOccurrence(element.unique_code)" *ngIf="element.occurance_start_date!=element.occurance_end_date" class="pointer text-primary">
+                                    {{element.occurance_start_date |date :'mediumDate'}} {{element.occurance_start_time}} To {{element.occurance_end_date |date :'mediumDate':''}} {{element.occurance_end_time}}
+                                </span>
+                                <span (click)="fnChangeOccurrence(element.unique_code)" *ngIf="element.occurance_start_date==element.occurance_end_date" class="pointer text-primary">
+                                    {{element.occurance_start_date |date :'mediumDate'}} {{element.occurance_start_time}} {{element.occurance_start_time?'-':''}} {{element.occurance_end_time}}
+                                </span>
+                            </div>
+                            <div class="tb-data" fxFlex="15" *ngIf="element.soldout == 'Tickets are not available'">{{element.soldout}}</div>
+                            <div class="tb-data" fxFlex="15" *ngIf="element.soldout !== 'Tickets are not available'">{{element.soldout[0].Sold}}</div>
+                            <div class="tb-data" fxFlex="15" *ngIf="element.remaining == 'Tickets are not available'">{{element.remaining}}</div>
+                            <div class="tb-data" fxFlex="15" *ngIf="element.remaining !== 'Tickets are not available'">{{element.remaining[0].Remaining}}</div>
+                            <div class="tb-data" fxFlex="15" *ngIf="element.final_revenue == 'Tickets are not available'">{{element.final_revenue}}</div>
+                            <div class="tb-data" fxFlex="15" *ngIf="element.final_revenue !== 'Tickets are not available'">{{element.final_revenue[0].Revenue}}</div>
+                            <div class="tb-data" fxFlex="15">
+                                <mat-icon [ngbPopover]="popContent" placement="left" aria-hidden="false" aria-label="Example home icon" class="action-icon">more_horiz</mat-icon>
+                                <!-- <i class="fa fa-ellipsis-h action-icon" aria-hidden="true"></i> -->
+                                <ng-template class="popover custom-popover" #popContent>
+                                    <div class="px-3  border-bottom" (click)="fnOccurrenceSummary(element.unique_code)">
+                                        <i class="fa fa-bar-chart-o mr-2"></i><span>Event summary</span>
+                                    </div>
+                                    <div class="px-3  border-bottom" (click)="fnOccurrenceOrder(element.unique_code)">
+                                        <i class="fa fa-shopping-bag mr-2"></i><span>Orders</span>
+                                    </div>
+                                    <div class="px-3  border-bottom" (click)="fnOccurrenceDelete(element.unique_code)">
+                                        <i class="fa fa-trash mr-2"></i><span>Delete</span>
+                                    </div>
+
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="upcomingOccurrenceList && upcomingOccurrenceList.length == 0">
+                        <p class="text-center my-2">No record found.</p>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Past" class="">
+                    <div class="heads main-heading-content drageble" fxLayout="row">
+                        <div class="heading-table" fxFlex="40">
+                            Date and Time
+                        </div>
+                        <div class="heading-table" fxFlex="15">Sold</div>
+                        <div class="heading-table" fxFlex="15">Remaining</div>
+                        <div class="heading-table" fxFlex="15">Revenue</div>
+                        <div class="heading-table" fxFlex="15">Action</div>
+                    </div>
+                    <div class="content" class="drageble-list" *ngIf="pastOccurrenceList">
+                        <div class="drageble-box" fxLayout="row" *ngFor="let element of pastOccurrenceList; let i=index;">
+                            <div class="tb-data" fxFlex="40">
+                                <span (click)="fnChangeOccurrence(element.unique_code)" *ngIf="element.occurance_start_date!=element.occurance_end_date" class="pointer text-primary">
+                                    {{element.occurance_start_date |date :'mediumDate'}} {{element.occurance_start_time}} To {{element.occurance_end_date |date :'mediumDate':''}} {{element.occurance_end_time}}
+                                </span>
+                                <span (click)="fnChangeOccurrence(element.unique_code)" *ngIf="element.occurance_start_date==element.occurance_end_date" class="pointer text-primary">
+                                    {{element.occurance_start_date |date :'mediumDate'}} {{element.occurance_start_time}} {{element.occurance_start_time?'-':''}} {{element.occurance_end_time}}
+                                </span>
+                            </div>
+                            <div class="tb-data" fxFlex="15" *ngIf="element.soldout == 'Tickets are not available'">{{element.soldout}}</div>
+                            <div class="tb-data" fxFlex="15" *ngIf="element.soldout !== 'Tickets are not available'">{{element.soldout[0].Sold}}</div>
+                            <div class="tb-data" fxFlex="15" *ngIf="element.remaining == 'Tickets are not available'">{{element.remaining}}</div>
+                            <div class="tb-data" fxFlex="15" *ngIf="element.remaining !== 'Tickets are not available'">{{element.remaining[0].Remaining}}</div>
+                            <div class="tb-data" fxFlex="15" *ngIf="element.final_revenue == 'Tickets are not available'">{{element.final_revenue}}</div>
+                            <div class="tb-data" fxFlex="15" *ngIf="element.final_revenue !== 'Tickets are not available'">{{element.final_revenue[0].Revenue}}</div>
+                            <div class="tb-data" fxFlex="15">
+                                <mat-icon [ngbPopover]="popContent" placement="left" aria-hidden="false" aria-label="Example home icon" class="action-icon">more_horiz</mat-icon>
+                                <!-- <i class="fa fa-ellipsis-h action-icon" aria-hidden="true"></i> -->
+                                <ng-template class="popover custom-popover" #popContent>
+                                    <div class="px-3  border-bottom" (click)="fnOccurrenceSummary(element.unique_code)">
+                                        <i class="fa fa-bar-chart-o mr-2"></i><span>Event summary</span>
+                                    </div>
+                                    <div class="px-3  border-bottom" (click)="fnOccurrenceOrder(element.unique_code)">
+                                        <i class="fa fa-shopping-bag mr-2"></i><span>Orders</span>
+                                    </div>
+                                    <div class="px-3  border-bottom" (click)="fnOccurrenceDelete(element.unique_code)">
+                                        <i class="fa fa-trash mr-2"></i><span>Delete</span>
+                                    </div>
+
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="pastOccurrenceList && pastOccurrenceList.length == 0">
+                        <p class="text-center my-2">No record found.</p>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+
+    <div *ngIf="(selectedOccurrence != 'all' && recurringEvent == 'Y') || recurringEvent == 'N'" class="ticket-sales border p-3">
+        <div class="row m-0">
+            <div class="title">
+                Ticket Sales
+            </div>
+            <div class="ml-auto">
+                <a (click)="fnNavigateToTickets()">Manage ticket types</a>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <div class="border" fxLayout="row">
+                <div class="fxflex p-2 pl-3 border-right" fxFlex="35">Item</div>
+                <div class="fxflex p-2 pl-3 border-right" fxFlex="15">Price</div>
+                <div class="fxflex p-2 pl-3 border-right" fxFlex="10">Fee</div>
+                <div class="fxflex p-2 pl-3 border-right" fxFlex="20">Qty</div>
+                <div class="fxflex p-2 pl-3 border-right" fxFlex="20">Subtotal</div>
+            </div>
+
+            <div *ngIf="eventSummery  && eventSummery.soldTicket">
+
+                <div class="border" fxLayout="row" *ngFor="let value of eventSummery.soldTicket;let i=index">
+                    <div class="fxflex p-2 pl-3 border-right" fxFlex="35">{{value.ticket ? value.ticket.ticket_name : '-'}} </div>
+                    <div class="fxflex p-2 pl-3 border-right" fxFlex="15">{{ value.ticket_amt | currency:currencycode:'symbol' }}</div>
+                    <div class="fxflex p-2 pl-3 border-right" fxFlex="10">{{ (value.ticket ? value.ticket.booking_fee : 0) | currency:currencycode:'symbol' }}</div>
+                    <div class="fxflex p-2 pl-3 border-right" fxFlex="20">{{value.sold}}</div>
+                    <div class="fxflex p-2 pl-3 border-right" fxFlex="20">
+                        {{value.revenue | currency:currencycode:'symbol' }}
+                    </div>
+                </div>
+
+                <div class="border" fxLayout="row">
+                    <div class="fxflex p-2 pl-3 border-right" fxFlex="35">
+                        <p class="font-weight-bold mt-3">Grand Total</p>
+                    </div>
+                    <div class="fxflex p-2 pl-3 border-right" fxFlex="15"></div>
+                    <div class="fxflex p-2 pl-3 border-right" fxFlex="10"></div>
+                    <div class="fxflex p-2 pl-3 border-right" fxFlex="20"></div>
+                    <div class="fxflex p-2 pl-3 border-right" fxFlex="20">
+                        <p class="font-weight-bold mt-3"> {{ (eventSummery.totalTicket ? eventSummery.totalTicket.salesRevenue : 0) | currency:currencycode:'symbol' }} </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row areaChart mt-4">
+                <canvas id="areaChart1"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="(selectedOccurrence != 'all' && recurringEvent == 'Y') || recurringEvent == 'N'" id="" class="referral-sales-summary border p-3">
+        <div class="title">
+            Referral sales summary
+        </div>
+        <!-- <div class="mt-2" (click)="is_show_referral_data=!is_show_referral_data">
+            <a>Load referral stats</a>
+        </div> -->
+        <div class="mt-3">
+            <div class="border" fxLayout="row">
+                <div class="fxflex p-2 pl-3 border-right" fxFlex="40">Referral Code</div>
+                <div class="fxflex p-2 pl-3 border-right" fxFlex="20">Orders Placed</div>
+                <div class="fxflex p-2 pl-3 border-right" fxFlex="20">Tickets Sold</div>
+                <div class="fxflex p-2 pl-3 border-right" fxFlex="20">Revenue</div>
+            </div>
+            <div *ngIf="eventSummery && eventSummery.refrelData">
+                <div class="border" fxLayout="row" *ngFor="let value of eventSummery.refrelData;let i=index">
+                    <div class="fxflex font-weight-bold p-2 pl-3 border-right" fxFlex="40">{{value.type}}</div>
+                    <div class="fxflex font-weight-bold p-2 pl-3 border-right" fxFlex="20">{{value.totalOrders}}</div>
+                    <div class="fxflex font-weight-bold p-2 pl-3 border-right" fxFlex="20">{{value.totalTickets}}</div>
+                    <div class="fxflex font-weight-bold p-2 pl-3 border-right" fxFlex="20"> {{ value.totalRevenue | currency:currencycode:'symbol' }} </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="(selectedOccurrence != 'all' && recurringEvent == 'Y') || recurringEvent == 'N'" class="event-page-link border p-3" id="eventViewChart">
+        <div class="row m-0">
+            <div class="title">
+                Event View
+            </div>
+            <input type="text" id="chart_view_section">
+            <div class="ml-auto">
+                <mat-select class="event-view-dropdown form-control" (selectionChange)="fnGetEventViews($event)" value="day">
+                    <mat-option value="day">Last 7 Days</mat-option>
+                    <mat-option value="week">Last 4 Weeks</mat-option>
+                    <mat-option value="year">Last Year</mat-option>
+                </mat-select>
+            </div>
+        </div>
+        <div class="areaChart mt-4">
+            <canvas id="areaChart2"></canvas>
+        </div>
+    </div>
+</div>

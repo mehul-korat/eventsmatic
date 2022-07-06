@@ -1,0 +1,301 @@
+<div class="issued-ticket-view-container">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="">
+        <div class="modal-header pl-3 py-0 border-0">
+            <p class="font-weight-bold">Ticket : {{value.ticket_id}}</p>
+
+            <button type="button" *ngIf="ticketTypeView === 'normal'" data-dismiss="modal" aria-label="Close" class="close-btn" (click)="onNoClick()">
+                <span aria-hidden="true" class="white-text">&times;</span>
+            </button>
+
+            <button type="button" *ngIf="ticketTypeView === 'confirm'" data-dismiss="modal" aria-label="Close" class="close-btn" (click)="fnVoidTicket('normal')">
+                <span aria-hidden="true" class="white-text">&times;</span>
+            </button>
+
+            <button type="button" *ngIf="ticketTypeView === 'voidview'" data-dismiss="modal" aria-label="Close" class="close-btn" (click)="onNoClick()">
+                <span aria-hidden="true" class="white-text">&times;</span>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="ticketTypeView === 'normal'" class="pb-3">
+        <div class="modal-body p-0">
+            <div class="px-3 mt-3">
+                <div class=" px-3" *ngIf="value.order_status!='VO'">
+                    <button mat-flat-button class="void-ticket-btn" (click)="fnVoidTicket('confirm')">Void Ticket</button>
+                    <button mat-flat-button class="print-ticket-btn ml-2" (click)="printTicket(value)"> Print Ticket</button>
+                </div>
+                <div class="" *ngIf="value.order_status=='VO'">
+                    <div class="col-md-12 canceled-order-label">
+                        <p><span class="material-icons">cancel</span>This Ticket was voided on: {{value.canceled_at}}</p>
+                    </div>
+                </div>
+                <!-- <div class="px-3 mt-4">
+                    <div class="re-issue-notify p-3">
+                        <i class="fa fa-bell fa-lg mr-2"></i> To re-issue or edit ticket details, click the order ID below.
+                    </div>
+                </div> -->
+            </div>
+
+            <div id="print-ticket">
+                <div class="mt-3 ticket-detail-title">
+                    <div class="p-3">
+                        <p class="pl-3 m-0 font-weight-bold">Ticket details</p>
+                    </div>
+                </div>
+
+                <div class="ticket-detail mt-2 p-3">
+                    <div class="row m-0 pl-3">
+                        <div class="ticket-detail-field font-weight-bold">
+                            Order ID :
+                        </div>
+                        <div class="ticket-detail-field ml-auto fnOrdertView">
+                            <a (click)="fnOrdertView()">{{value.order_id}}</a>
+                        </div>
+
+                        <div class="ticket-detail-field font-weight-bold">
+                            Ticket code :
+                        </div>
+                        <div class="ticket-detail-field ml-auto">
+                            {{value.unique_code}}
+                        </div>
+
+                        <div class="ticket-detail-field font-weight-bold">
+                            Status :
+                        </div>
+                        <div [ngStyle]="{'color': value.order_status=='P' ? '#2BB800' : value.order_status=='C' ? '#FF0000' :  value.order_status=='CO' ? '#2BB800' : '#FF0000'}" class="ticket-detail-field ml-auto">
+                            {{value.order_status == 'P' ? 'Pending' : value.order_status == 'CO' ? 'Completed' : value.order_status == 'VO' ? 'Void' : 'Void' }}
+                        </div>
+
+                        <div class="ticket-detail-field font-weight-bold">
+                            Ticket type :
+                        </div>
+                        <div class="ticket-detail-field ml-auto">
+                            {{value.ticket ? value.ticket.ticket_name : ''}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3 ticket-detail-title">
+                    <div class="p-3">
+                        <p class="pl-3 m-0 font-weight-bold">Ticket voucher</p>
+                    </div>
+                </div>
+
+                <div class="mt-3 p-3">
+                    <div class="pl-3">
+                        <div class="p-3 ticket-voucher">
+                            <div *ngIf="value.order_status!='VO'" class="ticket-title">
+                                Ticket 1 of 1
+                            </div>
+                            <div *ngIf="value.order_status=='VO'" class="ticket-title">
+                                <span style="color: #ff0000;">Void</span> Ticket 1 of 1
+                            </div>
+
+                            <div class="qrcodes row">
+                                <div *ngIf="value.order_status == 'VO'" class="red-ticket-tag">
+                                    Void
+                                </div>
+                                <div *ngIf="value.order_status == 'C'" class="red-ticket-tag">
+                                    Canceled
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-inline-block">
+                                        <ngx-qrcode [elementType]="elementType" [value]="value.unique_code"></ngx-qrcode>
+                                    </div>
+                                </div>
+
+                                <div class=" barcode col-6">
+                                    <ngx-barcode [bc-value]="value.unique_code" [bc-display-value]="true"></ngx-barcode>
+                                </div>
+
+                            </div>
+
+                            <div class="mt-3">
+                                <div class="">
+                                    <label for="" style="margin: 0;">TICKET CODE </label>
+                                    <p class="m-0 font-weight-bold">{{value.unique_code}}</p>
+                                </div>
+
+                                <div class="mt-3">
+                                    <label for="" style="margin: 0;">TICKET TYPE</label>
+                                    <p class="m-0 font-weight-bold">
+                                        {{value.ticket ? value.ticket.ticket_name : ''}}
+                                    </p>
+                                </div>
+
+                                <div class="mt-3">
+                                    <label for="" style="margin: 0;">ATTENDEE NAME</label>
+                                    <p class="m-0 font-weight-bold">
+                                        {{value.attendee_name?value.attendee_name:''}}
+                                    </p>
+                                </div>
+
+                                <div class="mt-3">
+                                    <label for="" style="margin: 0;">EVENT</label>
+                                    <p class="m-0 font-weight-bold">{{eventDetail?.event_title}}</p>
+                                    <p class="m-0 date" *ngIf="recurringEvent == 'N'">{{dateFormate(eventDetail?.start_date)}}</p>
+                                    <p class="m-0 date" *ngIf="recurringEvent == 'Y'">{{occurreceStartDate}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ------------------------------------------ -->
+    <div *ngIf="ticketTypeView === 'confirm'">
+        <div class="modal-body p-0">
+            <div class="px-3 mt-3">
+
+                <div class="px-3">
+                    <div class="invalidate-ticket p-3">
+                        <i class="fa fa-times-circle fa-lg mr-2"></i> This will invalidate the ticket for entry.
+                    </div>
+                </div>
+
+                <div class="mt-2">
+                    <div class="main-div-ticket-code-type px-3">
+                        <div class="row m-0 px-3">
+                            <div class="ticket-code-type font-weight-bold">
+                                Ticket Code :
+                            </div>
+
+                            <div class="ticket-code-type ml-auto">
+                                {{value.ticket_id}}
+                            </div>
+
+                            <div class="ticket-code-type font-weight-bold">
+                                Ticket Type :
+                            </div>
+
+                            <div class="ticket-code-type ml-auto">
+                                {{ value.ticket ? value.ticket.ticket_name : ''}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer border-0">
+            <div class="px-3">
+                <button mat-flat-button class="void-ticket px-5" (click)="fnVoidTicket('voidview')">Void Ticket</button>
+            </div>
+        </div>
+    </div>
+    <!-- ------------------------------------------ -->
+    <div *ngIf="ticketTypeView === 'voidview'">
+        <div>
+            <div class="modal-body p-0">
+                <div class="px-3 mt-3">
+                    <div class="px-3">
+                        <div class="invalidate-ticket p-3">
+                            <i class="fa fa-times-circle fa-lg mr-2"></i> This ticket was voided on: {{today}}
+                        </div>
+                    </div>
+                    <!-- <div class="px-3 mt-4">
+                        <div class="re-issue-notify p-3">
+                            <i class="fa fa-bell fa-lg mr-2"></i> To re-issue or edit ticket details, click the order ID below.
+                        </div>
+                    </div> -->
+                </div>
+                <div id="print-ticket">
+                    <div class="mt-3 ticket-detail-title">
+                        <div class="p-3">
+                            <p class="pl-3 m-0 font-weight-bold">Ticket details</p>
+                        </div>
+                    </div>
+
+                    <div class="ticket-detail mt-2 p-3">
+                        <div class="row m-0 pl-3">
+                            <div class="ticket-detail-field font-weight-bold">
+                                Order ID :
+                            </div>
+                            <div class="ticket-detail-field ml-auto fnOrdertView">
+                                <a (click)="fnOrdertView()">  {{value.order_id}}</a>
+                            </div>
+
+                            <div class="ticket-detail-field font-weight-bold">
+                                Ticket code :
+                            </div>
+                            <div class="ticket-detail-field ml-auto">
+                                {{value.ticket_id}}
+                            </div>
+
+                            <div class="ticket-detail-field font-weight-bold">
+                                Status :
+                            </div>
+                            <div class="ticket-detail-field ml-auto text-danger">
+                                {{value.order_status}}
+                            </div>
+
+                            <div class="ticket-detail-field font-weight-bold">
+                                Ticket type :
+                            </div>
+                            <div class="ticket-detail-field ml-auto">
+                                {{value.ticket ? value.ticket.ticket_name : ''}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 ticket-detail-title">
+                        <div class="p-3">
+                            <p class="pl-3 m-0 font-weight-bold">Ticket voucher</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 p-3">
+                        <div class="pl-3">
+                            <div class="p-3 ticket-voucher">
+                                <div class="ticket-title">
+                                    Ticket 1 of 1
+                                </div>
+                                <div class="qrcodes">
+                                    <div class="d-inline-block">
+                                        <ngx-qrcode [elementType]="elementType" [value]="value.unique_code"></ngx-qrcode>
+                                    </div>
+                                    <div class=" barcode d-inline-block">
+                                        <ngx-barcode [bc-value]="value.unique_code" [bc-display-value]="true"></ngx-barcode>
+                                    </div>
+                                </div>
+
+                                <div class="d-inline-block bg-danger text-center p-3 void-label">
+                                    Void
+                                </div>
+
+                                <div class="mt-3">
+                                    <div class="">
+                                        <label for="">TICKET CODE </label>
+                                        <p class="m-0 font-weight-bold">{{value.ticket_id}}</p>
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <label for="">TICKET TYPE</label>
+                                        <p class="m-0 font-weight-bold"> {{ value.ticket ? value.ticket.ticket_name : ''}}</p>
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <label for="">ATTENDEE NAME</label>
+                                        <p class="m-0 font-weight-bold">
+                                            {{value.attendee_name?value.attendee_name:''}} \
+
+                                        </p>
+                                    </div>
+                                    <div class="mt-3">
+                                        <label for="">EVENT</label>
+                                        <p class="m-0 font-weight-bold">{{eventDetail?.event_title}}</p>
+                                        <p class="m-0 date">{{dateFormate(eventDetail?.start_date)}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

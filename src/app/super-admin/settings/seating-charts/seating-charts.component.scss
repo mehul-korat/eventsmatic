@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+.main {
+    font-family: Poppins, Regular;
+}
+
+.notification-icon {
+    transform: matrix(0.87, -0.48, 0.48, 0.87, 0, 0);
+    color: #FF6600;
+}
+
+.box {
+    border-radius: 5px;
+}
+
+.btn {
+    background-color: #973c56;
+    color: #ffffff;
+}
+
+.description {
+    font-size: small;
+}
+
+.txt {
+    color: black;
+    font: bold;
+}
+
+.alert-info {
+    display: flex;
+    align-items: center;
+    padding: 14px 10px;
+}
+
+.Seating-charts-text p {
+    color: #595959;
+    font-size: 12px;
+}
+
+.Seating-charts-main {
+    padding: 14px 0px;
+}

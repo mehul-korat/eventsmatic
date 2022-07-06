@@ -1,0 +1,330 @@
+<div id="my-customers" class="sub-container">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="right-toolbar h-100">
+        <div class="container-fluid top-fixed-customer">
+            <div class="row">
+                <div class="p-3 mt-2 page-title">
+                    Manage Customers
+                </div>
+
+                <div class="ml-auto p-3">
+                    <button mat-flat-button class="mx-2" (click)="ImportFileUpload()">Import Customers</button>
+                    <button mat-flat-button class="mx-2" (click)="ExportFile()">Export Customers</button>
+                    <button *ngIf="addFormButtonDiv" mat-flat-button class="ml-2 text-white add-customer" (click)="addFormButton()">Add Customer</button>
+                    <button *ngIf="!addFormButtonDiv" mat-flat-button class="ml-2 text-white add-customer" (click)="addFormButton()">View Customer</button>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid h-100 fixed-wrap">
+            <div class="row h-100">
+                <div class="customer-list-container bg-light p-0">
+                    <div class="border-bottom px-3 py-4 my-2">
+                        <mat-select [(ngModel)]="selecetdFilterCustomer" (selectionChange)="fnFilterCustomer($event)" class=" form-control">
+                            <mat-option value="all">All Customers</mat-option>
+                            <mat-option *ngFor="let filterEventlist of filterEventlist" value="{{filterEventlist.unique_code}}">{{filterEventlist.event_title}}</mat-option>
+
+                        </mat-select>
+
+                        <div class="mt-3 p-2 bg-white border search-btn" matTooltipClass="main-menu-tooltip" matTooltipPosition="above" matTooltip="Search by name, phone, tag and email address">
+                            <i class="fa fa-search border-right px-2"></i>
+                            <input type="text" class="px-2" [(ngModel)]="search.keyword" (keyup)="customerSearch()" placeholder="Search by name, phone, tag and email address">
+                        </div>
+                    </div>
+
+                    <div class="customres-list" *ngIf="customerDetails !== null">
+                        <div class="single-customer" [ngClass]="{'active':selectedCustomerCode == customerDetails.unique_code}" *ngFor="let customerDetails of customerDetails; let i=index">
+                            <div class="row mx-auto align-items-center">
+                                <div class="check-col p-1">
+                                    <mat-checkbox class=""></mat-checkbox>
+                                </div>
+                                <div class="customer-image-icon pointer" *ngIf="!editCustomerForm" (click)="fnSelectCustomer(customerDetails.unique_code)" [ngStyle]="{'background-image': 'url(' + customerDetails.image + ')'}">
+                                    <!-- <img src="{{customerDetails.image}}" class="w-100 h-100"> -->
+                                </div>
+                                <div class="col-8 customer-email p-0 " *ngIf="!editCustomerForm" (click)="fnSelectCustomer(customerDetails.unique_code)">
+                                    <span>{{customerDetails.firstname + " " + customerDetails.lastname}}</span>
+                                    <p> {{customerDetails.email}}</p>
+                                </div>
+                                <div class="customer-image-icon pointer" *ngIf="editCustomerForm" (click)="fnSelectCustomer(customerDetails.unique_code);addFormButton()" [ngStyle]="{'background-image': 'url(' + customerDetails.image + ')'}">
+                                    <!-- <img src="{{customerDetails.image}}" class="w-100 h-100"> -->
+                                </div>
+                                <div class="col-8 customer-email p-0 " *ngIf="editCustomerForm" (click)="fnSelectCustomer(customerDetails.unique_code);addFormButton()">
+                                    <span>{{customerDetails.firstname + " " + customerDetails.lastname}}</span>
+                                    <p> {{customerDetails.email}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="customres-list no-data-label" *ngIf="customerDetails == null">
+                        <div class="no-data-view">
+                            <img src="../../../assets/images/no-data-found.svg" />
+                            <label> No data available.</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="customer-detail-container bg-white p-0">
+
+                    <div class="p-3" class="single-customer-detail" *ngIf="addFormButtonDiv && selectedCustomerDetails">
+                        <div>
+                            <div class="col-12 py-3">
+                                <div class="row">
+                                    <div class="customer-dp" [ngStyle]="{'background-image': 'url(' + selectedCustomerDetails.image + ')'}">
+                                        <!-- <img src="{{selectedCustomerDetails && selectedCustomerDetails.image ? selectedCustomerDetails.image : ''}}" class="w-100 h-100" alt=""> -->
+                                        <!-- <img  src="{{selectedCustomerDetails && selectedCustomerDetails.image ? selectedCustomerDetails.image : customerImageUrl}}" alt=""> -->
+                                    </div>
+                                    <div class="px-3 py-4 customer-name">
+                                        <span> {{ selectedCustomerDetails.firstname + " " + selectedCustomerDetails.lastname}} </span>
+                                    </div>
+
+                                    <div class="ml-auto p-3 customer-edit-delete-btn">
+                                        <button mat-flat-button class="mr-1 edit-btn" (click)="editCustomerDetails()"><i class="fa fa-pencil pr-2"></i>Edit</button>
+                                        <button mat-flat-button class="ml-1 delete-btn" (click)="deleteCustomerDetails()"><i class="fa fa-trash pr-2"></i>Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <mat-tab-group class="">
+                                <mat-tab label="Details">
+                                    <div class="py-2">
+                                        <label for="">Phone No.</label>
+                                        <p>
+                                            {{selectedCustomerDetails.phone}}
+                                        </p>
+                                    </div>
+                                    <hr class="m-0">
+                                    <div class="py-2">
+                                        <label for="">Email</label>
+                                        <p>
+                                            {{selectedCustomerDetails.email}}
+                                        </p>
+                                    </div>
+                                    <hr class="m-0">
+                                    <div class="py-2">
+                                        <label for="">Address</label>
+                                        <!-- <p *ngIf="selectedCustomerDetails.address">
+                                            {{selectedCustomerDetails.address}}
+                                        </p> -->
+                                        <p *ngIf="selectedCustomerDetails.uk_address !== null">
+                                            {{selectedCustomerDetails.uk_address.address1}}, {{selectedCustomerDetails.uk_address.address2}}, {{selectedCustomerDetails.uk_address.address3}}, {{selectedCustomerDetails.uk_address.zipcode}} 
+                                        </p>
+                                        <p *ngIf="selectedCustomerDetails.ca_address !== null">
+                                            {{selectedCustomerDetails.ca_address.address1}}, {{selectedCustomerDetails.ca_address.city}}, {{selectedCustomerDetails.ca_address.province}}, {{selectedCustomerDetails.ca_address.postalcode}} 
+                                        </p>
+                                        <p *ngIf="selectedCustomerDetails.usa_address !== null">
+                                            {{selectedCustomerDetails.usa_address.address1}}, {{selectedCustomerDetails.usa_address.city}}, {{selectedCustomerDetails.usa_address.state}}, {{selectedCustomerDetails.usa_address.zipcode}} 
+                                        </p>
+                                    </div>
+                                    <hr class="m-0">
+                                    <div class="py-2 row mx-0">
+                                        <div class="pl-0 col-12 col-sm-4 customer-detail-bottom">
+                                            <label for="">Registration</label>
+                                            <p class="text-capitalize">
+                                                {{selectedCustomerDetails.created_at |date :'fullDate'}}<br> Added By {{selectedCustomerDetails.register_by}}
+                                            </p>
+                                        </div>
+                                        <div *ngIf="allEventListData.lastOrder" class="col-12 col-sm-4 customer-detail-bottom">
+                                            <label for="">Last Events</label>
+                                            <p>
+                                                {{allEventListData.lastOrder?allEventListData.lastOrder.event_title:'-'}}<br/> {{allEventListData.lastOrder.event_occurrence_type == 'N'?lastEventDateTime:''}}
+                                            </p>
+                                        </div>
+                                        <div *ngIf="!allEventListData.lastOrder || allEventListData.lastOrder == null" class="col-12 col-sm-4 customer-detail-bottom">
+                                            <label for="">Last Events</label>
+                                            <p>
+                                                -
+                                            </p>
+                                        </div>
+                                        <div class="col-12 col-sm-4 customer-detail-bottom">
+                                            <label class="w-100" for="">Tags</label>
+                                            <!---<p class="tags" *ngIf="selectedCustomerDetails.tags != null">
+                                                {{selectedCustomerDetails.tags}}
+                                            </p>-->
+                                            <p class="tags" *ngFor="let tag of selectedCustomerDetails.tags">
+                                                {{tag}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <hr class="m-0">
+                                </mat-tab>
+
+                                <mat-tab label="Events" (click)="eventList('all')">
+                                    <div class="py-3" class="customer-event-list">
+                                        <button mat-flat-button [ngClass]="{'active':eventActiveTab == 'all'}" class="border mr-1" (click)="eventList('all')">All Events</button>
+                                        <button mat-flat-button [ngClass]="{'active':eventActiveTab == 'complete'}" class="border m-1 " (click)="eventList('complete')">Completed Events</button>
+                                        <button mat-flat-button [ngClass]="{'active':eventActiveTab == 'upcoming'}" class="border ml-1" (click)="eventList('upcoming')">Upcoming Events</button>
+                                    </div>
+
+                                    <div class="" *ngIf="eventActiveTab=='all' && allEventListData">
+                                        <table class="table">
+                                            <tr *ngFor="let element of allEventListData.all">
+                                                <td>{{element.event_title}} </td>
+                                                <td>{{element.start_date}}</td>
+                                                <td><span class="px-3 py-1" [ngClass]="{'upcoming-status':element.status_flage == 'Upcoming', 'complete-status':element.status_flage == 'Completed'}">{{element.status_flage}}</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="" *ngIf="eventActiveTab=='complete' && allEventListData">
+                                        <table class="table">
+                                            <tr *ngFor="let element of allEventListData.complete">
+                                                <td>{{element.event_title}} </td>
+                                                <td>{{element.start_date}}</td>
+                                                <td><span class="px-3 py-1 complete-status">Completed</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="" *ngIf="eventActiveTab=='upcoming' && allEventListData">
+                                        <table class="table">
+                                            <tr *ngFor="let element of allEventListData.upcoming">
+                                                <td>{{element.event_title}} </td>
+                                                <td>{{element.start_date | date}}</td>
+                                                <td><span class="px-3 py-1 upcoming-status">Upcoming</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </mat-tab>
+                            </mat-tab-group>
+                        </div>
+                    </div>
+
+
+                    <div class="p-3" *ngIf="!addFormButtonDiv" class="add-customer-form">
+                        <div class="px-3">
+                            <div class="row">
+                                <div class="px-3 pt-3">
+                                    <div class="col-12 px-3 pt-3 add-customer-div-title" *ngIf="!editCustomerForm">
+                                        Add Customer
+                                    </div>
+                                    <div class="col-12 px-3 pt-3 add-customer-div-title" *ngIf="editCustomerForm">
+                                        Edit Customer
+                                    </div>
+                                    <div class="col-12 px-3 sub-heading" *ngIf="!editCustomerForm">
+                                        Add relevant information of all your customers.
+                                    </div>
+                                    <div class="col-12 px-3 sub-heading" *ngIf="editCustomerForm">
+                                        Edi relevant information of your customers.
+                                    </div>
+                                    <div class="col-12 px-3 mt-3">
+                                        <div>
+                                            <label>Add Image</label>
+                                        </div>
+                                        <div class="row">
+                                            <div *ngIf="!customerImageUrl && !editCustomerForm" class="p-4 ml-3 image-upload hover pointer" (click)="fnChangeImage()">
+                                                <img src="../../../assets/images/admin/customer-default.svg">
+                                            </div>
+                                            <div *ngIf="customerImageUrl" class="ml-3 image-uploaded hover pointer" (click)="fnChangeImage()">
+                                                <img class="w-100 h-100" src="{{customerImageUrl}}">
+                                            </div>
+                                            <div *ngIf="!customerImageUrl && editCustomerForm" class="ml-3 image-uploaded hover pointer" (click)="fnChangeImage()">
+                                                <img class="w-100 h-100" src="{{selectedCustomerDetails.image}}">
+                                            </div>
+                                            <div class="px-3 py-42 add-customer-file" *ngIf="!customerImageUrl">
+                                                <span>No file chosen</span>
+                                                <p class="mt-2">
+                                                    Upload an image in .jpg, .jpeg, or .png format, and the size should not exceed 200x200.
+                                                </p>
+                                            </div>
+                                            <div class="px-3 py-42 add-customer-file" *ngIf="customerImageUrl">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form [formGroup]="addCustomerForm" class="with-validation px-3 pb-3">
+                                    <div class="col-12 px-3 mt-3">
+                                        <div class="row">
+                                            <div class="col-6 ">
+                                                <label for="">Name</label>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" formControlName="cust_name" />
+                                                    <span class="error-wrap" *ngIf="addCustomerForm.get('cust_name').dirty || addCustomerForm.get('cust_name').touched"><small *ngIf="addCustomerForm.get('cust_name').hasError('required')" class="error text-left">name is required.</small></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 ">
+                                                <label for="">Phone No. </label>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" formControlName="phone" />
+                                                    <span class="error-wrap" *ngIf="addCustomerForm.get('phone').dirty || addCustomerForm.get('phone').touched"><small *ngIf="addCustomerForm.get('phone').hasError('required')" class="error text-left">Phone Number is required.</small>
+                                                      <small *ngIf="addCustomerForm.get('phone').hasError('pattern') || (addCustomerForm.get('phone').hasError('pattern') && (addCustomerForm.get('phone').hasError('maxlength') || addCustomerForm.get('phone').hasError('minlength')))" class="error">Phone Number Should in numbers</small>
+                                                      <small *ngIf="!addCustomerForm.get('phone').hasError('pattern') && (addCustomerForm.get('phone').hasError('maxlength') || addCustomerForm.get('phone').hasError('minlength'))" class="error">Phone Number Should Minimum 6 and Maximum 15 digits.</small></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6 ">
+                                                <label for="">Email ID</label>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" formControlName="email" />
+                                                    <span class="error-wrap" *ngIf="addCustomerForm.get('email').dirty || addCustomerForm.get('email').touched"><small *ngIf="addCustomerForm.get('email').hasError('required')" class="error text-left">Email is required.</small><small *ngIf="addCustomerForm.get('email').hasError('pattern')" class="error">Enter valid email.</small><small *ngIf="addCustomerForm.get('email').hasError('isEmailUnique')" class="error">Email is already exists.</small></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <label for="">{{addressArr.address}}</label>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" formControlName="address" />
+                                                    <span class="error-wrap" *ngIf="addCustomerForm.get('address').dirty || addCustomerForm.get('address').touched"><small *ngIf="addCustomerForm.get('address').hasError('required')" class="error text-left">{{addressArr.address}} is required.</small></span>
+                                                </div>
+                                            </div> 
+                                            <div class="col-4">
+                                                <label for="">{{addressArr.address1}}</label>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" formControlName="address1" />
+                                                    <span class="error-wrap" *ngIf="addCustomerForm.get('address1').dirty || addCustomerForm.get('address1').touched"><small *ngIf="addCustomerForm.get('address1').hasError('required')" class="error text-left">{{addressArr.address1}} is required.</small></span>
+                                                </div>
+                                            </div> 
+                                            <div class="col-4">
+                                                <label for="">{{addressArr.address2}}</label>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" formControlName="address2" />
+                                                    <span class="error-wrap" *ngIf="addCustomerForm.get('address2').dirty || addCustomerForm.get('address2').touched"><small *ngIf="addCustomerForm.get('address2').hasError('required')" class="error text-left">{{addressArr.address1}} is required.</small></span>
+                                                </div>
+                                            </div> 
+                                            <div class="col-4">
+                                                <label for="">{{addressArr.zipcode}}</label>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" formControlName="zipcode" />
+                                                    <span class="error-wrap" *ngIf="addCustomerForm.get('zipcode').dirty || addCustomerForm.get('zipcode').touched">
+                                                        <small *ngIf="addCustomerForm.get('zipcode').hasError('required')" class="error text-left">{{addressArr.zipcode}} is required.</small>
+                                                        <small *ngIf="!addCustomerForm.get('zipcode').hasError('required') && (addCustomerForm.get('zipcode').hasError('minlength') || addCustomerForm.get('zipcode').hasError('maxlength'))" class="error text-left">{{addressArr.zipcode}} is should be 5 to 7 characters.</small>
+                                                    </span>
+                                                </div>
+                                            </div> 
+                                            
+
+                                            <div class="col-12 ">
+                                                <label for="">Add Tags</label>
+                                                <div class="d-flex">
+                                                    <div class="tag-container">
+                                                        <mat-form-field [ngClass]="{'tag-disabled':!addNewTag}" class="w-100 tags-input bottom-border-field">
+                                                            <mat-chip-list #chipList aria-label="Tag selection">
+                                                                <mat-chip *ngFor="let tag of tags" [selectable]="selectable" [removable]="removable" (removed)="remove(tag)">{{tag}}
+                                                                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                                                </mat-chip>
+                                                                <input formControlName="tags" #TagInput placeholder="Tags..." [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                                                                <span class="error-wrap" *ngIf="addCustomerForm.get('tags').dirty || addCustomerForm.get('tags').touched"><small *ngIf="addCustomerForm.get('tags').hasError('required')" class="error text-left">tags is required.</small></span>
+                                                            </mat-chip-list>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="footer-btn">
+                                                <div class="can-save">
+                                                    <button mat-raised-button class="cancel-btn" (click)="addFormButton()">Cancel</button>
+                                                    <button *ngIf="!editCustomerForm" mat-raised-button class="save-btn" (click)="submitForm()">Create</button>
+                                                    <button *ngIf="editCustomerForm" mat-raised-button class="save-btn" (click)="submitForm()">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

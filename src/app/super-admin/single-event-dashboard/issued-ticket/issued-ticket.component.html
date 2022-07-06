@@ -1,0 +1,150 @@
+<div class="main bg-white ml-2">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="row">
+        <div class="col-12 tickes-heading">
+            <div class="page-title d-flex">Issued tickets
+                <mat-select (selectionChange)="fnChangeOccurrence($event)" [(ngModel)]="selectedOccurrence" *ngIf="recurringEvent == 'Y'" class="form-control col-4 ml-auto">
+                    <mat-option value="all">All Occurrences</mat-option>
+                    <mat-option *ngFor="let element of allOccurrenceList; let i=index;" value="{{element.unique_code}}">{{element.occurance_start_date |date :'mediumDate'}} {{element.occurance_start_time}} - {{element.occurance_end_time}}</mat-option>
+                </mat-select>
+            </div>
+            <p class="mt-2">
+                Find all the issued tickets for your event below, along with attendee data. Looking for orders? See all the orders for this event.
+            </p>
+        </div>
+    </div>
+
+    <mat-card class="main-form-setting-content mat_content mt-2">
+        <div class="container-fluid">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-12 font-weight-bold align-items-center d-flex justify-content-between">
+                        Manage
+                        <div class="d-flex align-items-center">
+                            <a routerLink="/super-admin/settings/app-users" class="mt-1 mr-3"><u> Get the check-in app </u></a>
+                            <button mat-flat-button class="mat-blue" (click)="fnExportDoorList()"> Export doorlist   </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row mx-0">
+                    <div class="searchbox p-0 search-bar rounded col-12 mt-3 bg-white">
+                        <i class="fa fa-search p-2"></i>
+                        <input matInput type="text" class="p-2 pl-0" [(ngModel)]="global_search" (keyup)="applyFilter($event)" placeholder="Search by name, email, order ID, or ticket code" />
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-3">
+                        <label for="">Ticket</label>
+                        <mat-select placeholder="Select all ticket" class="form-control" [(ngModel)]="Ticket_Type" (selectionChange)="onChange($event.value)">
+                            <mat-option value="all">All</mat-option>
+                            <mat-option *ngFor="let val of EventDetail.tickets; let i = index" [value]="val.unique_code">{{ val.ticket_name }}</mat-option>
+                            <!-- <mat-option *ngFor="let val of EventDetail.tickets; let i = index" value="{{val.unique_code ? val.unique_code : 'NULL'}}">{{ val.ticket_name }}</mat-option> -->
+                        </mat-select>
+                    </div>
+
+                    <div class="col-3">
+                        <label for="">Issued from</label>
+                        <div class="matDate">
+                            <mat-datepicker-toggle matPrefix [for]="ticketIssuedDatePicker" class="dateIcon">
+                            </mat-datepicker-toggle>
+                            <input placeholder="MM/DD/YYYY" type="text" matInput [matDatepicker]="ticketIssuedDatePicker" (dateChange)="IssuedfromChange()" [(ngModel)]="Issued_from" (click)="ticketIssuedDatePicker.open()" class="form-control matInputdate" />
+                            <mat-datepicker #ticketIssuedDatePicker></mat-datepicker>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <label for="">Issued to</label>
+                        <div class="matDate">
+                            <mat-datepicker-toggle matSuffix [for]="ticketIssuedTo" class="dateIcon"></mat-datepicker-toggle>
+                            <input placeholder="MM/DD/YYYY" type="text" matInput [matDatepicker]="ticketIssuedTo" (dateChange)="IssuedtoChange()" [(ngModel)]="Issued_to" (click)="ticketIssuedTo.open()" class="form-control matInputdate" />
+                            <mat-datepicker #ticketIssuedTo></mat-datepicker>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <label for="" class="col-3">Status</label>
+                        <mat-select placeholder="All issued  ticket" class="form-control" (selectionChange)="onStatusChange($event.value)">
+                            <mat-option value="all">all</mat-option>
+                            <mat-option value="P">Pending</mat-option>
+                            <mat-option value="CO">Completed</mat-option>
+                            <mat-option value="C">Cancel</mat-option>
+                            <mat-option value="VO">Void</mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="events">
+                <div class="service-listing">
+                    <div class="main-table-content main-cust-table-content">
+                        <div class="">
+                            <div class="heads main-heading-content drageble py-3" fxLayout="row">
+                                <div class="" fxFlex="30">Ticket Code</div>
+                                <div class="" fxFlex="20">Ticket Type</div>
+                                <div class="" fxFlex="20">Name</div>
+                                <div class="" fxFlex="15">Order ID</div>
+                                <div class="" fxFlex="15">Issued</div>
+                            </div>
+
+                            <div class="drageble-list" *ngIf="getIssuedTicket.length > 0">
+                                <div class="drageble-box" fxLayout="row" *ngFor="let val of getIssuedTicket; let i = index">
+                                    <div class="tb-data" fxFlex="30">
+                                        <span class="cpn-bor" (click)="fnIssuedTicketView(i)" [ngStyle]="{ color: val.order_status === 'CO' ? '#0000ff' : '#0000ff'}">
+                                            {{val.unique_code}}
+                                        </span>
+                                        <button mat-raised-button class="mx-1 void-btn" *ngIf="val.order_status === 'VO'">
+                                            void
+                                        </button>
+                                        <button mat-raised-button class="mx-1 void-btn" *ngIf="val.order_status === 'C'">
+                                            canceled
+                                        </button>
+                                    </div>
+                                    <div class="tb-data" fxFlex="20">
+                                        {{ val.ticket ? val.ticket.ticket_name : '-' }}
+                                    </div>
+                                    <div class="tb-data" fxFlex="20">
+                                        {{val.attendee_name != ''?val.attendee_name:'No attendee Name'}}
+                                        <!-- {{ val.customer ? val.customer.firstname : '' }} {{ val.customer ? val.customer.lastname : '' }} -->
+                                    </div>
+                                    <div class="tb-data" fxFlex="15">
+                                        {{ val.order.order_id }}
+                                    </div>
+                                    <div class="tb-data" fxFlex="15">
+                                        {{ dateFormate(val.order_date) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="no-data-label" *ngIf="getIssuedTicket.length == 0">
+                                <div class="no-data-view">
+                                    <img src="../../../assets/images/no-data-found.svg" />
+                                    <label> No data available.</label>
+                                </div>
+                            </div>
+
+                            <div class="col-12 text-center">
+                                <div class="table_pagination mt-4 pagination-class" *ngIf="getIssuedTicket != ''">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-end">
+                                            <li class="page-item" (click)="navigateToTicket(first_page_url_getIssuedTicket)"><a class="page-link"><i class="fa fa-angle-double-left arrow-icon" aria-hidden="true"></i></a></li>
+                                            <li class="page-item" (click)="navigateToTicket(prev_page_url_getIssuedTicket)"><a class="page-link"><i class="fa fa-angle-left arrow-icon" aria-hidden="true"></i></a></li>
+                                            <li class="page-item" [ngClass]="{'active':current_page_getIssuedTicket == i+1}" *ngFor="let pagenumber of arrayOneTicket(last_page_getIssuedTicket); let i = index;" (click)="navigateToPageNumberTicket(i+1)">
+                                                <a class="page-link">{{i+1}}</a>
+                                            </li>
+                                            <li class="page-item" (click)="navigateToTicket(next_page_url_getIssuedTicket)"><a class="page-link"><i class="fa fa-angle-right arrow-icon" aria-hidden="true"></i></a></li>
+                                            <li class="page-item" (click)="navigateToTicket(last_page_url_getIssuedTicket)"><a class="page-link"><i class="fa fa-angle-double-right arrow-icon" aria-hidden="true"></i></a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>

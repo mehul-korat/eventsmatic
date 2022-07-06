@@ -1,0 +1,89 @@
+<div class="main-page-wrapper">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="user-data-page clearfix d-lg-flex">
+        <div class="illustration-wrapper d-flex align-items-center justify-content-center flex-column">
+            <div class="illustration-holder">
+                <img src="../../assets/images/login/ils_15.svg" alt="" class="illustration">
+                <img src="../../assets/images/login/ils_15.1.svg" alt="" class="ES-IP_24">
+                <img src="../../assets/images/login/ils_15.2.svg" alt="" class="ES-IP_25">
+                <img src="../../assets/images/login/ils_15.3.svg" alt="" class="ES-IP_26">
+            </div>
+            <h3>Selling over 100 tickets? <br>try eventsmatic</h3>
+        </div> <!-- /.illustration-wrapper -->
+
+        <div class="form-wrapper">
+            <img src="../../assets/images/login/shape_02.svg" alt="" class="shapes shape_2">
+            <img src="../../assets/images/login/shape_01.svg" alt="" class="shapes shape_1">
+            <img src="../../assets/images/login/shape_03.svg" alt="" class="shapes shape_3">
+            <img src="../../assets/images/login/shape_131.svg" alt="" class="shapes shape_4">
+            <div class="logo"><a href="https://www.eventsmatic.com/"><img src="../../assets/images/login/logo.svg" alt=""></a></div>
+            <form [formGroup]="signUpForm" class="user-data-form mt-20 with-validation">
+                <h2>Welcome Back! Join us again. </h2>
+                <p class="rsv-font header-info pt-15 pb-30">Already have an account? <a routerLink="/login">Log in</a></p>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="input-group-meta mb-40">
+                            <label>Full Name</label>
+                            <input type="text" placeholder="Enter your full name" formControlName="firstname">
+                            <span class="placeholder_icon valid-sign"><img src="../../assets/images/login/check.svg" alt=""></span>
+                            <span class="error-wrap" *ngIf="signUpForm.get('firstname').dirty || signUpForm.get('firstname').touched"><small *ngIf="signUpForm.get('firstname').hasError('required')" class="error text-left ml-4">Name is required.</small></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group-meta mb-40">
+                            <label>Email</label>
+                            <input type="email" placeholder="Enter your email address" formControlName="email">
+                            <span class="placeholder_icon valid-sign"><img src="../../assets/images/login/check.svg" alt=""></span>
+                            <span class="error-wrap" *ngIf="signUpForm.get('email').dirty || signUpForm.get('email').touched"><small *ngIf="signUpForm.get('email').hasError('required')" class="error text-left ml-4">Email is required.</small><small *ngIf="signUpForm.get('email').hasError('pattern')" class="error">Enter valid email.</small><small *ngIf="signUpForm.get('email').hasError('isEmailUnique')" class="error">Email is already exists.</small></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group-meta mb-40">
+                            <label>Password</label>
+                            <input  [type]="hide?'password':'text'" placeholder="Enter Password" formControlName="password" class="pass_log_id">
+                            <span class="placeholder_icon" [ngClass]="{'password-show':hide}" (click)="hide = !hide"><span class="passVicon"><img src="../../assets/images/login/view.svg" alt=""></span></span>
+                            <span class="error-wrap" *ngIf="signUpForm.get('password').dirty || signUpForm.get('password').touched"><small *ngIf="signUpForm.get('password').hasError('required')" class="error text-left ml-4">Password is required.</small><small *ngIf="signUpForm.get('password').hasError('minlength') || signUpForm.get('password').hasError('maxlength')" class="error">Password should  minimum 8 maximum 12 characters.</small></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group-meta mb-15">
+                            <label>Confirm Password</label>
+                            <input [type]="hide1?'password':'text'" placeholder="Confirm Password" formControlName="ReNewPassword" class="pass_log_id">
+                            <span class="placeholder_icon" [ngClass]="{'password-show':hide1}" (click)="hide1 = !hide1"><span class="passVicon"><img src="../../assets/images/login/view.svg" alt=""></span></span>
+                            <!-- <span class="error-wrap" *ngIf="signUpForm.get('password').dirty || signUpForm.get('password').touched"><small *ngIf="signUpForm.get('password').hasError('required')" class="error text-left ml-4">Password is required.</small><small *ngIf="signUpForm.get('password').hasError('minlength') || signUpForm.get('password').hasError('maxlength')" class="error">Password should  minimum 8 maximum 12 characters.</small></span> -->
+                            <span class="error-wrap" *ngIf="signUpForm.get('ReNewPassword').dirty || signUpForm.get('ReNewPassword').touched">
+                                <small *ngIf="signUpForm.get('ReNewPassword').hasError('required') && signUpForm.hasError('notSame')" class="error text-left ml-4">Confirm password is required.</small>
+                                <small *ngIf="!signUpForm.get('ReNewPassword').hasError('required') && signUpForm.hasError('notSame')" class="error text-left ml-4">Passwords do not match.</small>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-20">
+                        <div class="agreement-checkbox d-flex justify-content-between align-items-center">
+                            <div>
+                                <mat-checkbox class="" (change)="fnChangeTermsPrivacyCheck($event.checked)">By checking you agree to the <a target="_blank" href="https://eventsmatic.com/terms-and-conditions.html">Terms and Conditions</a> and <a target="_blank" href="https://eventsmatic.com/privacy-policy.html">Privacy Policy</a>.</mat-checkbox>
+                                <span class="error-wrap" *ngIf="!termsCheckbox">
+                                <small *ngIf="!termsCheckbox" class="error"> Check the Privacy Policy & Terms and Conditions.</small></span>
+                                <!-- <input type="checkbox" id="remember">
+                                <label for="remember"></label> -->
+                               
+                            </div>
+                        </div> <!-- /.agreement-checkbox -->
+                    </div>
+                    <div class="col-12">
+                        <button class="button-solid-one rsv-font mt-30 mb-30" (click)="fnSignUp()">Sign Up</button>
+                    </div>
+                    <div class="col-12">
+                        <p class="text-center rsv-font copyright-text">© Copyright 2021 Eventsmatic. A Product of Weberr Technologies Inc.</p>
+                    </div>
+                </div>
+            </form>
+        </div> <!-- /.form-wrapper -->
+    </div> <!-- /.user-data-page -->
+    
+    
+
+
+    
+
+</div> 

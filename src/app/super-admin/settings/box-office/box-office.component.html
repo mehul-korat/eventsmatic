@@ -1,0 +1,125 @@
+<div class="">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="box-office main">
+        <div class="box-office main-work-area">
+            <h5 class="page-title">Box Office</h5>
+            <form [formGroup]="singleBoxOffice" class="with-validation">
+                <div class="box-office-content row mx-0 mt-4">
+                    <div class="col-md-6 my-left-content px-0">
+                        <div>
+                            <div class="">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div *ngIf="(!boxofficeImageUrl && singleBoxofficeDetails) && singleBoxofficeDetails.image" class="pl-0 boxoffice-profile" [ngStyle]="{'backgroundImage': 'url(' + singleBoxofficeDetails.image + ')'}">
+                                        <!-- <img *ngIf="(!boxofficeImageUrl && singleBoxofficeDetails) && singleBoxofficeDetails.image" src="{{singleBoxofficeDetails.image}}" alt="">
+                                        <img *ngIf="boxofficeImageUrl" src="{{boxofficeImageUrl}}" alt=""> -->
+                                    </div>
+                                    <div *ngIf="boxofficeImageUrl" class="pl-0 boxoffice-profile" [ngStyle]="{'backgroundImage': 'url(' + boxofficeImageUrl + ')'}">
+
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div *ngIf="singleBoxofficeDetails && singleBoxofficeDetails.image_name != 'default_image.png'">
+                                            <button mat-flat-button class="change-logo" (click)="fnChangeImage()">Change logo</button>
+                                        </div>
+                                        <div *ngIf="singleBoxofficeDetails && singleBoxofficeDetails.image_name == 'default_image.png'">
+                                            <button mat-flat-button class="change-logo" (click)="fnChangeImage()">Upload logo</button>
+                                        </div>
+                                        <div *ngIf="singleBoxofficeDetails && singleBoxofficeDetails.image_name != 'default_image.png'">
+                                            <button mat-flat-button class="remove-logo mt-2" (click)="fnRemoveImage()">Remove logo</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-12 mt-4">
+                                <label for="" class="required">Box Office Name</label>
+                                <input type="text" class="form-control col-12" formControlName="boxoffice_name">
+                                <span class="error-wrap" *ngIf="singleBoxOffice.get('boxoffice_name').dirty || singleBoxOffice.get('boxoffice_name').touched"><small *ngIf="singleBoxOffice.get('boxoffice_name').hasError('required')" class="error text-left ml-4">Box Office name required.</small></span>
+                            </div>
+
+                            <div class="form-group col-12 mt-3">
+                                <label for="" class="">Language (experimental feature)</label>
+                                <mat-select name=" " id="" class="form-control col-12" formControlName="language">
+                                    <mat-option *ngFor="let allLanguage of allLanguage;" value="{{allLanguage.id}}">{{allLanguage.name}}</mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="form-group col-12 mt-3">
+                                <label for="" class="">Billing currency</label>
+                                <mat-select name=" " id="" class="form-control col-12" formControlName="currency">
+                                    <mat-option *ngFor="let allCurency of allCurency;" value="{{allCurency.id}}">{{allCurency.CurrencyName}}</mat-option>
+                                </mat-select>
+                                <span class="error-wrap" *ngIf="singleBoxOffice.get('currency').dirty || singleBoxOffice.get('currency').touched"><small *ngIf="singleBoxOffice.get('currency').hasError('required')" class="error text-left ml-4">Billing currency required.</small></span>
+                            </div>
+
+                            <div class="form-group col-12 mt-3">
+                                <label for="" class="required">Timezone</label>
+                                <mat-select name=" " id="" class="form-control col-12" formControlName="timezone" #singleSelect>
+                                    <ngx-mat-select-search placeholderLabel="Search" noEntriesFoundLabel="No record found" [formControl]="timeZoneFilterCtrl"></ngx-mat-select-search>
+                                    <mat-option *ngFor="let listTimeZone of listTimeZoneList | async" value="{{listTimeZone.id}}">({{listTimeZone.utc}}){{listTimeZone.name}}</mat-option>
+                                </mat-select>
+                                <span class="error-wrap" *ngIf="singleBoxOffice.get('timezone').dirty || singleBoxOffice.get('timezone').touched"><small *ngIf="singleBoxOffice.get('timezone').hasError('required')" class="error text-left ml-4">Timezone  required.</small></span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 my-right-content">
+                        <div class="form-group mt-2">
+                            <label>Box office Link <span> <i class="fa fa-question-circle ml-2"  matTooltip="You can share this short link with your customers so they have a convenient way to access your box office. " aria-hidden="true"></i></span></label>
+                            <div class="row">
+                                <div class="col-10 d-flex flex-wrap align-items-center pr-1">
+                                    <label class="mb-0 w-100">{{frontUrl}}/box-office/</label>
+                                    <input [attr.disabled]="editEventLink ? null : ''" type="text" class="form-control link-sufix" formControlName="box_office_link">
+                                    <button type="" (click)="editEventLink = !editEventLink" class="btn edit-boxoffice-link edit-link-btn search-button"><span class="material-icons create">create </span></button>
+                                </div>
+                                <!-- <div class="col-1 pl-1 ">
+                                </div> -->
+                                <span class="error-wrap" *ngIf="singleBoxOffice.get('box_office_link').dirty || singleBoxOffice.get('box_office_link').touched"><small *ngIf="singleBoxOffice.get('box_office_link').hasError('required')" class="error text-left ml-4">Box office Link required.</small></span>
+                            </div>
+                        </div>
+                        <div class="pt-2 my-3">
+                            <mat-checkbox class="" [checked]="singleBoxofficeDetails && singleBoxofficeDetails.email_order_notification == 'Y'" (change)="fnEmailOrderNotification($event)">Send new order notifications by email </mat-checkbox>
+                        </div>
+                        <div class="mt-2">
+                            <label for="" class="pt-2">Who should receive notifications?</label>
+                            <div class="">
+                                <mat-checkbox class="" [checked]="singleBoxofficeDetails && singleBoxofficeDetails.account_owner == 'Y'" (change)="fnAccountOwner($event)" formControlName="account_owner">Account Owner</mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="form-group pt-2 mt-2">
+                            <div *ngIf="!showHide">
+                                <i class="fa fa-plus-circle fa-lg plus-icon" (click)="fnshowHide()"></i>
+                                <a class="ml-2 add-email" (click)="fnshowHide()">Add Email</a>
+                            </div>
+                            <div *ngIf="showHide">
+                                <div class="row mt-2">
+                                    <div class="col-10 pr-1">
+                                        <input type="text" class="form-control" *ngIf="Emailshow" formControlName="add_email">
+                                        <span><small *ngIf="singleBoxOffice.get('add_email').hasError('pattern')" class="error">Enter valid email.</small></span>
+                                    </div>
+
+                                    <div class="col-2 pl-1">
+                                        <mat-icon class="material-icons close-icon" (click)="fnshowHide()">close</mat-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <mat-checkbox [ngClass]="{'disable-access': singleBoxofficeDetails.subscription.white_label_status == 'N'}" [checked]="hideLogo == 'Y'" class="" (change)="fnHideLogo($event)">Hide Eventsmatic logo <span class="ml-2"><i class="fa fa-question-circle ml-2"  matTooltip="Hide the Eventsmatic logo from your box office pages. This feature is only available if you activate 'White-label' plan." aria-hidden="true"></i></span></mat-checkbox>
+                        </div>
+                        <div class="mt-4">
+                            <mat-checkbox [checked]="hideName == 'Y'" class="" (change)="fnHideNameLogo($event)">Hide Box Office name from preview </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="footer-action-btn">
+        <div class="can-save">
+            <button mat-raised-button class="cancel-btn" (click)="onCancel()">Cancel</button>
+            <button mat-raised-button class="save-btn" (click)="fnSubmitBoxOffice()">Save</button>
+        </div>
+    </div>
+</div>

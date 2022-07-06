@@ -1,0 +1,126 @@
+<div class="main">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="page-title">
+        Edit order confirmation
+    </div>
+    <div class="order-main-st">
+        The order confirmation is the message customers receive after they place an order. This includes all of their ticket information.
+    </div>
+
+    <div class="border mt-3 p-3 select-order-main">
+        <mat-radio-group aria-label="Select an option" (change)="fnEditOrderConfirmation($event)">
+            <mat-radio-button value="GlobalOrderConfirmation" [checked]="confirmationType === 'GlobalOrderConfirmation'">
+                <p class="mb-0 fw-bold">Global order confirmation</p>
+                <p class="radio-sub-title mb-0">(Applies to all events)</p>
+            </mat-radio-button>
+            <mat-radio-button class="ml-5" value="SpecificOrderConfirmation" [checked]="confirmationType === 'SpecificOrderConfirmation'">
+                <p class="mb-0 fw-bold">Event specific order confirmation</p>
+                <p class="radio-sub-title mb-0">(Applies to this event only)</p>
+            </mat-radio-button>
+        </mat-radio-group>
+
+
+        <div class="specific-order-confirmation" *ngIf="confirmationType === 'SpecificOrderConfirmation'">
+            <div class="Edit-order-main">
+                <div class="order-info-line">Click the
+                    <mat-icon class="px-1 mx-1 order-set-icone">people</mat-icon>
+                    icon to insert <span class="highlight p-1 mx-1">Placeholder</span> which get replaced with order details when the email is sent.</div>
+            </div>
+            <div class="specific--order-confirm mt-3 border">
+                <div class="specific-msg-content">
+                    <angular-editor [config]="config" class="description_field" [(ngModel)]="eventOrderEmail">
+                    </angular-editor>
+                </div>
+            </div>
+
+            <div class="invoice-preview mt-3">
+                <div class="invoive-details">
+                    <mat-checkbox [(ngModel)]="ticketEventVouchersPDF">Attach ticket vouchers as a PDF <i class="fa fa-question-circle" aria-hidden="true" matTooltip="Attaching tickets vouchers as a PDF can make it easier for your tickets buyers to print, share and download  tickets to their Phone. "></i></mat-checkbox><br>
+                    <mat-checkbox [(ngModel)]="attachEventInvoice">Attach invoice <i class="fa fa-question-circle" aria-hidden="true" matTooltip="include an invoice with the order confirmation"></i></mat-checkbox>
+                    <div class="title mt-2 invoice-preview-title">
+                        Invoice preview
+                        <p>Edit the invoice text field to add details such as your company address and contact information.</p>
+                    </div>
+                    <div class="invoice-demo border rounded p-3">
+                        <div class="row m-0">
+                            <!-- <div [innerHtml]="eventOrderEmailPre"></div> -->
+                            <div class="title p-2">Invoice</div>
+                            <div class="empty-box ml-auto with-validation">
+                                <textarea [(ngModel)]="invoiceAddress" class=" rounded">
+                        </textarea>
+                                <span class="w-100 error-wrap" *ngIf="invoiceValidation">
+                            <small class="error">Too many lines. Maximum 6.</small>       
+                        </span>
+
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <div class="row m-0">
+                                <div class="blank-bar"> </div>
+                                <div class="blank-bar ml-auto"> </div>
+                                <div class="blank-bar"> </div>
+                                <div class="blank-bar ml-auto"> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 text-center">
+                <button mat-flat-button (click)="fnEventEmail()" class="remove-photo mt-4" style="color: #fff;">Save</button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="preview-global-order mt-2 border p-3 border-radius" *ngIf="confirmationType === 'GlobalOrderConfirmation'">
+        <div class="row m-0 align-items-center">
+            <div class="title">
+                Preview of global order confirmation
+            </div>
+            <div class="ml-auto">
+                <button mat-flat-button color="primary" [routerLink]="['/settings/order-confirmation']">Edit global order confirmation</button>
+            </div>
+        </div>
+        <div class="order-confirm border rounded mt-3">
+            <div class="msg-content border p-3 bottom-thankyou-preview">
+
+                <div [innerHtml]="eventOrderEmailPre"></div>
+
+                <!-- <div class="title">
+                    Thank you for your order
+                </div>
+                <div class="mt-3">
+                    <p>Dear [customer-name]</p>
+                    <p>Thank you for the order you recently placed for tickets to the event [event-name] (on event-start-date).</p>
+                </div>
+                <div class="sub-title mt-3">
+                    Your tickets
+                </div>
+                <div class="mt-3"> 
+                    <p>ticket-vouchers</p> 
+                    <p>Please bring these tickets with you to the event. Personal details such as your address may be used for verification on entry.</p> 
+                </div>
+
+                <div class="sub-title mt-3">
+                    Order summary 
+                </div>
+    
+                <div class="mt-3">
+                    [order-summary]
+                </div>
+
+                <div class="sub-title mt-3">
+                    Event details 
+                </div>
+                
+                <div class="mt-3">
+                    <p class="mb-0">Event name: [event-name]</p> 
+                    <p class="mb-0">Event date: [event-full-date]</p> 
+                    <p class="mb-0">Venue: [event-venue-name], [event-venue-postcode]</p>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+</div>

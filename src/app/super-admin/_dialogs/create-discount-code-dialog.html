@@ -1,0 +1,82 @@
+<div class="" role="document">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="modal-content ">
+        <div class="modal-header modal-bcolor-primary">
+            <p class="heading lead  work-content">Create discount code</p>
+            <button type="button" class="close-btn" data-dismiss="modal" aria-label="Close" (click)="onNoClick()"><span aria-hidden="true" class="white-text">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div>
+                <form [formGroup]="createCouponForm" class="row with-validation">
+                    <div class="form-group col-md-6">
+                        <label for="title">Coupon Title <span><i class="fa fa-asterisk" aria-hidden="true"></i></span> </label>
+                        <input type="text" class="form-control" formControlName="title" id="title" placeholder="Coupon Title">
+                        <span class="error-wrap" *ngIf="createCouponForm.get('title').touched || createCouponForm.get('title').dirty">
+                        <small *ngIf="createCouponForm.get('title').hasError('required')" class="error">Coupon Title is required.</small>
+                        <small *ngIf="createCouponForm.get('title').hasError('maxlength')" class="error">Coupon Title should be maximum 15 character.</small>
+                    </span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="max_redemption">Maximum Redemption <span><i class="fa fa-asterisk" aria-hidden="true"></i></span> </label>
+                        <input type="text" class="form-control" formControlName="max_redemption" id="max_redemption" placeholder="Maximum Redemption">
+                        <span class="error-wrap" *ngIf="createCouponForm.get('max_redemption').touched || createCouponForm.get('max_redemption').dirty">
+                        <small *ngIf="createCouponForm.get('max_redemption').hasError('required')" class="error">Maximum redemptions is required.</small>
+                        <small *ngIf="createCouponForm.get('max_redemption').hasError('pattern')" class="error">Maximum redemptions should be only in numbers.</small>
+                    </span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="code">Coupon Code <span><i class="fa fa-asterisk" aria-hidden="true"></i></span> </label>
+                        <input type="text" class="form-control" formControlName="code" id="code" aria-describedby="emailHelp" placeholder="Coupon Code">
+                        <span class="error-wrap" *ngIf="createCouponForm.get('code').touched || createCouponForm.get('code').dirty">
+                        <small *ngIf="createCouponForm.get('code').hasError('required')" class="error">Coupon code is required.</small>
+                        <small *ngIf="createCouponForm.get('code').hasError('maxlength')" class="error">Coupon code should be maximum 15 character.</small>
+                    </span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="type">Discount Type <span><i class="fa fa-asterisk" aria-hidden="true"></i></span> </label>
+                        <mat-select (selectionChange)="fnChangeDiscountType($event.value)" class="form-control" formControlName="type" id="type">
+                            <mat-option value="P">Percentage</mat-option>
+                            <mat-option value="F">Fixed Amount</mat-option>
+                        </mat-select>
+                        <span class="error-wrap" *ngIf="createCouponForm.get('type').touched || createCouponForm.get('type').dirty">
+                        <small *ngIf="createCouponForm.get('type').hasError('required')" class="error">Discount type is required.</small>
+                    </span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="discount">Discount</label>
+                        <input type="text" (keyup)="discount_check()" formControlName="discount" class="form-control" id="discount" placeholder="Discount">
+                        <span class="error-wrap" *ngIf="createCouponForm.get('discount').touched || createCouponForm.get('discount').dirty">
+                        <small *ngIf="createCouponForm.get('discount').hasError('required')" class="error">Discount value is required.</small>
+                        <small *ngIf="createCouponForm.get('discount').hasError('pattern')" class="error">Discount value should be only in numbers.</small>
+                        <small *ngIf="createCouponForm.get('discount').hasError('maxlength')" class="error">Coupon Title should be maximum 15 character.</small>
+                        <small *ngIf="diccount_error" class="error">Discount Maximum 100%.</small>
+                    </span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="valid_from">Valid From <span><i class="fa fa-asterisk" aria-hidden="true"></i></span> </label>
+                        <input type="text" (dateChange)="fnChangeValideFrom()" [min]="minDate" (click)="valid_from_picker.open()" formControlName="valid_from" [matDatepicker]="valid_from_picker" class="form-control" id="valid_from" placeholder="MM/DD/YYYY">
+                        <mat-datepicker #valid_from_picker></mat-datepicker>
+                        <span class="error-wrap" *ngIf="createCouponForm.get('valid_from').touched || createCouponForm.get('valid_from').dirty">
+                        <small *ngIf="createCouponForm.get('valid_from').hasError('required')" class="error">Valid from is required.</small>
+                    </span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="valid_till">Valid Till <span><i class="fa fa-asterisk" aria-hidden="true"></i></span> </label>
+                        <input (click)="valid_till_picker.open()" [min]="minTillDate" [matDatepicker]="valid_till_picker" type="text" formControlName="valid_till" class="form-control" id="valid_till" placeholder="MM/DD/YYYY">
+                        <mat-datepicker #valid_till_picker></mat-datepicker>
+                        <span class="error-wrap" *ngIf="createCouponForm.get('valid_till').touched || createCouponForm.get('valid_till').dirty">
+                        <small *ngIf="createCouponForm.get('valid_till').hasError('required')" class="error">Valid till is required.</small>
+                    </span>
+                    </div>
+                    <div class="example-button-row ml-auto mt-3">
+                        <button mat-raised-button (click)="fnCancelCreateCoupon()" class="cancel-btn">Cancel</button>
+                        <button *ngIf="!signleCouponDetail" mat-raised-button (click)="fnSubmitCreateCoupon()" class="mx-3 cupon-btn">Save discount code</button>
+                        <button *ngIf="signleCouponDetail" mat-raised-button (click)="fnSubmitCreateCoupon()" class="mx-3 cupon-btn">Update discount code</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

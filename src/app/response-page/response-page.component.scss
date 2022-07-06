@@ -1,0 +1,35 @@
+.sub-content{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    margin: auto;
+    width: 50%;
+    height: 230px; 
+    .ty-text{
+        font-size: 35px;
+        font-weight: bold;
+        font-style: italic;
+        color: #973c56;
+    }
+    .oops-text{
+        font-size: 35px;
+        font-weight: bold;
+        font-style: italic;
+        color: #ff7676;
+    }
+    .ty-image{
+        .image{
+            // width: 10%;
+        }
+    }
+    .oops-image{
+        .image{
+            width: 70px;
+            font-size: 40px;
+            font-weight: bolder;
+            color: #ff7676;
+        }
+    }
+}

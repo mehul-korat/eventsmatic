@@ -1,0 +1,369 @@
+::ng-deep .event-tickets {
+    .event-main {
+        .event-head {
+            .page-title {
+                font-size: 18px;
+                font-weight: 500;
+                margin-bottom: 20px;
+                text-align: left;
+                color: #181818;
+            }
+        }
+        .add-event-info {
+            background: #F6F6F645;
+            border: 1px solid #CECECE;
+            border-radius: 4px;
+            .event-content {
+                padding: 15px 15px;
+                h6 {
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: #181818;
+                }
+                .event-info {
+                    .asterisk {
+                        color: #FF0000;
+                        font-size: 5px;
+                        position: relative;
+                        bottom: 6px;
+                    }
+                    .fa-question {
+                        border-radius: 50%;
+                        font-size: 9px;
+                        padding: 3px 5px;
+                        background: #CECECE;
+                        opacity: 0.47;
+                        margin-left: 8px;
+                    }
+                    .events {
+                        margin-right: 15px;
+                        .event-image {
+                            border-radius: 4px;
+                            width: 80px;
+                            height: 80px;
+                        }
+                    }
+                    .upload-link {
+                        margin-right: 15px;
+                        .upload {
+                            background: #FFE6C8;
+                            border: 1px dashed #973c56;
+                            border-radius: 4px;
+                            align-items: center;
+                            display: flex;
+                            justify-content: center;
+                            width: 80px;
+                            height: 80px;
+                            .upload-icon {
+                                color: #973c56;
+                            }
+                            p {
+                                color: #2C2C2C;
+                            }
+                        }
+                    }
+                    .no-image-link {
+                        margin-right: 15px;
+                        .no-image {
+                            background: #E4E4E4;
+                            border: 1px dashed #E4E4E4;
+                            border-radius: 4px;
+                            align-items: center;
+                            display: flex;
+                            justify-content: center;
+                            width: 80px;
+                            height: 80px;
+                            .no-img {
+                                width: 25px;
+                                height: 25px;
+                            }
+                            p {
+                                color: #2C2C2C;
+                            }
+                        }
+                    }
+                    .select-event-img-sm {
+                        .select-event-image {
+                            border-radius: 10px;
+                            width: 150px;
+                            height: 150px;
+                            overflow: hidden;
+                            background-position: center !important;
+                            box-shadow: 6px 6px 10px #f1f1f1;
+                            background-repeat: no-repeat !important;
+                            background-size: 100%;
+                        }
+                    }
+                    .select-event-img-lg {
+                        .select-event-image {
+                            width: 400px;
+                            height: 150px;
+                            border-radius: 10px;
+                            overflow: hidden;
+                            background-position: center !important;
+                            box-shadow: 6px 6px 10px #f1f1f1;
+                            background-repeat: no-repeat !important;
+                        }
+                    }
+                }
+            }
+        }
+        .create-ticket {
+            background: #F6F6F645;
+            border: 1px solid #CECECE;
+            border-radius: 4px;
+            margin: 15px 0px;
+            .event-content {
+                padding: 15px 30px;
+                h6 {
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: #181818;
+                }
+                .event-info {
+                    .ticket-type-btn {
+                        background: #973c56;
+                        color: #FFFFFF;
+                    }
+                    .ticket-grp-btn {
+                        background: #973c56;
+                        color: #FFFFFF;
+                    }
+                }
+                .ticket-details {
+                    background: #e4f0fd;
+                    padding: 15px;
+                    border-radius: 4px;
+                    margin: 15px 0px;
+                    .sold-ticket {
+                        color: #973c56;
+                        text-align: end;
+                    }
+                    .remaining-ticket {
+                        color: #973c56
+                    }
+                }
+            }
+            button {
+                background-color: #973c56;
+                color: #ffffff;
+            }
+            .add-ticket-notification {
+                background-color: #FFE6C8;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .fa-bell {
+                transform: rotate(-45deg);
+                color: #FF6600;
+            }
+            .delete-btn {
+                background-color: #fff;
+                color: #212529;
+            }
+        }
+        .event-settings {
+            background: #F6F6F645;
+            border: 1px solid #CECECE;
+            border-radius: 4px;
+            margin: 15px 0px;
+            .event-content {
+                padding: 15px 15px;
+                h6 {
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: #181818;
+                }
+                .event-info {
+                    .text-italic {
+                        font-style: italic;
+                    }
+                    .info {
+                        position: relative;
+                        bottom: 2px;
+                    }
+                    .asterisk {
+                        color: #FF0000;
+                        font-size: 5px;
+                        position: relative;
+                        bottom: 6px;
+                    }
+                    .fa-question {
+                        border-radius: 50%;
+                        font-size: 9px;
+                        padding: 3px 5px;
+                        background: #CECECE;
+                        opacity: 0.47;
+                        margin-left: 8px;
+                    }
+                    .allow-donation {
+                        .mat-checkbox-layout {
+                            margin-bottom: 0px !important;
+                        }
+                    }
+                }
+            }
+        }
+        .event-setting-btn {
+            display: flex;
+            .cancel-btn {
+                background: #E1E1E1;
+                border-radius: 5px;
+                opacity: 1;
+                color: #2C2C2C;
+                text-align: center;
+                margin-left: auto;
+            }
+            .save-btn {
+                background: #973c56;
+                border-radius: 5px;
+                opacity: 1;
+                color: #FFFFFF;
+                text-align: center;
+                margin-left: 15px;
+            }
+        }
+    }
+}
+::ng-deep .angular-editor{
+    .angular-editor-textarea{
+        background-color: #ffffff !important;
+        min-height: 150px !important;
+    }
+} 
+
+.after-save-general-admission {
+    background-color: #FFE6C8;
+    font-weight: bold;
+    .ticket-status {
+        color: #973c56;
+    }
+    .tickets-main-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+::ng-deep .cancel-btn {
+    background-color: #FFE6C8;
+    outline: none;
+}
+
+ ::ng-deep .save-btn {
+    background-color: #973c56;
+    color: #ffffff;
+}
+
+::ng-deep .info {
+    position: relative;
+    bottom: 2px;
+    // padding-left: 8px;
+}
+
+.event-images {
+    width: 100px;
+    height: 70px;
+    background-color: #FFE6C8;
+    display: inline-block;
+    border-radius: 5px;
+    p {
+        color: #2C2C2C;
+    }
+    .fa-cloud-upload {
+        color: #973c56;
+    }
+    .fa-ban {
+        color: #2C2C2C;
+    }
+    &.active-image {
+        border: 3px solid #195bf3;
+    }
+}
+
+.create-ticket-types {
+    button {
+        background-color: #973c56;
+        color: #ffffff;
+    }
+    .add-ticket-notification {
+        background-color: #FFE6C8;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .fa-bell {
+        transform: rotate(-45deg);
+        color: #FF6600;
+    }
+    .delete-btn {
+        background-color: #fff;
+        color: #212529;
+    }
+}
+
+::ng-deep .fa-asterisk {
+    color: #FF0000;
+    font-size: 5px;
+    position: relative;
+    bottom: 6px;
+}
+
+.event-settings {
+    border-bottom: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}
+
+.sales-tax-container {
+    background-color: #F6F6F645;
+    border-top: 0px !important;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+}
+
+.form-control[readonly] {
+    background-color: transparent
+}
+
+.delete-tax {
+    align-items: center;
+    display: flex;
+    margin-left: 10px;
+    mat-icon {
+        padding: 5px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        color: red;
+    }
+}
+
+.tax-input {
+    width: calc(48% - 10px);
+    &:first-child {
+        margin-right: 0.8%;
+    }
+}
+
+.add-ticket-notification {
+    background-color: #FFE6C8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fa-bell {
+    transform: rotate(-45deg);
+    color: #FF6600;
+}
+
+::ng-deep .main-menu-tooltip {
+    background: #FF8800;
+}
+
+#ticket_module{
+    opacity: 0;
+    height: 1px;
+}

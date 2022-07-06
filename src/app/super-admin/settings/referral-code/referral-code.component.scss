@@ -1,0 +1,96 @@
+.main {
+    width: 100%;
+    
+    .referral-code-list {
+        .title {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .add-referral-code-btn {
+            border-radius: 20px;
+            background-color: #973c56;
+            color: #ffffff;
+        }
+        .tab-title {
+            font-weight: bold;
+        }
+        .fa-pencil {
+            background-color: #E3E6EB;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .fa-trash {
+            background-color: #E3E6EB;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    }
+}
+
+::ng-deep .add-referral-code-form {
+    .asterisk-icon {
+        padding: 2px;
+        .asterisk {
+            color: #FF0000;
+            font-size: 5px;
+            position: relative;
+            bottom: 6px;
+        }
+    }
+    .popup-cancel-btn {
+        min-width: 64px;
+        height: auto;
+        background: #DDDDDD 0% 0% no-repeat padding-box;
+        border-radius: 5px;
+        text-align: center;
+        color: #181818;
+        font-size: 14px;
+        line-height: 36px;
+        padding: 0px 16px;
+    }
+    .popup-save-btn {
+        min-width: 64px;
+        height: auto;
+        color: #fff;
+        background: #973c56 0% 0% no-repeat padding-box;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 14px;
+        line-height: 36px;
+        padding: 0px 16px;
+    }
+    .popup-cros-btn {
+        width: 25px;
+        height: 25px;
+        background: #B4D4FF 0% 0% no-repeat padding-box;
+        color: #973c56;
+        border-radius: 100px;
+        border: 0;
+        font-size: 19px;
+        line-height: 1.4;
+    }
+}
+
+.copy-btn{
+    
+    background-color: #E3E6EB;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, .87);
+}
+
+.action-btn{
+    
+    background-color: #E3E6EB;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, .87);
+    display: flex;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    text-align: center;
+}

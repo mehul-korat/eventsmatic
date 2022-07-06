@@ -1,0 +1,369 @@
+<div id="website_embed_code" class="">
+    <div class="main" *ngIf="CustomiseButtonDiv">
+
+        <div class="page-title">
+            Website Embed Codes
+        </div>
+        <p class="py-1 Customise-widgets-title">Embed a booking widget into your website so that your customer can book tickets directly.</p>
+
+        <div class="p-3 border rounded main-booking-widget">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="px-3 py-2">
+                            Set up a booking widget
+                        </div>
+                        <div class="ml-auto px-3 py-2">
+                            <!-- <button mat-flat-button class="mr-1" (click)="addReferralCode()">Add Referral Code</button> -->
+                            <!-- <button mat-flat-button class="mr-1" (click)="CustomiseButton()">Customise widget colors</button> -->
+                            <button mat-flat-button class="ml-1" (click)="EditButton()">Edit widget options</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12" *ngIf="!EditButtonDiv">
+                    <form [formGroup]="editWidgetsoptionForm">
+                        <div class="col-7">
+                            <label for="">Widget Background <span class="text-danger">*</span>  </label>
+                            <mat-select name="" id="" class="form-control" formControlName="fullWidget">
+                                <mat-option value="Filled Background">Filled Background</mat-option>
+                                <mat-option value="Transparent Background">Transparent Background</mat-option>
+                            </mat-select>
+                        </div>
+
+                        <div class="col-7 mt-3">
+                            <label for="">Show header and event info <span class="text-danger">*</span> </label>
+                            <mat-select name="" id="" class="form-control" formControlName="optionalWidget">
+                                <mat-option value="Show Header, event description and header image">Show Header, event description and header image</mat-option>
+                                <mat-option value="Hide header and event description">Hide header and event description</mat-option>
+                                <mat-option value="Show header and event description">Show header and event description</mat-option>
+                            </mat-select>
+                        </div>
+
+                        <div class="col-7 mt-3">
+                            <label for="">Events <span class="text-danger">*</span>  </label>
+                            <mat-select name="" id="" class="form-control" formControlName="eventTitle">
+                                <mat-option value="all">All Events</mat-option>
+                                <mat-option *ngFor="let allEvents of allEvents" value="{{allEvents.unique_code}}">{{allEvents.event_title}}</mat-option>
+                            </mat-select>
+                        </div>
+
+                    </form>
+
+                    <div class="col-7 mt-3">
+                        <button mat-flat-button class="edit-btn px-5" (click)="fnUpadateWidget()">Update Widget</button>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="py-3 ">
+                        Preview
+                    </div>
+                    <div class="card border-0">
+                        <p [innerHtml]="embededCodePreview"></p>
+                        <!-- <div class="card-header py-4">
+                            Sparkling Events
+                        </div>
+                        <div class="card-body pb-5">
+                            There are no events listed at the moment. Please check back soon.
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-8">
+                                    <span>Need help, lost your tickets, and have any questions? <a>Click here for help</a></span>
+                                </div>
+                                <div class="col-4 text-center poweredby">
+                                    <p class="m-0">Powered by</p>
+                                    <p class="web-title">Eventsmatic</p>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="py-3  ml-2">
+                        Directions
+                    </div>
+                    <!-- <div class="col-md-7 p-2">
+                        <mat-select name="" id="" class="form-control">
+                            <mat-option value="">For HTML Websites</mat-option>
+                            <mat-option value="">1</mat-option>
+                            <mat-option value="">2</mat-option>
+                            <mat-option value="">3</mat-option>
+                        </mat-select>
+                    </div> -->
+
+                    <div class="py-2 mt-2">
+                        Copy and paste the HTML code below into your website and the booking widget will show on your website.
+                    </div>
+
+                    <div class="html-code-div mt-2 border rounded p-2">
+                        {{embededCode}}
+                    </div>
+
+                    <div class="mt-3">
+                        <button mat-button type="submit" (click)="copyEmbedCode(embededCode)" class="appearance-save-btn">Copy Code</button>
+                    </div>
+                    <div class="py-3">
+                        The widget is responsive and will fit perfectly as per your layout.
+                    </div>
+
+                    <div class="py-3">
+                        If you don't know what to do with this code please send it to your web designer or the website manager.
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Customise widgets colors -->
+
+    <div class="px-3 py-4" *ngIf="!CustomiseButtonDiv">
+        <div class=" text-right text-primary" (click)="CustomiseButton()"><i class="fa fa-arrow-circle-left fa-lg"></i></div>
+        <div class=" page-title">
+            Widget Customisation
+        </div>
+        <p class="py-1 Customise-widgets-title">Customise how your widgets look using the options below</p>
+
+        <div class="p-3 border rounded ">
+            <div class="row">
+                <div class="col-12 px-3 ">
+                    Please note that any color changes will affect all of your widgets.
+                </div>
+
+                <div class="col-8 mt-3">
+                    <div class="my-2">
+                        <form [formGroup]="customiseWidgetForm">
+                            <label for="">Theme</label>
+                            <mat-select name="" id="" class="form-control" (selectionChange)="fnChangeTheme($event)" formControlName="selectTheme">
+                                <mat-option value="Select a theme">Select a theme</mat-option>
+                                <mat-option value="Classic Blue">Classic Blue</mat-option>
+                                <mat-option value="Green Shades">Green Shades</mat-option>
+                                <mat-option value="Gray Scale">Gray Scale</mat-option>
+                                <mat-option value="Sunshine">Sunshine</mat-option>
+                                <mat-option value="Black and White">Black and White</mat-option>
+                                <mat-option value="Turquoise">Turquoise</mat-option>
+                                <mat-option value="Firenze">Firenze</mat-option>
+                                <mat-option value="Phonedro">Phonedro</mat-option>
+                            </mat-select>
+                        </form>
+                    </div>
+                    <div class="my-3">
+                        Theme Colors
+                    </div>
+
+                    <div class="mt-2">
+                        <div class="row">
+                            <div class="col-8">
+                                background Color
+                            </div>
+                            <div class="col-3">
+                                <div class="text-center px-3 color-code rounded">
+                                    <div class="row">
+                                        <div class="d-inline-block p-2">{{bgColor}}</div>
+                                        <input class="bg-color-code d-inline-block ml-auto m-2" [(colorPicker)]="bgColor" [style.background]="bgColor" (value)="bgColor" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <div class="row">
+                            <div class="col-8">
+                                Text Color
+                            </div>
+                            <div class="col-3">
+                                <div class="text-center px-3 color-code rounded">
+                                    <div class="row">
+                                        <div class="d-inline-block p-2">{{bgTextColor}}</div>
+                                        <input class="text-color-code d-inline-block ml-auto m-2" [(colorPicker)]="bgTextColor" [style.background]="bgTextColor" (value)="bgTextColor" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="mt-2">
+                        <div class="row">
+                            <div class="col-8">
+                                Header background Color
+                            </div>
+                            <div class="col-3">
+                                <div class="text-center px-3 color-code rounded">
+                                    <div class="row">
+                                        <div class="d-inline-block p-2">{{headerColor}}</div>
+                                        <input class="header-color-code d-inline-block ml-auto m-2" [(colorPicker)]="headerColor" [style.background]="headerColor" (value)="headerColor" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <div class="row">
+                            <div class="col-8">
+                                Header Text Color
+                            </div>
+                            <div class="col-3">
+                                <div class="text-center px-3 color-code rounded">
+                                    <div class="row">
+                                        <div class="d-inline-block p-2">{{headerTextColor}}</div>
+                                        <input class="header-text-color-code d-inline-block ml-auto m-2" [(colorPicker)]="headerTextColor" [style.background]="headerTextColor" (value)="headerTextColor" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <div class="row">
+                            <div class="col-8">
+                                Button background Color
+                            </div>
+                            <div class="col-3">
+                                <div class="text-center px-3 color-code rounded">
+                                    <div class="row">
+                                        <div class="d-inline-block p-2">{{btnColor}}</div>
+                                        <input class="btn-color-code d-inline-block ml-auto m-2" [(colorPicker)]="btnColor" [style.background]="btnColor" (value)="btnColor" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <div class="row">
+                            <div class="col-8">
+                                Button Text Color
+                            </div>
+                            <div class="col-3">
+                                <div class="text-center px-3 color-code rounded">
+                                    <div class="row">
+                                        <div class="d-inline-block p-2">{{btnTextColor}}</div>
+                                        <input class="btn-text-color-code d-inline-block ml-auto m-2" [(colorPicker)]="btnTextColor" [style.background]="btnTextColor" (value)="btnTextColor" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-3">
+                        <button mat-flat-button class="save-btn px-5" (click)="fnUpadateCustomiseWidget()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class=" page-title my-3">
+            Preview of example events widget
+        </div>
+
+        <div class="px-3 pt-0 preview-example" [(colorPicker)]="bgTextColor" [style.color]="bgTextColor">
+            <div class="row">
+                <div class="preview" [(colorPicker)]="bgColor" [style.background]="bgColor">
+                    <div class="col-12 p-3 ticket-header" [(colorPicker)]="headerColor" [style.background]="headerColor" [(colorPicker)]="headerTextColor" [style.color]="headerTextColor">
+                        <div>
+                            Sparkling Events
+                        </div>
+                        <div class="">
+                            Lajawab Cooking Classes [DRAFT]
+                        </div>
+                        <div>
+                            Mon Jul 27 2020 6:00 - 10:00 | The Grand Hyatt
+                        </div>
+                    </div>
+
+                    <div class="col-12 px-5 py-3">
+                        Book Ticket
+                    </div>
+
+                    <div class="col-12 px-5 py-3 ticket-table-title">
+                        <div class="row">
+                            <div class="col-8">
+                                Ticket Type
+                            </div>
+                            <div class="col-2">
+                                Price
+                            </div>
+                            <div class="col-2">
+                                Quantity
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="col-12 mt-3 px-5">
+                        <div class="row">
+                            <div class="col-8">
+                                General Adminssion
+                            </div>
+                            <div class="col-2">
+                                $ 5000.00
+                            </div>
+                            <div class="col-2">
+                                <mat-select name="" id="" class="form-control">
+                                    <mat-option value="0">0</mat-option>
+                                    <mat-option value="1">1</mat-option>
+                                    <mat-option value="2">2</mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="col-12 px-5">
+                        <div class="row">
+                            <div class="col-10">
+                                Subtotal
+                            </div>
+
+                            <div class="col-2">
+                                $ 0.00
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="col-12 px-5 text-right">
+                        <button mat-flat-button class="next-btn px-5" [(colorPicker)]="btnColor" [style.background]="btnColor" [(colorPicker)]="btnTextColor" [style.color]="btnTextColor">Next</button>
+                    </div>
+                    <div class="col-12 px-5  pb-2">
+                        DISCRIPTION
+                    </div>
+                    <div class="col-12 px-5">
+                        <div class="row">
+                            <div class="col-8">
+                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur nihil est maxime! Suscipit inventore libero cumque, iure sequi reprehenderit debitis ut ipsam nemo. Optio delectus sequi vero nobis soluta molestiae.
+                            </div>
+                            <div class="col-4">
+                                <img src="../../../../assets/images/admin/Image 40.png" alt="" class="w-100">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4 p-3 ticket-footer" [(colorPicker)]="headerColor" [style.background]="headerColor" [(colorPicker)]="headerTextColor" [style.color]="headerTextColor">
+                        <div class="row">
+                            <div class="col-8 pt-3">
+                                <span>Need help, lost your tickets, and have any questions? <a>Click here for help</a></span>
+                            </div>
+                            <div class="col-4 text-center poweredby">
+                                <p class="m-0">Powered by</p>
+                                <p class="web-title">Eventsmatic</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>

@@ -1,0 +1,57 @@
+.settins-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 1rem;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    color: #2c2c2c;
+}
+
+.setting-left-menu {
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    width: 300px;
+    position: fixed;
+    z-index: 9;
+    top: 60px;
+}
+
+.setting-right-container {
+    width: calc(100% - 300px);
+    margin-left: 300px;
+    overflow: auto;
+    &.no-sidebar{
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+.setting-menu-icon {
+    width: 20px;
+    height: auto;
+    margin-left: 1rem;
+    // background-color: yellow;
+}
+
+.active {
+    color: #fff;
+    background-color: #70C0C1;
+}
+
+.common-setting-menu {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    font-weight: 500;
+}
+
+.common-sub-menu {
+    cursor: pointer;
+    padding-left: 50px;
+}
+
+.ml-auto {
+    margin-left: auto;
+}

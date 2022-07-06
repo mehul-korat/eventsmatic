@@ -1,0 +1,400 @@
+#my-boxoffice-top {
+    width: 100%;
+    height: 56px;
+    .inner {
+        background: #ffe2b7;
+        padding: 10px;
+        position: fixed;
+        top: 60px;
+        z-index: 99;
+        width: 100%;
+        .first {
+            align-items: center;
+            span {
+                font-size: 18px;
+                font-weight: 500;
+            }
+        }
+        .second {
+            justify-content: flex-end;
+            display: flex;
+            button {
+                background-color: #973c56;
+                font-size: 14px;
+                color: #fff !important;
+                border-radius: 25px;
+                text-decoration: none;
+                font-weight: 400;
+                i {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+}
+
+#list_boxoffice {
+    display: flex;
+    align-items: flex-start;
+    padding: 25px;
+    height: calc(100vh - 125px);
+    overflow-y: auto;
+    mat-card {
+        border-radius: 5px;
+        // margin: 0px 16px 20px;
+        box-shadow: 0px 3px 30px #fe6a4d33;
+        .boxoffice-title {
+            h6 {
+                font-size: 20px;
+            }
+        }
+        .content {
+            font-size: 12px;
+            padding: 0;
+            margin: 2% 1em;
+        }
+    }
+    .Selectboxoffice {
+        box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12),
+            0 3px 5px -1px rgba(0, 0, 0, 0.3);
+        .image-round-main {
+            display: flex;
+            justify-content: center;
+        }
+    }
+    .SelectboxofficeIcon {
+        background-color: #e6e6e6;
+        border-radius: 50%;
+        font-size: 45px;
+        display: flex;
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+        width: 100px;
+        img.mat-card-avatar {
+            height: 100%;
+            width: 100%;
+        }
+    }
+    .businness-btn {
+        border-radius: 40px 40px;
+        padding: 0 25px;
+        background-color: #973c56;
+        color: white;
+    }
+    .Newboxoffice-matcard {
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-shadow: unset;
+        border: 1px dashed #973c56;
+        border-radius: 20px;
+        transition: all 0.3s;
+        height: 100%;
+        &:hover {
+            background-color: #ffd8aa;
+            box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+                0 1px 3px 0 rgba(0, 0, 0, 0.12);
+            border: 1px dashed #ffd8aa;
+        }
+        h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+    }
+    .boxoffice-btn-main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .AddNewboxofficeIcon {
+        background-color: #973c56;
+        border-radius: 50%;
+        height: 60px;
+        width: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img.mat-card-avatar {
+            height: 40px;
+            width: 40px;
+        }
+    }
+}
+
+.left-boxoffice-main{
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    width: 800px;
+    position: fixed;
+    z-index: 9;
+    top: 60px;
+}
+.right-testi-main{
+    width: calc(100% - 800px);
+    margin-left: 800px;
+    overflow: auto;   
+}
+@media only screen and (max-width: 765px) and (orientation: portrait) {
+    mat-card {
+        margin-right: 0 !important;
+        padding-bottom: 10px;
+    }
+    .Selectboxoffice {
+        margin-bottom: 10px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    #Add-new-boxoffice {
+        mat-card {
+            margin: 0px 0px 20px;
+        }
+    }
+    ::ng-deep #admin-boxoffice .inner-pad {
+        padding: 10px !important;
+    }
+    ::ng-deep .form-group {
+        margin-bottom: 0;
+    }
+    ::ng-deep .mat-form-field {
+        margin-bottom: 0;
+    }
+    ::ng-deep .select-hide {
+        display: none;
+    }
+    ::ng-deep .mt-res {
+        margin-top: 30px;
+    }
+    ::ng-deep .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+        transform: translateY(0%) !important;
+    }
+}
+
+@media only screen and (max-width: 767px) and (orientation: landscape) {
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    ::ng-deep .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+        transform: translateY(0%) !important;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    #Add-new-boxoffice {
+        mat-card {
+            margin: 0px 0px 20px;
+        }
+    }
+}
+
+// <-----------create-new-boxoffice-dialog----->
+::ng-deep #admin-boxoffice {
+    // margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+    .inner-pad {
+        padding: 60px;
+    }
+    h2 {
+        color: #973c56;
+        font-weight: bolder;
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+    .admin-boxoffice-Submitbutton {
+        background-color: #973c56;
+        color: white;
+        padding: 2px 45px;
+    }
+    .close.close-btn {
+        // position: absolute;
+        // right: 0px;
+        // top: -60px;
+    }
+}
+::ng-deep .popup-title {
+    h2 {
+        color: #000;
+    }
+}
+// ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix{
+// 	padding: 15px 0 15px 10px;
+// }
+::ng-deep .mat-form-field-infix {
+    border-top: unset;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+    transform: inherit;
+}
+
+::ng-deep .mat-form-field-label-wrapper {
+    // .mat-empty{
+    // }
+    top: -0.44375em;
+}
+.mb-30 {
+    margin-bottom: 30px;
+}
+::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0;
+}
+
+// ::ng-deep .mat-form-field-infix input{
+// 	line-height: 55px;
+// }
+::ng-deep .bottom-border-field .mat-form-field-underline {
+    bottom: 0;
+}
+
+::ng-deep .bottom-border-field .mat-form-field-infix {
+    padding: 0.5em 0 !important;
+}
+
+.left-side-main-menu {
+    display: none !important;
+}
+
+mat-drawer.left-side-container.left-side-main-menu.mat-drawer.ng-tns-c2-0.ng-trigger.ng-trigger-transform.mat-drawer-side.mat-drawer-opened.ng-star-inserted {
+    display: none;
+}
+
+.signle-boxoffice {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    .boxoffice-title {
+        h6 {
+            font-size: 24px;
+            font-weight: 500;
+        }
+    }
+    .delete-btn {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        width: 40px;
+        height: 40px;
+        // background-color: #ff4a4a;
+        // transform: rotate(45deg);
+        color: #888;
+        font-size: 14px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding: 8px;
+        cursor: pointer;
+        // i{
+        //     transform: rotate(-45deg);
+        // }
+    }
+}
+::ng-deep .popover {
+    .popover-body {
+        padding: 0;
+        i {
+            font-size: 20px;
+        }
+    }
+    .pop-menu-item {
+        transition: all 0.3s;
+        padding: 6px 10px;
+        &:hover {
+            background: #ffe2b7;
+        }
+    }
+}
+::ng-deep .admin-business-Submitbutton {
+    color: #ffffff;
+    background: #973c56;
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.close.close-btn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
+.first-new-boxoffice {
+   
+    padding: 0px 30px;
+    .new-box-office-box {
+        width: 100%;
+        // max-width: 900px;
+        padding: 20px;
+        box-shadow: 0 4px 40px rgb(159 246 255 / 40%);
+        margin: 25px 0;
+    }
+    .main-testimonial-wrap {
+        .single-common-testimonial {
+            margin-left: 50px;
+            padding-bottom: 50px;
+            .testimonial-card {
+                background-color: #fff;
+                border-radius: 12px;
+                box-shadow: 0 4px 40px rgb(159 246 255 / 40%);
+
+                padding: 14px;
+                position: relative;
+                width: 380px;
+                /* text-align: center; */
+                /* display: block; */
+                padding-left: 45px;
+                margin-top: 46px;
+                .store-img {
+                    width: 64px;
+                    height: 64px;
+                    border-radius: 100%;
+                    border: 5px solid #ffd8aa;
+                    position: absolute;
+                    left: -30px;
+                    top: -30px;
+                    img {
+                        width: 100%;
+                        border-radius: 100%;
+                    }
+                }
+                p{
+                    font-size: 13px;
+                }
+                .testimonial-name {
+                    display: flex;
+                    img{
+                        width: 22px;
+                        margin-right: 10px;
+                    }
+                    h3 {
+                        text-align: justify;
+                        margin-bottom: 4px;
+                        color: #fe6a4d;
+                        font-weight: 500;
+                        letter-spacing: 0.4px;
+                        font-size: 14px;
+                        line-height: 1;
+                    }
+                    span {
+                        color: #2c2c2c;
+                        opacity: 0.5;
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+::ng-deep .confirmation-dialog {
+    .mat-dialog-container {
+        padding: 0 !important;
+    }
+}
+
+.loader-main{
+  
+    background: rgba(255, 255, 255, 1)  !important;
+  }

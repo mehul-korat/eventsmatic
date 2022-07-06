@@ -1,0 +1,50 @@
+<div class="main">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="page-title">
+        Referral Code
+    </div>
+    <div class="mt-2">
+        If you would like to apply the Referral code, please specify the details below.
+    </div>
+
+    <div class="referral-code-list shadow mt-3">
+        <div class="border-bottom px-4 py-3">
+            <div class="row m-0 align-items-center">
+                <div class="title">
+                    Referral Code
+                </div>
+                <div class="ml-auto">
+                    <button (click)="fnAddReferralCode()" class="add-referral-code-btn px-5" mat-flat-button>Add Referral Code</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-bottom px-4 pb-3">
+            <div class="mt-3" fxLayout="row">
+                <div class="tab-title pt-2" fxFlex="20">Referral Name</div>
+                <div class="tab-title pt-2" fxFlex="20">Referral Code</div>
+                <div class="tab-title pt-2" fxFlex="50">URL</div>
+                <div class="tab-title text-right pt-2" fxFlex="10">Action</div>
+            </div>
+        </div>
+
+        <div class="border-bottom px-4 py-3" *ngFor="let rCodes of allReferralCodeList; let i=index;">
+            <div class="mt-3" fxLayout="row">
+                <div class="" fxFlex="20">{{rCodes.type}}</div>
+                <div class="" fxFlex="20">{{rCodes.code}}</div>
+                <div class="" fxFlex="35">
+                    <span class="url">{{boxOfficeUrl}}?{{rCodes.type}}={{rCodes.code}}</span>
+                    <i matTooltipPosition="above" matTooltip="Copy Url" (click)="copyRefferUrl(boxOfficeUrl+'?'+rCodes.type+'='+rCodes.code)" class="fa fa-copy fa-lg copy-btn mx-2 p-2"></i>
+                </div>
+                <div class="text-right d-flex align-items-start justify-content-end" fxFlex="25">
+                    <i (click)="fnShare('twitter',boxOfficeUrl+'?'+rCodes.type+'='+rCodes.code);" class="action-btn fa fa-twitter fa-lg p-2"></i>
+                    <i (click)="fnShare('facebook',boxOfficeUrl+'?'+rCodes.type+'='+rCodes.code);" class="fa action-btn ml-2 fa-facebook fa-lg p-2"></i>
+                    <i class="action-btn fa fa-pencil p-2 ml-2" (click)="updateReferralCode(i)"></i>
+                    <i class="action-btn fa fa-trash p-2 ml-2" (click)=" fnDeleteReferralCode(i)"></i>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

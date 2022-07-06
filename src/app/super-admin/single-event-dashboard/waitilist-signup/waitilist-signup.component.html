@@ -1,0 +1,170 @@
+<div id="waitilist-signup" class="main">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="">
+        <div class="top-heading-main">
+            <h4 class="page-title d-flex"> Waitlist
+                <mat-select (selectionChange)="fnChangeOccurrence($event)" [(ngModel)]="selectedOccurrence" *ngIf="recurringEvent == 'Y'" class="form-control col-4 ml-auto">
+                    <mat-option value="all">All Occurrences</mat-option>
+                    <mat-option *ngFor="let element of allOccurrenceList; let i=index;" value="{{element.unique_code}}">{{element.occurance_start_date |date :'mediumDate'}} {{element.occurance_start_time}} - {{element.occurance_end_time}}</mat-option>
+                </mat-select>
+            </h4>
+            <p> 
+                Set up a waitlist to collect email addresses from prospective tickets buyers. When tickets become available, you can notify the sign-ups by sending them a Broadcast or exporting the data and using an alternative tool.
+            </p>
+        </div>
+        <div class="bottom-waitlist-main">
+            <form [formGroup]="waitListForm" class="with-validation">
+                <div class="waitilist-deatils-top">
+                    <h4> Settings </h4>
+                    <mat-checkbox class="example-margin" [checked]="activeWaitlist" (change)="fnActiveWaitlist($event)">Activate waitlist</mat-checkbox>
+                </div>
+                <div class="bottom-hide-show-wrap" *ngIf="activeWaitlist">
+                    <mat-checkbox class="example-margin" [checked]="showTicket == 'Y'" (change)="fnShowTicket($event)">Show only when no tickets are available</mat-checkbox>
+
+                    <div class="fileds-main">
+                        <div class="form-group col-md-12 col-lg-12 col-sm-12">
+                            <label>Call to action<span class="text-danger">*</span> <i class="fa fa-question-circle" aria-hidden="true"  
+                                    matTooltip="This is what will be displayed on event action buttons and as a title above the waitlist form" ></i> </label>
+
+                            <input class="form-control ng-pristine ng-invalid ng-touched" formControlName="btn_text" placeholder="Join waiting list">
+                            <span class="error-wrap" *ngIf="waitListForm.get('btn_text').dirty || waitListForm.get('btn_text').touched"><small *ngIf="waitListForm.get('btn_text').hasError('required')" class="error text-left">Join waiting list  is required.</small></span>
+                        </div>
+                        <div class="form-group col-md-12 col-lg-12 col-sm-12">
+                            <label>Event page text<span class="text-danger">*</span> <i class="fa fa-question-circle" aria-hidden="true"  
+                                    matTooltip="Description above tickets waitlist form" ></i> </label>
+
+                            <input class="form-control ng-pristine ng-invalid ng-touched" formControlName="event_page_text" placeholder="Join waiting list to be notified when tickets become available">
+                            <span class="error-wrap" *ngIf="waitListForm.get('event_page_text').dirty || waitListForm.get('event_page_text').touched"><small *ngIf="waitListForm.get('event_page_text').hasError('required')" class="error text-left">Please enter your contact id is required.</small></span>
+                        </div>
+                        <div class="form-group col-md-12 col-lg-12 col-sm-12">
+                            <label>Confirmation message <span class="text-danger">*</span> <i class="fa fa-question-circle" aria-hidden="true"  
+                                    matTooltip="This will be shown to the user after they have signed up the waitlist   " ></i> </label>
+
+                            <input class="form-control ng-pristine ng-invalid ng-touched" formControlName="confirmation_msg" placeholder="Done! You are on the waiting list.">
+                            <span class="error-wrap" *ngIf="waitListForm.get('confirmation_msg').dirty || waitListForm.get('confirmation_msg').touched"><small *ngIf="waitListForm.get('confirmation_msg').hasError('required')" class="error text-left">Confirmation  is required.</small></span>
+                        </div>
+                    </div>
+                    <div class="bottom-deatils-save-btn normal-btns">
+                        <div class="action-btns col-md-12 col-lg-12 col-sm-12">
+                            <button mat-raised-button class="save-btn" [disabled]="saveDisabled" color="primary" (click)="fnSavewaitlist()"> 
+                                <span *ngIf="!saveDisabled">Save</span>
+                                <div *ngIf="saveDisabled" class="button-spinner">
+                                    <div class="double-bounce1"></div>
+                                    <div class="double-bounce2"></div>
+                                </div>    
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="bottom-hide-waiting">
+            <div class="side-common-btn">
+                <button mat-flat-button (click)="fnExportData()" color="primary"> Export Data </button>
+                <button mat-flat-button color="primary" (click)="goToCreateBroadcast()"> Create Broadcast </button>
+            </div>
+            <mat-tab-group>
+                <mat-tab label="All ({{getAllWaitingListData ? getAllWaitingListData.count : 0}})">
+                    <div class="top-search-bar">
+                        <div class="form-group col-sm-12 col-12 col-lg-12 col-md-12 col-xl-12">
+                            <span class="fa fa-search search-form"></span>
+                            <input [(ngModel)]="search.keyword" (keyup)="fnALLSearch()" class="form-control" placeholder="Search by email">
+                        </div>
+                    </div>
+                    <div class="main-table-content waitlist-table mt-4">
+                        <div class="">
+                            <div class="heads main-heading-content" fxLayout="row">
+                                <div class="" fxFlex="30">Email</div>
+                                <div class="" fxFlex="30">Signed up</div>
+                                <div class="" fxFlex="20">Notified</div>
+                                <div class="" fxFlex="20">Action</div>
+                            </div>
+                            <div *ngIf="getAllWaitingListData && getAllWaitingListData.data.length > 0">
+                                <div *ngFor="let val of getAllWaitingListData.data;let index = i;">
+                                    <div class="content" fxLayout="row">
+                                        <div class="tb-data" fxFlex="30">{{val.email}}</div>
+                                        <div class="tb-data" fxFlex="30">
+                                            {{val.created_at}}
+                                            <!-- <div *ngIf="val.signed_up === 'N'">NO</div> -->
+                                        </div>
+                                        <div class="tb-data" fxFlex="20">
+                                            <div *ngIf="val.status === 'BUY' || val.status === 'NEW'">NO</div>
+                                            <div *ngIf="val.status === 'NOTIFY'">YES</div>
+                                        </div>
+                                        <div class="tb-data" fxFlex="20">
+                                            <button (click)="onDeleteRec(val.unique_code)" mat-fab color="warn" class="delete-btn" aria-label="Example icon button with a delete icon">
+                                                Delete
+                                              </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="no-data-label" *ngIf="getAllWaitingListData && getAllWaitingListData.data.length == 0">
+                                <div class="no-data-view">
+                                    <img src="../../../assets/images/no-data-found.svg" />
+                                    <label> No data available.</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="New signups ({{getNewWaitingListData ? getNewWaitingListData.count : 0}})">
+                    <div class="top-search-bar">
+                        <div class="form-group col-sm-12 col-12 col-lg-12 col-md-12 col-xl-12">
+                            <span class="fa fa-search search-form"></span>
+                            <input [(ngModel)]="search.keyword" (keyup)="fnNewSearch()" class="form-control" placeholder="Search by email">
+                        </div>
+                    </div>
+                    <div class="main-table-content waitlist-table mt-4">
+                        <div class="">
+                            <div class="heads main-heading-content" fxLayout="row">
+                                <div class="" fxFlex="30">Email</div>
+                                <div class="" fxFlex="30">Signed up</div>
+                            </div>
+                            <div *ngIf="getNewWaitingListData && getNewWaitingListData.data">
+                                <div *ngFor="let val of getNewWaitingListData.data;let index = i;">
+                                    <div class="content" fxLayout="row">
+                                        <div class="tb-data" fxFlex="30">{{val.email}}</div>
+                                        <div class="tb-data" fxFlex="30">
+                                            <div *ngIf="val.signed_up === 'Y'">YES</div>
+                                            <div *ngIf="val.signed_up === 'N'">NO</div>
+                                            <!-- <div *ngIf="val.status === 'NEW'">YES</div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Notified signups ({{getNotifyWaitingListData ? getNotifyWaitingListData.count : 0}})">
+                    <div class="top-search-bar">
+                        <div class="form-group col-sm-12 col-12 col-lg-12 col-md-12 col-xl-12">
+                            <span class="fa fa-search search-form"></span>
+                            <input [(ngModel)]="search.keyword" (keyup)="fnNotitySearch()" class="form-control" placeholder="Search by email">
+                        </div>
+                    </div>
+                    <div class="main-table-content waitlist-table mt-4">
+                        <div class="">
+                            <div class="heads main-heading-content" fxLayout="row">
+                                <div class="" fxFlex="30">Email</div>
+                                <div class="" fxFlex="30">Notified</div>
+                            </div>
+                            <div *ngIf="getNotifyWaitingListData && getNotifyWaitingListData.data">
+                                <div *ngFor="let val of getNotifyWaitingListData.data;let index = i;">
+                                    <div class="content" fxLayout="row">
+                                        <div class="tb-data" fxFlex="30">{{val.email}}</div>
+                                        <div class="tb-data" fxFlex="30">
+                                            <div *ngIf="val.status === 'BUY' || val.status === 'NEW'">NO</div>
+                                            <div *ngIf="val.status === 'NOTIFY'">YES</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>

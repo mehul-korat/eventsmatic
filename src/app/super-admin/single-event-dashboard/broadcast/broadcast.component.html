@@ -1,0 +1,214 @@
+<div id="broadcast" class="main">
+    <div class="broadcast-deatails" *ngIf="createBroadcast">
+        <div class="">
+            <div class="top-heading-main">
+                <h4 class="page-title"> Broadcasts </h4>
+                <p>Send important event updates to your ticket buyers via email.</p>
+            </div>
+            <div class="bottom-broadcast-wrap">
+                <div class="broadcast-notification">
+                    <i class="fa fa-bell" aria-hidden="true"></i>
+                    <p>Broadcasts can not be used for sending anything other than important event updates. If you would like to send marketing emails please use our <a [href]="weberrLink" target="_blank">Weberr</a> Product</p>
+
+                </div>
+                <div class="manage-broadcast-table">
+                    <div class="main-table-content main-cust-table-content">
+                        <div class="add-broadcast-main">
+                            <h3>
+                                Manage Broadcasts
+                            </h3>
+                            <button mat-flat-button color="primary" (click)="fnCreateBroadcast()"> Create Broadcast </button>
+
+                        </div>
+                        <div class="">
+                            <div class="heads main-heading-content drageble" fxLayout="row">
+                                <div class="heading-table" fxFlex="25">Subject</div>
+                                <div class="heading-table" fxFlex="25">Recipients</div>
+                                <div class="heading-table" fxFlex="25">Status</div>
+                                <div class="heading-table" fxFlex="25">Date</div>
+                            </div>
+                            <div *ngIf="getAllBroadcastData.length > 0">
+                                <div class="content" class="drageble-list" *ngFor="let getAllBroadcastData of getAllBroadcastData; let i=index">
+                                    <div class="drageble-box" fxLayout="row">
+                                        <div class="tb-data heading-table" (click)="previewBroadcast(i)" fxFlex="25"> <a> {{getAllBroadcastData.subject}} </a> </div>
+                                        <div class="tb-data heading-table" fxFlex="25"> {{getAllBroadcastData.recipients}} </div>
+                                        <div class="tb-data heading-table {{getAllBroadcastData.status == 'draft' ? 'text-black' : 'text-green'}} text-capitalize" fxFlex="25">{{getAllBroadcastData.status}}</div>
+                                        <div class="tb-data heading-table" fxFlex="25">{{getAllBroadcastData.created_at}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div *ngIf="getAllBroadcastData.length == 0">
+                                <p class="my-2 text-center">No record found.</p>
+                            </div> -->
+                            <div class="no-data-label" *ngIf="getAllBroadcastData.length == 0">
+                                <div class="no-data-view">
+                                    <img src="../../../assets/images/no-data-found.svg" />
+                                    <label> No data available.</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div #new_broadcast_start>
+    </div>
+    <div class="create-broadcast-main" *ngIf="!createBroadcast">
+        <div class="container-fluid">
+            <div class="top-heading-main">
+                <h4 class="d-flex">
+                    <mat-icon (click)="createBroadcast=!createBroadcast" class="mr-3 pointer">west</mat-icon> Create Broadcast</h4>
+            </div>
+            <form [formGroup]="createBroadcastForm" class="with-validation">
+
+
+                <div class="bottom-create-form">
+                    <div class="form-group col-md-12 col-lg-12 col-sm-12">
+                        <label>Recipients<span class="text-danger">*</span> <i class="fa fa-question-circle" aria-hidden="true"  
+                                    matTooltip="When your customers have a question they can either contact you via contact form that forwards on to you can specify your own contact instructions." ></i> 
+                        </label>
+                        <mat-select class="form-control clr-black" formControlName="recipients" id="exampleFormControlSelect1">
+                            <!-- <mat-option value="select Recipients">select Recipients</mat-option> -->
+                            <mat-option value="BUY">All ticket buyers ({{allWaitingListData?allWaitingListData.BUY:0}})</mat-option>
+                            <mat-option value="ALL">All waitlist signups ({{allWaitingListData?allWaitingListData.ALL:0}})</mat-option>
+                            <mat-option value="NEW">New waitlist signups ({{allWaitingListData?allWaitingListData.NEW:0}})</mat-option>
+                            <mat-option value="NOTIFY">Notified waitlist signups ({{allWaitingListData?allWaitingListData.NOTIFY:0}})</mat-option>
+                        </mat-select><br>
+                        <span class="error-wrap" *ngIf="createBroadcastForm.get('recipients').touched || createBroadcastForm.get('recipients').dirty">
+                            <small *ngIf="createBroadcastForm.get('recipients').hasError('required')" class="error">Recipients is required.</small>
+                        </span>
+                    </div>
+                    <div *ngIf="recurrenceEvent == 'Y'" class="form-group col-md-12 col-lg-12 col-sm-12">
+                        <label>Occurrences<span class="text-danger">*</span> <i class="fa fa-question-circle" aria-hidden="true" matTooltip="When your customers have a question they can either contact you via contact form that forwards on to you can specify your own contact instructions." ></i> 
+                        </label>
+                        <mat-select (selectionChange)="fnChangeOccurrence($event)" class="form-control clr-black" id="exampleFormControlSelect2">
+                            <!-- <mat-option value="select Recipients">select Recipients</mat-option> -->
+                            <mat-option *ngFor="let element of allOccurrenceList; let i=index" value="{{element.unique_code}}">
+                                <span *ngIf="element.occurance_start_date!=element.occurance_end_date">
+                                    {{element.occurance_start_date |date :'mediumDate'}} {{element.occurance_start_time}} To {{element.occurance_end_date |date :'mediumDate':''}} {{element.occurance_end_time}}
+                                </span>
+                                <span *ngIf="element.occurance_start_date==element.occurance_end_date">
+                                    {{element.occurance_start_date |date :'mediumDate'}} {{element.occurance_start_time}} {{element.occurance_start_time?'-':''}} {{element.occurance_end_time}}
+                                </span>
+                            </mat-option>
+
+                        </mat-select><br>
+                        <span class="error-wrap" *ngIf="occurrenceError">
+                            <small *ngIf="occurrenceError" class="error">Occurrence is required.</small>
+                        </span>
+                    </div>
+
+
+                    <div class="form-group col-md-12 col-lg-12 col-sm-12">
+                        <label>Subject<span class="text-danger">*</span> <i class="fa fa-question-circle" aria-hidden="true"  
+                                matTooltip="When your customers have a question they can either contact you via contact form that forwards on to you can specify your own contact instructions." ></i> 
+                        </label>
+                        <input class="form-control ng-pristine ng-invalid ng-touched" formControlName="subject">
+                        <span class="error-wrap" *ngIf="createBroadcastForm.get('subject').touched || createBroadcastForm.get('subject').dirty">
+                            <small *ngIf="createBroadcastForm.get('subject').hasError('required')" class="error">Subject is required.</small>
+                        </span>
+                    </div>
+
+
+                    <div class="form-group col-md-12 col-lg-12 col-sm-12">
+                        <label>Message<span class="text-danger">*</span> </label>
+                        <angular-editor [config]="config" [(ngModel)]="broadcast_message" class="description_field" name="editor1" formControlName="message">
+                        </angular-editor>
+                        <span class="error-wrap" *ngIf="createBroadcastForm.get('message').touched || createBroadcastForm.get('message').dirty">
+                            <small *ngIf="createBroadcastForm.get('message').hasError('required')" class="error">Enter your message, Message is required.</small>
+                        </span>
+                    </div>
+
+
+                    <div class="form-group col-md-12 col-lg-12 col-sm-12">
+                        <label>Send<span class="text-danger">*</span> </label>
+                        <mat-select class="form-control clr-black" [(ngModel)]="sendingType" formControlName="send" (selectionChange)="fnSelectionChange($event)" id="exampleFormControlSelect1">
+                            <mat-option value="IMM">Immediately </mat-option>
+                            <mat-option value="AT_SED_DATE_TIME">At a scheduled date and time</mat-option>
+                            <mat-option value="AT_SED_ITR_BFO_EVT_ST">At a scheduled interval before the event start</mat-option>
+                            <mat-option value="AT_SED_ITR_AFT_EVT_ND">At a scheduled interval after the event ends </mat-option>
+                        </mat-select><br>
+                        <span class="error-wrap" *ngIf="createBroadcastForm.get('send').touched || createBroadcastForm.get('send').dirty">
+                            <small *ngIf="createBroadcastForm.get('send').hasError('required')" class="error">Sending Option is required.</small>
+                        </span>
+                    </div>
+
+                    <div class="mb-2 d-flex col-md-12 col-lg-12 col-sm-12" *ngIf="sendOptions === 'AT_SED_DATE_TIME'">
+
+                        <div class="col-3 p-0 d-inline-block">
+                            <label for="">Date :</label>
+                            <div class="matDate ">
+                                <mat-datepicker-toggle matSuffix [for]="ticketIssuedTo" class="dateIcon"></mat-datepicker-toggle>
+                                <input type="text" formControlName="scheduledDate" (dateChange)="fnChangeEventStartDate()" [min]="startDate" [matDatepicker]="ticketIssuedTo" (click)="ticketIssuedTo.open()" class="form-control matInputdate">
+                                <mat-datepicker #ticketIssuedTo></mat-datepicker>
+                            </div>
+                            <span class="error-wrap" *ngIf="createBroadcastForm.get('scheduledDate').touched || createBroadcastForm.get('scheduledDate').dirty">
+                                <small *ngIf="createBroadcastForm.get('scheduledDate').hasError('required')" class="error">Scheduled date is required.</small>
+                            </span>
+                        </div>
+
+                        <div class="col-3 d-inline-block">
+                            <label for="">Time :</label>
+                            <mat-select *ngIf="!scheduledDateToday" formControlName="scheduledTime" class="form-control">
+                                <mat-option *ngFor="let fullDayTimeSlote of fullDayTimeSlote; let i=index" value="{{fullDayTimeSlote}}">{{transformTime24To12(fullDayTimeSlote)}}</mat-option>
+                            </mat-select>
+                            <mat-select *ngIf="scheduledDateToday" formControlName="scheduledTime" class="form-control">
+                                <mat-option  [ngClass]="{'hidden-slot':currentTime > fullDayTimeSlote}" *ngFor="let fullDayTimeSlote of fullDayTimeSlote; let i=index" value="{{fullDayTimeSlote}}">{{transformTime24To12(fullDayTimeSlote)}}</mat-option>
+                            </mat-select>
+                            <br>
+                            <span class="error-wrap" *ngIf="createBroadcastForm.get('scheduledTime').touched || createBroadcastForm.get('scheduledTime').dirty">
+                                <small *ngIf="createBroadcastForm.get('scheduledTime').hasError('required')" class="error">Scheduled time is required.</small>
+                            </span>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group col-md-12 col-lg-12 col-sm-12" *ngIf="sendOptions === 'AT_SED_ITR_BFO_EVT_ST' || sendOptions === 'AT_SED_ITR_AFT_EVT_ND'">
+                        <mat-select formControlName="scheduledInterval" class="col-2 form-control d-inline-block">
+                            <mat-option value="01">01</mat-option>
+                            <mat-option value="02">02</mat-option>
+                            <mat-option value="03">03</mat-option>
+                            <mat-option value="04">04</mat-option>
+                            <mat-option value="05">05</mat-option>
+                            <mat-option value="06">06</mat-option>
+                            <mat-option value="07">07</mat-option>
+                            <mat-option value="08">08</mat-option>
+                            <mat-option value="09">09</mat-option>
+                            <mat-option value="10">10</mat-option>
+                            <mat-option value="11">11</mat-option>
+                            <mat-option value="12">12</mat-option>
+                        </mat-select>
+                        <span class="ml-2">/  Hours</span><br>
+                        <span class="error-wrap" *ngIf="createBroadcastForm.get('scheduledInterval').touched || createBroadcastForm.get('scheduledInterval').dirty">
+                            <small *ngIf="createBroadcastForm.get('scheduledInterval').hasError('required')" class="error">Scheduled time is required.</small>
+                        </span>
+                    </div>
+
+                    <div class="form-group col-md-12 col-lg-12 col-sm-12">
+                        <div class="terms-privicy-main">
+                            <mat-checkbox class="example-margin" formControlName="terms">I have read and agree to the following terms:</mat-checkbox>
+                            <p> <span class="clr-black"> (1)</span> This email is not a marketing communication.<span class="clr-black"> (2) </span> This is an essential service email relating to the event my ticket buyers have purchased tickets for.
+                                <span class="clr-black"> (3) </span> Replies to this email will go to 'iitstudent2018@gmail.com' I am aware this email address will be visible to the recipients of the email. <span class="clr-black"> (4) </span> The email
+                                address 'iitstudent2018@gmail.com' is a valid email address that can receive emails and is in my control.<span class="clr-black">(5) </span> I will handle any responses and/or complaints in relation to this email. </p>
+                        </div>
+                        <span class="error-wrap" *ngIf="createBroadcastForm.get('terms').touched || createBroadcastForm.get('terms').dirty">
+                            <small *ngIf="createBroadcastForm.get('terms').hasError('required')" class="error">T & C is required.</small>
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="form-group col-md-12 col-lg-12 col-sm-12">
+                    <div class="botttom-buttons">
+                        <button mat-flat-button class="save-draf-btn mr-2" (click)="fnOnSubmitForm('draft')" color="primary"> Save Draft </button>
+                        <button mat-flat-button color="primary" (click)="fnOnSubmitForm('send')"> Create and Send Broadcast </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

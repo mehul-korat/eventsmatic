@@ -1,0 +1,58 @@
+<div class="bg-white">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <form [formGroup]="privacyPolicesForm" class="with-validation">
+        <div class="main main-work-area">
+            <div class="row mx-auto">
+                <div class="col-12 mt-2 p-0">
+                    <div class="page-title">
+                        <div class="form-group">
+                            Privacy policy
+                        </div>
+                    </div>
+                    <label for="">Add your privacy policy below. This explains to customers how you will collect and use their data. Find this link from the footer of your box office.</label>
+
+                </div>
+            </div>
+
+            <div class="row mx-auto mt-3">
+                <div class="col-12 pb-2 p-0">Update privacy policy
+                    <i class="fa fa-question-circle ml-2" matTooltip="Info about the action" aria-hidden="true"></i>
+                </div>
+                <div class="col-10 ckeditor privacy-ckeditor p-0">
+                    <angular-editor [config]="config" class="description_field" formControlName="updatePolicy" class="form-group">
+                    </angular-editor>
+                    <span class="error-wrap" *ngIf="privacyPolicesForm.get('updatePolicy').touched || privacyPolicesForm.get('updatePolicy').dirty">
+                <small *ngIf="privacyPolicesForm.get('updatePolicy').hasError('required')" class="error">Field is required.</small>
+            </span>
+                    <!-- <div *ngIf="myckeditor.invalid && myckeditor.touched" class="help-block">Required field.</div> -->
+                </div>
+
+
+                <!-- <button [disabled]="myForm.invalid" class="btn btn-primary">Save</button> -->
+                <!-- <div [innerHTML]="mycontent"></div> -->
+            </div>
+
+
+            <div class="row mx-auto mt-5">
+                <div class="main-privacy-text col-10  bg alert-info box text-dark">
+                    <div class="">
+                        <span class="material-icons notification-icon mr-2">
+                        notifications
+                        </span>
+                    </div>
+                    <div class="">
+                        <p class=" mb-1"> Do you need a privacy policy?</p>
+                        <p class="">We have created a free tool to create a custom privacy policy specific to your requirements.</p>
+                        <a (click)="fnPrivacyPolicyGenerate()" class="text-primary hover-link"><u> Use our free privacy policy generator.</u></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-action-btn">
+            <div class="can-save">
+                <button mat-raised-button (click)="fnCancel()" class="cancel-btn">Cancel</button>
+                <button mat-raised-button (click)="fnPrivacyPolices()" class="save-btn">Save</button>
+            </div>
+        </div>
+    </form>
+</div>

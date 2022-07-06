@@ -1,0 +1,105 @@
+@import "variables";
+// @import '~@angular/material/theming';
+// @include mat-core();
+//Available color palettes: https://material.io/design/color/
+// $md-primary: (
+//   50: $fourth,
+//   100: $first-alt-lighter,
+//   200: $first-alt-lighter,
+//   300: $first-alt-lighter,
+//   400: $first,
+//   500: $first,
+//   600: $first,
+//   700: $first,
+//   800: $first-alt-darker,
+//   900: $first-alt-darker,
+//   A100: $first-alt-lighter,
+//   A200: $first,
+//   A400: $first-alt-darker,
+//   A700: $first-alt-darker,
+//   contrast: (
+//     50: $dark-primary-text,
+//     100: $dark-primary-text,
+//     200: $dark-primary-text,
+//     300: $dark-primary-text,
+//     400: $dark-primary-text,
+//     500: $light-primary-text,
+//     600: $light-primary-text,
+//     700: $light-primary-text,
+//     800: $light-primary-text,
+//     900: $light-primary-text,
+//     A100: $dark-primary-text,
+//     A200: $dark-primary-text,
+//     A400: $light-primary-text,
+//     A700: $light-primary-text,
+//   )
+// );
+// $md-accent: (
+//   50: $fourth,
+//   100: $second-alt-lighter,
+//   200: $second-alt-lighter,
+//   300: $second-alt-lighter,
+//   400: $second,
+//   500: $second,
+//   600: $second,
+//   700: $second,
+//   800: $second-alt-darker,
+//   900: $second-alt-darker,
+//   A100: $second-alt-lighter,
+//   A200: $second,
+//   A400: $second-alt-darker,
+//   A700: $second-alt-darker,
+//   contrast: (
+//     50: $dark-primary-text,
+//     100: $dark-primary-text,
+//     200: $dark-primary-text,
+//     300: $dark-primary-text,
+//     400: $dark-primary-text,
+//     500: $light-primary-text,
+//     600: $light-primary-text,
+//     700: $light-primary-text,
+//     800: $light-primary-text,
+//     900: $light-primary-text,
+//     A100: $dark-primary-text,
+//     A200: $light-primary-text,
+//     A400: $light-primary-text,
+//     A700: $light-primary-text,
+//   )
+// );
+// $theme-primary: mat-palette($md-primary);
+// $theme-accent: mat-palette($md-accent);
+// $theme-warn: mat-palette($mat-red);
+// $theme-theme: mat-light-theme($theme-primary, $theme-accent, $theme-warn);
+// @include angular-material-theme($theme-theme);
+$light-gray: #f3f3f3;
+h1 {
+    padding-bottom: 2rem;
+    width: 100%;
+    text-align: center;
+    font-weight: normal
+}
+
+h2 {
+    margin-bottom: 2rem;
+    font-weight: normal;
+    color: #333;
+    text-align: center;
+}
+
+h3 {
+    margin-bottom: 1rem;
+    font-weight: normal;
+    // color: #333;
+    text-align: center;
+}
+
+h4 {
+    margin-bottom: 0rem;
+    font-weight: normal;
+    color: #7a7a7a;
+    text-align: center;
+}
+
+.mat-drawer-container {
+    background-color: #ffffff;
+}

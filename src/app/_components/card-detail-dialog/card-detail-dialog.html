@@ -1,0 +1,234 @@
+<div class="" role="document" id="update-payment">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="modal-header pl-3 py-0 border-0">
+        <p class="dialog-title"> Update payment details </p>
+        <button type="button" class="close-btn" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+            <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="main-top-heading">
+            <h4> Payment method information</h4>
+        </div>
+        <form [formGroup]="cardDetail" class="with-validation">
+            <div class="row">
+                <div class="col-6">
+                    <label class="" for="">First Name
+                        <span class="asterisk-icon">
+                            <i class="fa fa-asterisk asterisk" aria-hidden="true"></i>
+                        </span>
+                    </label>
+                    <div class="form-group">
+                        <input formControlName="firstname" class="form-control" type="text">
+                        <span class="error-wrap" *ngIf="cardDetail.get('firstname').touched || cardDetail.get('firstname').dirty">
+                            <small *ngIf="cardDetail.get('firstname').hasError('required')" class="error">First name is required.</small>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label class="" for="">Last Name
+                        <span class="asterisk-icon">
+                            <i class="fa fa-asterisk asterisk" aria-hidden="true"></i>
+                        </span>
+                    </label>
+                    <div class="form-group">
+                        <input formControlName="lastname" class="form-control" type="text">
+                        <span class="error-wrap" *ngIf="cardDetail.get('lastname').touched || cardDetail.get('lastname').dirty">
+                            <small *ngIf="cardDetail.get('lastname').hasError('required')" class="error">Last name is required.</small>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label class="" for="">Card Number
+                        <span class="asterisk-icon">
+                            <i class="fa fa-asterisk asterisk" aria-hidden="true"></i>
+                        </span>
+                    </label>
+                    <div class="form-group">
+                        <input type="number" maxlength="16" minlength="16" formControlName="number" class="form-control" type="text">
+                        <span class="error-wrap" *ngIf="cardDetail.get('number').touched || cardDetail.get('number').dirty">
+                            <small *ngIf="cardDetail.get('number').hasError('required')" class="error">Card Number is required.</small>
+                            <small *ngIf="!cardDetail.get('number').hasError('required') && (cardDetail.get('number').hasError('minlength') || cardDetail.get('number').hasError('maxlength'))" class="error">Card Number is invalid.</small>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div id="cb-cards">
+        
+                        <span class="visa"></span>
+                    
+                        <span class="mastercard"></span>
+                    
+                        <span class="american_express"></span>
+                    
+                </div>
+                </div>
+                <div class="col-6">
+                    <label class="" for="">Expiry
+                        <span class="asterisk-icon">
+                            <i class="fa fa-asterisk asterisk" aria-hidden="true"></i>
+                        </span>
+                    </label>
+                    <div class="Expiry-main-wrap">
+                        <div class="form-group">
+                            <mat-select formControlName="exMonth" class="form-control">
+                                <mat-option value="0">Month</mat-option>
+                                <mat-option value="1">1</mat-option>
+                                <mat-option value="2">2</mat-option>
+                                <mat-option value="3">3</mat-option>
+                                <mat-option value="4">4</mat-option>
+                                <mat-option value="5">5</mat-option>
+                                <mat-option value="6">6</mat-option>
+                                <mat-option value="7">7</mat-option>
+                                <mat-option value="8">8</mat-option>
+                                <mat-option value="9">9</mat-option>
+                                <mat-option value="10">10</mat-option>
+                                <mat-option value="11">11</mat-option>
+                                <mat-option value="12">12</mat-option>
+                            </mat-select>
+                            <span class="error-wrap" *ngIf="cardDetail.get('exMonth').touched || cardDetail.get('exMonth').dirty">
+                                <small *ngIf="cardDetail.get('exMonth').hasError('required')" class="error">Month is required.</small>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <mat-select formControlName="exYear" class="form-control">
+                                <mat-option [value]="0">
+                                    Year
+                                </mat-option>
+                                <mat-option *ngFor="let year of exYearList; let i=index;" [value]="year">
+                                    {{year}}
+                                </mat-option>
+                            </mat-select>
+                            <span class="error-wrap" *ngIf="cardDetail.get('exYear').touched || cardDetail.get('exYear').dirty">
+                                <small *ngIf="cardDetail.get('exYear').hasError('required')" class="error">Year is required.</small>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label class="" for="">CVV
+                        <span class="asterisk-icon">
+                            <i class="fa fa-asterisk asterisk" aria-hidden="true"></i>
+                        </span>
+                    </label>
+                    <div class="Expiry-main-wrap">
+                        <div class="form-group">
+                            <input formControlName="cvv" class="form-control" type="text">
+                            <span class="error-wrap" *ngIf="cardDetail.get('cvv').touched || cardDetail.get('cvv').dirty">
+                                <small *ngIf="cardDetail.get('cvv').hasError('required')" class="error">CVV is required.</small>
+                                <small *ngIf="!cardDetail.get('cvv').hasError('required') && (cardDetail.get('cvv').hasError('minlength') || cardDetail.get('cvv').hasError('maxlength'))" class="error">CVV is invalid.</small>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <div id="cb-cvv"><span class="help-block">(Last 3-4 digits)</span></div> 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label class="" for="">Card address line 1
+                        <span class="asterisk-icon">
+                            <i class="fa fa-asterisk asterisk" aria-hidden="true"></i>
+                        </span>
+                    </label>
+                    <div class="form-group">
+                        <input formControlName="address1" class="form-control" type="text">
+                        <span class="error-wrap" *ngIf="cardDetail.get('address1').touched || cardDetail.get('address1').dirty">
+                            <small *ngIf="cardDetail.get('address1').hasError('required')" class="error">Card address line 1 is required.</small>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label class="" for="">Card address line 2
+                        <span class="asterisk-icon">
+                            <i class="fa fa-asterisk asterisk" aria-hidden="true"></i>
+                        </span>
+                    </label>
+                    <div class="form-group">
+                        <input formControlName="address2" class="form-control" type="text">
+                        <!-- <span class="error-wrap" *ngIf="cardDetail.get('address2').touched || cardDetail.get('address2').dirty">
+                            <small *ngIf="cardDetail.get('address2').hasError('required')" class="error">Card address line 2 is required.</small>
+                        </span> -->
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label class="" for="">Card address city
+                        <span class="asterisk-icon">
+                            <i class="fa fa-asterisk asterisk" aria-hidden="true"></i>
+                        </span>
+                    </label>
+                    <div class="form-group">
+                        <input formControlName="city" class="form-control" type="text">
+                        <span class="error-wrap" *ngIf="cardDetail.get('city').touched || cardDetail.get('city').dirty">
+                            <small *ngIf="cardDetail.get('city').hasError('required')" class="error">City is required.</small>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label class="" for="">Card address zip
+                        <span class="asterisk-icon">
+                            <i class="fa fa-asterisk asterisk" aria-hidden="true"></i>
+                        </span>
+                    </label>
+                    <div class="form-group">
+                        <input formControlName="zip" class="form-control" type="text">
+                        <span class="error-wrap" *ngIf="cardDetail.get('zip').touched || cardDetail.get('zip').dirty">
+                            <small *ngIf="cardDetail.get('zip').hasError('required')" class="error">Zip is required.</small>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label class="" for="">Card address State
+                        <span class="asterisk-icon">
+                            <i class="fa fa-asterisk asterisk" aria-hidden="true"></i>
+                        </span>
+                    </label>
+                    <div class="form-group">
+                        <input formControlName="state" class="form-control" type="text">
+                        <span class="error-wrap" *ngIf="cardDetail.get('state').touched || cardDetail.get('state').dirty">
+                            <small *ngIf="cardDetail.get('state').hasError('required')" class="error">State is required.</small>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label class="" for="">Card address country
+                        <span class="asterisk-icon">
+                            <i class="fa fa-asterisk asterisk" aria-hidden="true"></i>
+                        </span>
+                    </label>
+                    <div class="form-group">
+                        <mat-select formControlName="country" class="form-control">
+                            <mat-option *ngFor="let country of countryList; let i=index;" [value]="country.sortname">
+                                {{country.name}}
+                            </mat-option>
+                        </mat-select>
+                        <span class="error-wrap" *ngIf="cardDetail.get('country').touched || cardDetail.get('country').dirty">
+                            <small *ngIf="cardDetail.get('country').hasError('required')" class="error">Country is required.</small>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="bottom-main-wrap">
+                <p>
+                    I authorize Weberr Technologies Inc trading as Eventsmatic to save this payment method and automatically charge me on new subscriptions, renewals, downgrades, and upgrades.
+                </p>
+                <div class="payment-submit-button">
+                    <button mat-button class="yes-btn mr-2" (click)="submitCard()"> Add Payment Method </button>
+                    <button mat-button class="cancel-btn" (click)="onNoClick()">Cancel</button>
+                </div>
+            </div>
+            <div class="informtation-main">
+                <div class="note-theme mt-4 mb-4">
+                    <div class="notification">
+                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="notif-icon">help_outline
+                        </mat-icon>
+                    </div>
+                    <div>
+                        <p class="note-message">
+                            You may be taken to your bank page for 3D secure verification for which a token amount may be charged, which will be fully refunded.</p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

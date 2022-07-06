@@ -1,0 +1,299 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+main {
+    font-family: Poppins, Regular;
+}
+
+
+/* common default css changes */
+
+button:focus {
+    outline: none;
+}
+
+::ng-deep .ml-15 {
+    margin-left: 15px;
+}
+
+::ng-deep .modal-lg {
+    max-width: 1050px;
+    margin: 0px;
+    border: none;
+}
+
+::ng-deep .modal-content .modal-header {
+    border: none;
+    padding: 0px 16px;
+    .close-btn {
+        margin-top: 0px;
+    }
+}
+
+::ng-deep .modal-content {
+    border: none;
+}
+
+::ng-deep .modal-content .modal-header .heading {
+    margin-bottom: 0px;
+    font: normal normal medium 22px/33px Poppins;
+    letter-spacing: 0px;
+    color: #181818;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+::ng-deep .modal-dialog .form-group label {
+    color: #595959;
+    font-size: 14px;
+}
+
+
+/* end css */
+
+
+/* Coupon modal css */
+
+::ng-deep .fa-asterisk {
+    color: #FF0000;
+    font-size: 5px;
+    position: relative;
+    bottom: 6px;
+}
+
+::ng-deep .fa-question {
+    // background: #e8e8e8;
+    border-radius: 50%;
+    font-size: 9px;
+    padding: 3px 5px;
+    background: #CECECE;
+    opacity: 0.47;
+}
+
+::ng-deep .tooltip-btn.mat-raised-button {
+    padding-left: 0px;
+    height: 0px;
+    box-shadow: none !important;
+}
+
+::ng-deep .info {
+    position: relative;
+    bottom: 2px;
+}
+
+::ng-deep .cupon-btn {
+    background: #973c56;
+    font-size: 16px;
+    color: #FFFFFF;
+}
+
+::ng-deep .cancel-btn {
+    background: #FFE6C8;
+    font-size: 14px;
+    color: #181818;
+}
+
+::ng-deep .close-btn {
+    background: #FFE6C8 !important;
+    opacity: 1;
+    border-radius: 50%;
+    padding: 4px 6px !important;
+    font-size: 14px;
+    color: #973c56;
+}
+
+::ng-deep .voucher-code {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+
+/* end css */
+
+.coupons.comm-back {
+    background: white;
+    padding: 16px;
+    .page-title h6 {
+        font-size: 16px;
+        color: #181818;
+        font-weight: 500;
+    }
+    .page-descp {
+        padding-left: 25px;
+        p {
+            font-size: 14px;
+            color: #808080;
+        }
+    }
+    .cd-code-btn {
+        background: #973c56 0% 0% no-repeat padding-box;
+        color: white;
+        border-radius: 5px;
+        font-size: 15px;
+        font-weight: 400;
+    }
+     ::ng-deep .code-tab {
+        .mat-tab-header {
+            margin-bottom: 20px;
+            border: none;
+        }
+        .mat-ink-bar {
+            background: #973c56;
+            height: 3px;
+            border-radius: 10px;
+        }
+        .mat-tab-label {
+            font-size: 16px;
+        }
+        .mat-tab-label-active {
+            color: #973c56;
+        }
+    }
+    .search-input {
+        position: relative;
+        top: 42px;
+        z-index: 9;
+        .fa-search:before {
+            color: #595959;
+        }
+        .round-search::placeholder {
+            color: #9E9E9E;
+        }
+    }
+    .has-search .form-control {
+        padding-left: 2.375rem;
+    }
+    .has-search .form-control-feedback {
+        position: absolute;
+        z-index: 2;
+        display: block;
+        width: 2.375rem;
+        height: 2.375rem;
+        line-height: 2.375rem;
+        text-align: center;
+        pointer-events: none;
+        color: #aaa;
+    }
+    .round-search {
+        border-radius: 25px;
+        background: #F6F6F6;
+        border-color: #F6F6F6;
+    }
+    .round-search::placeholder {
+        font-size: 14px;
+    }
+    .couponcodes-listing {
+        .drageble-list {
+            width: 100%;
+            border-top: solid 1px #DDDDDD;
+            display: block;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            font-size: 14px;
+            height: calc(100vh - 320px);
+            font-weight: 500;
+            overflow-y: scroll;
+        }
+        .main-heading-content {
+            border-top: solid 1px #DDDDDD;
+            padding: 8px 3rem;
+            align-items: center;
+            font-size: 14px;
+            color: #595959;
+        }
+        .drageble-box {
+            align-items: center;
+            border-bottom: 1px solid #ccc5c5;
+            padding: 0 3rem;
+        }
+        .tb-data {
+            padding: 18px 0px;
+            color: #595959;
+        }
+        .cpn-title {
+            color: #181818;
+        }
+        .cpn-code {
+            color: #973c56;
+        }
+        .cpn-bor {
+            border: 1px dashed #973c56;
+            padding: 6px 12px;
+            border-radius: 5px;
+        }
+        .action-icon {
+            color: #e9684a;
+            border-radius: 50%;
+            padding: 16px 16px;
+            background: #FFE6C8;
+            width: 32px;
+            height: 32px;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            font-size: 30px;
+            &[aria-describedby]{
+                background:#70C0C1;
+                color:#fff;
+            }
+        }
+    }
+}
+
+::ng-deep .matDate {
+    position: relative;
+    .mat-datepicker-toggle {
+        position: absolute;
+    }
+    .form-control {
+        padding-left: 40px;
+    }
+}
+
+::ng-deep .matDate {
+    position: relative;
+    .mat-datepicker-toggle {
+        position: absolute;
+    }
+    .form-control {
+        padding-left: 40px;
+    }
+}
+
+::ng-deep .popover {
+    border: none;
+    .popover-body {
+        padding: 0px !important;
+        color: #595959;
+        box-shadow: 0px 0px 12px #973c5626;
+        border-radius: 6px;
+        .border-bottom {
+            border-bottom: 1px solid #7070701a !important;
+            padding: 5px 0px;
+            cursor: pointer;
+        }
+    }
+}
+
+ ::ng-deep .bs-popover-bottom>.arrow::before,
+.bs-popover-auto[x-placement^=bottom]>.arrow::before {
+    border-bottom-color: transparent;
+}
+
+.sub-container {
+    overflow: hidden;
+}
+
+.page-title {
+    font-size: 20px;
+    padding-left: 25px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+.title-des{
+    padding-left: 25px;
+}
+
+.no-data-label{
+    height: calc(100vh - 300px) !important;
+}

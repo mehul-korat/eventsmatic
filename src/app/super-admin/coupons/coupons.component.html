@@ -1,0 +1,136 @@
+<div id="my-coupons" class="sub-container">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="coupons comm-back">
+        <div class=" page-head d-flex align-items-center">
+            <div class="title-left-side has-search">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input *ngIf="clickedIndex == 'coupon'" [(ngModel)]="search.keyword" (keyup)="couponSearch()" type="text" class="form-control round-search" placeholder="Search by title and code">
+                <input *ngIf="clickedIndex == 'voucher'" [(ngModel)]="search.keyword" (keyup)="couponSearch()" type="text" class="form-control round-search" placeholder="Search by name and code">
+            </div>
+
+
+            <div class="page-right-btn ml-auto">
+                <button *ngIf="clickedIndex == 'coupon'" mat-raised-button color="primary" (click)="creatDiscountCode()" class="cd-code-btn ml-auto">Create discount code</button>
+                <button *ngIf="clickedIndex == 'voucher'" mat-raised-button color="primary" (click)="creatVoucherCode()" class="cd-code-btn ml-auto">Create a batch of voucher code</button>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="form-group has-search col-sm-12 col-12 col-lg-4 col-md-4 col-xl-4 mb-0 float-left ml-auto search-input">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input *ngIf="clickedIndex == 'coupon'" [(ngModel)]="search.keyword" (keyup)="couponSearch()" type="text" class="form-control round-search" placeholder="Search by title and code">
+                <input *ngIf="clickedIndex == 'voucher'" [(ngModel)]="search.keyword" (keyup)="couponSearch()" type="text" class="form-control round-search" placeholder="Search by name and code">
+            </div>
+        </div> -->
+
+        <div class="row code-tab">
+            <mat-tab-group (selectedTabChange)="onTabChanged($event)" class="col-sm-12 col-12 col-lg-12 col-md-12 col-xl-12 float-left p-0 coupon-code-tabs">
+                <mat-tab label="Discount Code ({{allCouponCodeList.length}})" class="">
+                    <div class="couponcodes-listing">
+                        <div class="main-table-content main-cust-table-content">
+                            <div class="">
+                                <div class="heads main-heading-content drageble" fxLayout="row">
+                                    <div class="" fxFlex="25">Coupon Title</div>
+                                    <div class="" fxFlex="20">Coupon Code</div>
+                                    <div class="" fxFlex="13">Type</div>
+                                    <div class="" fxFlex="10">Maximum Redemption</div>
+                                    <div class="" fxFlex="8">Used</div>
+                                    <div class="" fxFlex="8">Discount</div>
+                                    <div class="" fxFlex="10">Status</div>
+                                    <div class="" fxFlex="6">Action</div>
+                                </div>
+                                <div *ngIf="allCouponCodeList.length != 0" class="content" class="drageble-list">
+                                    <div *ngFor="let allCouponCodeList of allCouponCodeList; let i=index;" class="drageble-box" fxLayout="row">
+                                        <div class="tb-data cpn-title" fxFlex="25">{{allCouponCodeList.coupon_title}}</div>
+                                        <div class="tb-data cpn-code" fxFlex="20"><span class="cpn-bor">{{allCouponCodeList.coupon_code}}</span></div>
+                                        <div class="tb-data" fxFlex="13">{{allCouponCodeList.discount_type == 'P'? 'Percentage' : 'Fixed Amount'}}</div>
+                                        <div class="tb-data" fxFlex="10">{{allCouponCodeList.max_redemption}}</div>
+                                        <div class="tb-data" fxFlex="8">{{allCouponCodeList.used}}</div>
+                                        <div class="tb-data" fxFlex="8">{{allCouponCodeList.discount}}</div>
+                                        <div class="tb-data" fxFlex="10" *ngIf="allCouponCodeList.status == 'A' || allCouponCodeList.status == 'IA'">
+                                            <mat-slide-toggle (change)="changeCouponStaus($event,allCouponCodeList.unique_code)" [checked]="allCouponCodeList.status == 'A'"></mat-slide-toggle>
+                                        <div *ngIf="allCouponCodeList.status == 'S'" class="tb-data" fxFlex="10">Scheduled</div>
+                                        <div *ngIf="allCouponCodeList.status == 'E'" class="tb-data" fxFlex="10">Expired</div>
+                                        </div>
+                                        <div class="tb-data" fxFlex="6">
+
+
+                                            <mat-icon placement="left" [ngbPopover]="popContent" aria-hidden="false" aria-label="" class="action-icon">more_horiz</mat-icon>
+                                            <ng-template class="popover" #popContent>
+                                                <div (click)="fnEditCoupon(allCouponCodeList.unique_code)" class="px-3 pointer border-bottom">
+                                                    <i class="fa fa-pencil mr-2"></i><span>Edit</span>
+                                                </div>
+                                                <div class="px-3 pointer border-bottom" (click)="assignToTicketType(i, allCouponCodeList.unique_code)">
+                                                    <i class="fa fa-ticket mr-2"></i><span>Assign to Ticket Type</span>
+                                                </div>
+                                                <div (click)="fnDeleteCoupon(allCouponCodeList.unique_code)" class="px-3 pointer border-bottom">
+                                                    <i class="fa fa-trash mr-2"></i><span>Delete</span>
+                                                </div>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="allCouponCodeList.length == 0" class="content no-data-label">
+                                    <div class="no-data-view">
+                                        <img src="../../../assets/images/no-data-found.svg" />
+                                        <label> No data available.</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </mat-tab>
+                <mat-tab label="Voucher code ({{allVoucherCodeList.length}})">
+                    <!-- <p>Voucher codes are useful for facilitating gift cards, or vouchers sold through other services such as Groupon. Each code discounts a specified amount of money from an order and can only be 'spent' once.</p> -->
+                    <div class="couponcodes-listing">
+                        <div class="main-table-content main-cust-table-content">
+                            <div class="">
+                                <div class="heads main-heading-content drageble py-3" fxLayout="row">
+                                    <div class="" fxFlex="25">Voucher Name</div>
+                                    <div class="" fxFlex="25">Voucher Code</div>
+                                    <div class="" fxFlex="20">Voucher Value</div>
+                                    <div class="" fxFlex="20">Expiry Date</div>
+                                    <div class="" fxFlex="10">Action</div>
+                                </div>
+                                <div *ngIf="allVoucherCodeList.length !== 0" class="content" class="drageble-list">
+                                    <div *ngFor="let allVoucherCodeList of allVoucherCodeList; let i=index;" class="drageble-box" fxLayout="row">
+                                        <div class="tb-data cpn-title" fxFlex="25">{{allVoucherCodeList.voucher_name}}</div>
+                                        <div class="tb-data cpn-code" fxFlex="25"><span class="cpn-bor">{{allVoucherCodeList.voucher_code}}</span></div>
+                                        <div class="tb-data" fxFlex="20">{{allVoucherCodeList.voucher_value}}</div>
+                                        <div class="tb-data" fxFlex="20">{{allVoucherCodeList.expiry_date}}</div>
+                                        <div class="tb-data" fxFlex="10">
+
+                                            <mat-icon placement="left" [ngbPopover]="popContent" aria-hidden="false" aria-label="" class="action-icon">more_horiz</mat-icon>
+                                            <ng-template class="popover" #popContent>
+                                                <div (click)=" fnEditVoucher(allVoucherCodeList.unique_code)" class="px-3 pointer border-bottom">
+                                                    <i class="fa fa-pencil mr-2"></i><span>Edit</span>
+                                                </div>
+                                                <div class="px-3 pointer border-bottom" (click)="assignToEvent(i, allVoucherCodeList.unique_code)">
+                                                    <i class="fa fa-star mr-2"></i><span>Assign to Event</span>
+                                                </div>
+                                                <div (click)="fnDeleteVoucher(allVoucherCodeList.unique_code)" class="px-3 pointer border-bottom">
+                                                    <i class="fa fa-trash mr-2"></i><span>Delete</span>
+                                                </div>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="allVoucherCodeList.length === 0" class="content no-data-label">
+                                    <div class="no-data-view">
+                                        <img src="../../../assets/images/no-data-found.svg" />
+                                        <label> No data available.</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- --------------------------------------------------------------------------- -->
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>

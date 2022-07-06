@@ -1,0 +1,27 @@
+.dialog_button {
+    float: right !important;
+}
+
+// ::ng-deep .mat-dialog-container {
+//     padding: 0;
+// }
+
+#confirmation_dialog {
+    .yes-btn {
+        width: 130px;
+        height: 37px;
+        border-radius: 29px;
+        background-color: #973c56;
+        color: white;
+    }
+    .cancel-btn {
+        width: 130px;
+        height: 37px;
+        border-radius: 29px;
+        background-color: #FFE6C8;
+        color: #000;
+    }
+}
+.mat-dialog-container{
+    padding: 0;
+}

@@ -1,0 +1,246 @@
+<div class="container-fluid sub-container p-0" id="my_boxoffice">
+    <div fxLayout="row wrap" fxLayoutGap="2%" *ngIf="isLoaderAdmin" fxLayoutAlign="center center" class="full-height loader-main">
+        <img src="../../assets/event-spinner.svg" />
+    </div>
+    <div id="my-boxoffice-top">
+        <div class="col-12 d-flex inner">
+            <div *ngIf="noBoxOffice" class="col-lg-6 col-md-6 col-sm-12 first d-flex"><span>Create Box Office</span></div>
+            <div *ngIf="!noBoxOffice" class="col-lg-6 col-md-6 col-sm-12 first d-flex"><span>My Boxoffice</span></div>
+            <div *ngIf="!noBoxOffice" class="col-lg-6 col-md-6 col-sm-12 second">
+                <button mat-button (click)="fnCreateBoxOffice()" class="pointer">Add New Box Office</button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!noBoxOffice" class="" id="list_boxoffice">
+        <div class="col-12">
+            <div class="d-flex flex-wrap align-items-stretch">
+                <div *ngFor="let allBoxoffice of allBoxoffice; let i=index" class="col-lg-3 col-md-6 col-sm-12 mb-30">
+                    <mat-card class="text-center signle-boxoffice">
+                        <div class="pt-3 image-round-main d-flex justify-content-center">
+                            <div class="SelectboxofficeIcon">
+                                <img mat-card-avatar="" src="{{allBoxoffice.image?allBoxoffice.image:'../../assets/img/boxoffice.png'}}">
+                            </div>
+                        </div>
+                        <div class="pt-3 boxoffice-title">
+                            <h6 class="text-capitalize">{{allBoxoffice.box_office_name}}</h6>
+                        </div>
+                        <div class="content text-capitalize">
+                            {{allBoxoffice.country?allBoxoffice.country.name:''}}, {{allBoxoffice.type}}
+                        </div>
+                        <div class="pt-3">
+                            <button mat-button class="businness-btn" (click)="fnSelectBoxoffice(allBoxoffice.unique_code, allBoxoffice.box_office_name, allBoxoffice.box_office_link)">Select Box Office</button>
+                        </div>
+                        <div class="delete-btn">
+                            <mat-icon [ngbPopover]="popContent" placement="left" aria-hidden="false" aria-label="Example home icon" class="">more_vert</mat-icon>
+                            <ng-template class="popover custom-popover" #popContent>
+                                <div class="align-items-center pop-menu-item d-flex" (click)="deleteBoxOffice(allBoxoffice.unique_code)">
+                                    <i class="fa fa-trash mr-2"></i><span>Delete</span>
+                                </div>
+
+                            </ng-template>
+                        </div>
+                    </mat-card>
+                </div>
+                <div *ngIf="allBoxoffice.length > 0" class="col-lg-3 col-md-6 col-sm-12 mb-30">
+                    <mat-card class="text-center Newboxoffice-matcard pointer" (click)="fnCreateBoxOffice()">
+                        <div class="boxoffice-btn-main">
+                            <div class="AddNewboxofficeIcon">
+                                <img mat-card-avatar="" src="../../../assets/images/admin/round_add_white_18dp.png">
+                                <!-- <span class="material-icons">add</span> -->
+                            </div>
+                        </div>
+                        <div class="pt-4">
+                            <h2>Add New Box Office</h2>
+                        </div>
+                        <div class="pb-3 content">
+                            We are excited to help you create a box office and get your ticket sales started. Fill in the general information about your box office and the event to start the journey.
+                        </div>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="noBoxOffice" class="first-new-boxoffice create-new-office">
+        <div class="left-boxoffice-main">
+
+       
+        <div class="new-box-office-box">
+
+            <div class="pt-4">
+                <form [formGroup]="createBoxoffice" class="with-validation">
+                    <div class="col-12 p-0">
+                        <h3 class="text-left">
+                            <strong>Enter your Box Office details:</strong>
+                        </h3>
+                    </div>
+                    <div class="form-row mt-3">
+                        <div class="form-group col-md-6 col-lg-6 col-sm-12 bottom-border-field">
+                            <label>Name <span class="text-danger">*</span></label>
+                            <input formControlName="boxoffice_name" placeholder="" class="form-control">
+                            <span class="error-wrap" *ngIf="createBoxoffice.get('boxoffice_name').dirty || createBoxoffice.get('boxoffice_name').touched"><small *ngIf="createBoxoffice.get('boxoffice_name').hasError('required')" class="error">Box office name is required.</small></span>
+                        </div>
+                        <div class="form-group col-md-6 col-lg-6 col-sm-12 bottom-border-field">
+                            <label>Type  <span class="text-danger">*</span></label>
+                            <mat-select formControlName="boxoffice_type" class="form-control">
+                                <mat-option value="business">Business</mat-option>
+                                <mat-option value="charity">Charity</mat-option>
+                                <mat-option value="Community Group">Community Group</mat-option>
+                                <mat-option value="individual">Individual</mat-option>
+                                <mat-option value="Parent Teacher Association (PTA)">Parent Teacher Association (PTA)</mat-option>
+                                <mat-option value="Venue">Venue</mat-option>
+                                <mat-option value="Promoter">Promoter</mat-option>
+                                <mat-option value="Other">Other</mat-option>
+                            </mat-select>
+                            <span class="error-wrap" *ngIf="createBoxoffice.get('boxoffice_type').dirty || createBoxoffice.get('boxoffice_type').touched">
+                            <small *ngIf="createBoxoffice.get('boxoffice_type').hasError('required')" class="error">Box office type is required.</small></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row mt-3">
+                        <div class="form-group col-md-6 col-lg-6 col-sm-12 bottom-border-field">
+                            <label>Country  <span class="text-danger">*</span></label>
+                            <mat-select formControlName="boxoffice_country" class="form-control">
+                                <mat-option *ngFor="let val of allCountry" value="{{val.id}}">{{val.name}}</mat-option>
+                            </mat-select>
+                            <span class="error-wrap" *ngIf="createBoxoffice.get('boxoffice_country').dirty || createBoxoffice.get('boxoffice_country').touched">
+                            <small *ngIf="createBoxoffice.get('boxoffice_country').hasError('required')" class="error">Country is required.</small></span>
+                        </div>
+                        <div class="form-group col-md-6 col-lg-6 col-sm-12 bottom-border-field">
+                            <label>Billing Currency  <span class="text-danger">*</span></label>
+                            <mat-select formControlName="boxoffice_billing_currency" class="form-control">
+                                <mat-option *ngFor="let val of allCurency" value="{{val.id}}">{{val.CurrencyName}}</mat-option>
+                            </mat-select>
+                            <span class="error-wrap" *ngIf="createBoxoffice.get('boxoffice_billing_currency').dirty || createBoxoffice.get('boxoffice_billing_currency').touched">
+                                <small *ngIf="createBoxoffice.get('boxoffice_billing_currency').hasError('required')" class="error">Billing Currency is required.</small>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-row mt-3">
+                        <h3 class="text-left">
+                            <strong>What kind of event(s) do you typically run ?</strong>
+                        </h3>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 col-lg-6 col-sm-12 bottom-border-field">
+                            <label>Genre  <span class="text-danger">*</span></label>
+                            <mat-select formControlName="boxoffice_genre" class="form-control">
+                                <!-- <mat-option value="business">Are of film</mat-option> -->
+                                <mat-option value="business">Business</mat-option>
+                                <mat-option value="Charity Fundraisers">Charity Fundraisers</mat-option>
+                                <mat-option value="Comedy">Comedy</mat-option>
+                                <mat-option value="Education">Education</mat-option>
+                                <mat-option value="Entertainment">Entertainment</mat-option>
+                                <mat-option value="Food and Drink">Food and Drink</mat-option>
+                                <mat-option value="Health & Well-being">Health & Well-being</mat-option>
+                                <mat-option value="History/Heritage">History/Heritage</mat-option>
+                                <mat-option value="Music">Music</mat-option>
+                                <mat-option value="Private (Friend, Family, Group)">Private (Friend, Family, Group)</mat-option>
+                                <mat-option value="Religious/Spiritual">Religious/Spiritual</mat-option>
+                                <mat-option value="Sports & Fitness">Sports & Fitness</mat-option>
+                                <mat-option value="Theatre">Theatre</mat-option>
+                                <mat-option value="Tour/Travel">Tour/Travel</mat-option>
+                                <mat-option value="Other">Other</mat-option>
+                            </mat-select>
+                            <span class="error-wrap" *ngIf="createBoxoffice.get('boxoffice_genre').dirty || createBoxoffice.get('boxoffice_genre').touched">
+                                <small *ngIf="createBoxoffice.get('boxoffice_genre').hasError('required')" class="error">Box office genre is required.</small>
+                            </span>
+                        </div>
+                        <div class="form-group col-md-6 col-lg-6 col-sm-12 bottom-border-field">
+                            <label>Type  <span class="text-danger">*</span></label>
+                            <mat-select formControlName="boxoffice_genre_type" class="form-control">
+                                <mat-option value="awards/ceremony">Awards/Ceremony</mat-option>
+                                <mat-option value="Class/seminar/Training/Workshop">Class/Seminar/Training/Workshop</mat-option>
+                                <mat-option value="Conference/Tradeshow/Expo">Conference/Tradeshow/Expo</mat-option>
+                                <mat-option value="Dinner/Social">Dinner/Social</mat-option>
+                                <mat-option value="Exhibition">Exhibition</mat-option>
+                                <mat-option value="Fair/Fete">Fair/Fete</mat-option>
+                                <mat-option value="Festival">Festival</mat-option>
+                                <mat-option value="Gallery">Gallery</mat-option>
+                                <mat-option value="Gig/concert">Gig/Concert</mat-option>
+                                <mat-option value="Meeting">Meeting</mat-option>
+                                <mat-option value="Networking">Networking</mat-option>
+                                <mat-option value="Nightclub">Nightclub</mat-option>
+                                <mat-option value="Private Party">Private Party</mat-option>
+                                <mat-option value="Race/Competition">Race/Competition</mat-option>
+                                <mat-option value="Show/Performance/Viewing">Show/Performance/Viewing</mat-option>
+                                <mat-option value="Tour">Tour</mat-option>
+                                <mat-option value="Trade show">Trade show</mat-option>
+                                <mat-option value="Other">Other</mat-option>
+                            </mat-select>
+                            <span class="error-wrap" *ngIf="createBoxoffice.get('boxoffice_genre_type').dirty || createBoxoffice.get('boxoffice_genre_type').touched">
+                                <small *ngIf="createBoxoffice.get('boxoffice_genre_type').hasError('required')" class="error">Type is required.</small>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="text-right pt-4">
+                        <button mat-button class="admin-business-Submitbutton" (click)="fnCreateBoxOfficeSubmit()">Create Box Office</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+             </div>
+        <div class="right-testi-main"> 
+            <div class="main-testimonial-wrap mt-4">
+                <div class="single-common-testimonial">
+                    <div class="testimonial-card ml-auto">
+                        <div class="store-img">
+                            <img src="../../../assets/images/admin/storesimg-1.png"> 
+                        </div>
+                        <p> 
+                            Life-saver. I was looking to sell tickets for my first event. One cousin recommended Eventsmatic. Now I make all event on their platform. Very simple.
+                        </p>
+                        <div class="testimonial-name">
+                            <div> 
+                                <img src="../../../assets/images/admin/comment.png"> 
+                            </div>
+                            <div> 
+                                <h3>Yuri Markov </h3>
+                                <span> Marketing Director @Descom</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card mr-auto">
+                        <div class="store-img">
+                            <img src="../../../assets/images/admin/storesimg-2.png"> 
+                        </div>
+                        <p> 
+                            The best part about Eventsmatic is it is so easy to use. It hardly took me a few minutes to create my event. Setting up payments and discount coupons was super easy. If you want to make your first event, then get Eventsmatic. They will surely help you out. 
+                        </p>
+                        <div class="testimonial-name">
+                            <div> 
+                                <img src="../../../assets/images/admin/comment.png"> 
+                            </div>
+                            <div> 
+                                <h3>Yuri Markov </h3>
+                                <span> Marketing Director @Descom</span>
+                            </div>
+                           
+                           
+                        </div>
+                    </div>
+                    <div class="testimonial-card ml-auto">
+                        <div class="store-img">
+                            <img src="../../../assets/images/admin/storesimg-3.png"> 
+                        </div>
+                        <p> 
+                            Eventsmatic is one rare software that deliver exactly as per their promises. The platform is easy-to-use and anyone can create an event in less than 10 minutes. You can promote your event on social media and sell tickets to a public or private audience.
+                        </p>
+                        <div class="testimonial-name">
+                            <div> 
+                                <img src="../../../assets/images/admin/comment.png"> 
+                            </div>
+                            <div> 
+                                <h3>Yuri Markov </h3>
+                                <span> Marketing Director @Descom</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+</div>

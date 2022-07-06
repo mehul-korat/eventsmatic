@@ -1,0 +1,73 @@
+.main {
+    width: 100%;
+    
+    .tax {
+        .title {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .add-tax-btn {
+            border-radius: 20px;
+            background-color: #973c56;
+            color: #ffffff;
+        }
+        .tab-title {
+            font-weight: bold;
+        }
+        .fa-pencil {
+            background-color: #E3E6EB;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .fa-trash {
+            background-color: #E3E6EB;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    }
+}
+
+// --------------------------------------- Add Tax --------------------------------------------------
+::ng-deep .main-sale-tax {
+    .input-box {
+        width: 49%;
+        display: inline-block;
+    }
+    .tax-input {
+        border-radius: 5px;
+        .name-input {
+            width: 100%;
+            border: none;
+            outline: none;
+        }
+        .input {
+            width: 87%;
+            border: none;
+            outline: none;
+        }
+        .fa-percent {
+            width: 12%;
+            color: #808080;
+        }
+    }
+    .cancel-btn {
+        background-color: #FFE6C8;
+    }
+    .create-btn {
+        background-color: #973c56;
+        color: #ffffff;
+    }
+}
+
+button:focus {
+    outline: none;
+}
+
+::ng-deep .close-btn {
+    background: #FFE6C8 !important;
+    opacity: 1;
+    border-radius: 50%;
+    border: unset;
+    font-size: 14px;
+    color: #973c56;
+}

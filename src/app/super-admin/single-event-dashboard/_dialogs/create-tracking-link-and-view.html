@@ -1,0 +1,32 @@
+<div class="main">
+    <div class="modal-header pl-3 py-0 border-0">
+        <p class="font-weight-bold">Create Tracking Link and View</p>
+        <button class="close-btn" type="button" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <div class="text-primary mb-2" (click)="fntrackingLinkandViewAdd()">
+            <i class="fa fa-plus-circle mr-2"></i><span>Add more</span>
+        </div>
+        <form [formGroup]="trackingLinkandViewForm">
+            <div class=" w-100" formArrayName="trackingLinkandViewArr" *ngFor="let a of trackingLinkandViewForm.get('trackingLinkandViewArr')['controls']; let i = index">
+                <div [formGroupName]="i" class="mt-2">
+                    <div class="form--group form-field">
+                        <label for="">Event Tag</label>
+                        <input type="text" class="form-control" formControlName="event" />
+                    </div>
+
+                    <div class="form--group form-field f-right">
+                        <label for="">Referral Tag</label>
+                        <input type="text" class="form-control" formControlName="referralTag" />
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button mat-flat-button class="save-btn f-right mt-2">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

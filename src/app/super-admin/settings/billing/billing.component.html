@@ -1,0 +1,192 @@
+<div class="main bg-white">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title">
+                Manage billing
+            </div>
+        </div>
+    </div>
+
+    <div class="row top-boxes  mt-4 mx-0">
+        <div class="col-6 pl-0">
+            <div class="billing-box">
+                <div class="head-content">
+                    <h3>Pre Pay</h3>
+                    <button mat-flat-button (click)="onBuyTicketsCredits()" class="mat-blue">Buy ticket credits</button>
+                </div>
+                <p class="mt-3">Buy ticket credits in advance and save.</p>
+                <ul class="credit-data" *ngIf="creditDetails"> 
+                    <li>
+                        <label>Ticket credit balance :</label>
+                        <p>{{creditDetails.credit}}</p>
+                    </li>
+                    <li>
+                        <label>Auto-renew :</label>
+                        <p> {{creditDetails.auto_renew?creditDetails.auto_renew:''}}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-6 pr-0">
+            <div class="billing-box">
+                <div class="head-content">
+                    <h3>Pay as you go</h3>
+                </div>
+                <p class="mt-3">If you don't have ticket credits available, we will automatically charge you at the PAYG rate of $0.65 per ticket.</p>
+            </div>
+        </div>
+        <!-- <div class="col-4 billing-box text-center box">
+            <p class="mt-2">Price</p>
+            <p class="btn-head"> $0.65 </p>
+            <small> <p>per ticket (no monthly payment)</p></small>
+        </div> -->
+    </div>
+
+
+    <mat-card class="main-form-setting-content bg-light mt-4">
+
+        <div class="container p-3">
+            <div class="row">
+                <div class="col-12 pb-3 ">Your billing address</div>
+                <div class="col-6">
+                    <p>Plan name:</p>
+                    <p>Card payment details:</p>
+                    <!-- <p>Next renewal date:</p>
+                    <p>The remaining ticket sales included your plan:</p>
+                    <p>Additional ticket sales :</p> -->
+                    <p>Charity discount:</p>
+                </div>
+
+                <div class="col-6">
+                    <p>{{creditDetails && creditDetails.credit > 0 ? 'Pre Pay' : 'Pay as you go'}}</p>
+                    <p>ending <a class="biiling-link" (click)="onupdateCardDetail()"> <u>Update card details</u></a></p>
+                    <!-- <p>Thursday 13th of August 2020</p>
+                    <p>5 (will reset on Thursday 13th of August 2020)</p>
+                    <p>0 (charged at $0.65 per ticket)</p> -->
+                    <a (click)="applyCharityDiscount()" class="biiling-link"> <u>Apply for a charity discount</u></a>
+
+                </div>
+                <div class="col-12">
+                    <!-- <button mat-flat-button class="mat-blue">Change Plan</button> -->
+                    <button mat-flat-button (click)="onUpdateVatInfo()" class="mat-dull">Update VAT information</button>
+                    <!-- <button mat-flat-button class="mat-dull">Cancel Plan and delete Box ofiice</button> -->
+                </div>
+            </div>
+        </div>
+    </mat-card>
+
+
+    <mat-card class="main-form-setting-content bg-light mt-3">
+
+        <div class="container p-2">
+            <div class="row">
+                <div class="col-12 pb-2 ">Add-ons</div>
+            </div>
+
+            <div class="row alert-info text-dark ml-2" *ngIf="singleBoxofficeDetails && singleBoxofficeDetails.subscription">
+                <div class="col-10">
+                    <div class="col-3 pb-2 mt-3 ">White-label</div>
+                    <p class="ml-3">Remove the "Powered by Eventsmatic" badge from your box office for only<b>
+                                $49.00 / month.</b></p>
+                    <label class="ml-3 mt-3 white-lable-status" *ngIf="singleBoxofficeDetails.subscription.white_label_status == 'Y'">Subscription Enabled</label>
+                </div>
+                <div class="col-2 pt-3">
+                    <button mat-flat-button (click)="onWhiteLable()" class="mat-blue">Learn more</button>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+    <div class="row">
+        <div class="col-6">
+            <mat-card class="main-form-setting-content bg-light mt-3">
+                <div class="col-12 main-header-billing">
+                    <p> Recent invoices</p>
+                    <button [disabled]="invoiceList.length == 0" mat-flat-button (click)="onViewAllInvoices()" class="mat-blue">View all invoices</button>
+                </div>
+                <div class="mt-3">
+                    <div class="main-white-label">
+                        <div class="invoices-listing">
+                            <div class="main-table-content main-cust-table-content ">
+                                <div class="listing-table">
+                                    <div class="heads main-heading-content drageble py-3" fxLayout="row">
+                                        <div class="" fxFlex="25">Details</div>
+                                        <div class="" fxFlex="25">Total</div>
+                                        <div class="" fxFlex="25">Credit Applied</div>
+                                        <div class="" fxFlex="25">Action</div>
+                                    </div>
+
+                                    <div class="drageble-list">
+                                        <div class="drageble-box" *ngIf="invoiceList.length > 0" fxLayout="row">
+                                            <div class="tb-data " fxFlex="25">
+                                                <p> <span>{{recentInvoice.invoiceId}} </span>
+                                                  {{recentInvoice.invoiceDate * 1000 | date:'MMM d, y'}}</p>
+                                            </div>
+                                            <div class="tb-data " fxFlex="25">
+                                                <p> <span>${{recentInvoice.invoiceTotal}} </span>
+                                                    {{recentInvoice.invoiceStatus == 'success'?'Paid':'Unpaid'}} </p>
+                                            </div>
+                                            <div class="tb-data " fxFlex="25">
+                                                <p> <span>N/A </span>
+                                                </p>
+                                            </div>
+                                            <div class="tb-data " fxFlex="25">
+                                                <i class="fa fa-download mr-2 pointer"></i><a rel="noopener noreferrer" [href]="recentInvoice.invoiceUrl" [download]="recentInvoice.invoiceUrl" class="pointer">Download</a>
+                                            </div>
+                                        </div>
+                                        <div class="no-data-label" *ngIf="invoiceList.length == 0">
+                                            <div class="no-data-view">
+                                                <img src="../../../assets/images/no-data-found.svg" />
+                                                <label> No data available.</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <div class="col-6">
+            <mat-card class="main-form-setting-content bg-light mt-3">
+                <div class="col-12 main-header-billing">
+                    <p> Unbilled usage </p>
+                    <button mat-flat-button (click)="onViewAllUsage()" class="mat-blue">View all usage</button>
+                </div>
+                <div class="main-usage-wrap mt-3" *ngIf="overviewUsageData">
+                    <div class="common-usage-total">
+                        <h3> Total: </h3>
+                        <p> ${{overviewUsageData.total}} </p>
+                    </div>
+                    <div class="common-usage-total">
+                        <h3> Already paid (e.g. via Stripe): </h3>
+                        <p> ${{overviewUsageData.already_paid}} </p>
+                    </div>
+                    <div class="common-usage-total">
+                        <h3> Unpaid: </h3>
+                        <p> ${{overviewUsageData.unpaid}} </p>
+                    </div>
+                </div>
+                <!-- <div class="no-data-label" *ngIf="!overviewUsageData.unpaid && !overviewUsageData.already_paid && !overviewUsageData.total">
+                    <div class="no-data-view">
+                        <img src="../../../assets/images/no-data-found.svg" />
+                        <label> No data available.</label>
+                    </div>
+                </div> -->
+                <div class="note-theme mt-2 mb-4">
+                    <div class="notification">
+                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="notif-icon">notifications
+                        </mat-icon>
+                    </div>
+                    <div>
+                        <p class="note-message">Your next invoice will be generated either on {{overviewUsageData.nextBillDate?overviewUsageData.nextBillDate:''}}, or
+                            when you exceed $50 of unpaid charges (Whichever is sooner). Any payment due will be charged
+                            to the card you have on file. </p>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

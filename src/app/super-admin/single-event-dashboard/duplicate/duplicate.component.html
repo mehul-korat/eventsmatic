@@ -1,0 +1,228 @@
+<div id="duplicate" class="main">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="container-fluid">
+        <div class="topper">
+            <mat-icon *ngIf="!isPastEvent" class="mr-3 pointer" routerLink="/super-admin/single-event-dashboard/">west</mat-icon>
+            <div class="top-heading-main">
+                <h4 class="page-title"> Duplicate Event </h4>
+                <p>Below, you can create multiple duplications of the event with different names, start dates, and end dates. All other details, including tickets, will be replicated.</p>
+            </div>
+        </div>
+        <div class="manage-duplicate-table">
+            <div class="main-table-content main-cust-table-content">
+                <div class="duplicate-heading">
+                    <h3>
+                        Create duplicates
+                    </h3>
+                </div>
+                <div *ngIf="recurringEvent == 'N'">
+                    <div class="content" class="drageble-list">
+                        <div class="drageble-box" fxLayout="row">
+                            <div class="tb-data heading-table clr-black" fxFlex="10"> </div>
+                            <div class="tb-data heading-table" fxFlex="15">Event Name</div>
+                            <div class="tb-data heading-table" fxFlex="15">Start Date</div>
+                            <div class="tb-data heading-table" fxFlex="15">Start Time</div>
+                            <div class="tb-data heading-table" fxFlex="15">End Date</div>
+                            <div class="tb-data heading-table" fxFlex="15">End Time</div>
+                            <div class="tb-data heading-table" fxFlex="15">Status</div>
+                        </div>
+                    </div>
+                    <div class="content" class="drageble-list">
+                        <div class="drageble-box align-items-start" fxLayout="row">
+                            <div class="tb-data heading-table clr-black" fxFlex="10"> Original </div>
+                            <div class="tb-data heading-table" fxFlex="15">{{eventName?eventName.event_title:''}} </div>
+                            <div class="tb-data heading-table" fxFlex="15">{{eventName?eventName.start_date:'' | date}}</div>
+                            <div class="tb-data heading-table" fxFlex="15">{{eventName?transformTime24To12(eventName.start_time):''}}</div>
+                            <div class="tb-data heading-table" fxFlex="15">{{eventName?eventName.end_date:'' | date}}</div>
+                            <div class="tb-data heading-table" fxFlex="15">{{eventName?transformTime24To12(eventName.end_time):''}}</div>
+                            <div class="tb-data heading-table text-capitalize" fxFlex="15">{{eventName?eventName.event_status:''}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="recurringEvent == 'Y'">
+                    <div class="content" class="drageble-list">
+                        <div class="drageble-box" fxLayout="row">
+                            <div class="tb-data heading-table clr-black" fxFlex="10"> </div>
+                            <div class="tb-data heading-table" fxFlex="15">Event Name</div>
+                            <div class="tb-data heading-table" fxFlex="15">Status</div>
+                        </div>
+                    </div>
+                    <div class="content" class="drageble-list">
+                        <div class="drageble-box align-items-start" fxLayout="row">
+                            <div class="tb-data heading-table clr-black" fxFlex="10"> Original </div>
+                            <div class="tb-data heading-table" fxFlex="15">{{eventName?eventName.event_title:''}} </div>
+                            <div class="tb-data heading-table text-capitalize" fxFlex="15">{{eventName?eventName.event_status:''}}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="recurringEvent == 'N'">
+                    <form [formGroup]="duplicateForm" class="with-validation">
+                        <div class="error text-center pr-3">{{errorMessage}}</div>
+                        <div class="content" class="drageble-list" formArrayName="items" *ngFor="let item of duplicateForm.get('items')['controls']; let i = index">
+
+                            <div [formGroupName]="i">
+                                <div class="drageble-box main-drageble align-items-start" fxLayout="row">
+                                    <div class="tb-data heading-table clr-black" fxFlex="10"> New </div>
+
+                                    <div class="tb-data heading-table" fxFlex="15">
+                                        <input class="form-control" formControlName="event_title" (keyup)="onchenageformValue()" placeholder="{{eventName?eventName.event_title:''}}">
+                                        <span *ngIf="item.get('event_title').touched || item.get('event_title').dirty">
+                                        <small *ngIf="item.get('event_title').hasError('required')" class="error"> Event title is required </small>
+                                    </span>
+                                    </div>
+
+
+                                    <div class="tb-data heading-table text-purple" fxFlex="15">
+                                        <div class="matDate">
+                                            <mat-datepicker-toggle matPrefix [for]="duplicateStartDatePicker" class="dateIcon"> </mat-datepicker-toggle>
+                                            <input type="text" (dateChange)="fnChangeEventStartDate($event)" [matDatepicker]="duplicateStartDatePicker" [min]="minDate" (click)="duplicateStartDatePicker.open()" class="form-control matInputdate" formControlName="start_date">
+                                            <mat-datepicker #duplicateStartDatePicker></mat-datepicker>
+                                            <span *ngIf="item.get('start_date').touched || item.get('start_date').dirty">
+                                            <small *ngIf="item.get('start_date').hasError('required')" class="error"> Start date is required </small>
+                                        </span>
+                                            <!-- <div *ngIf="item.controls.start_date.invalid && item.controls.start_date.touched" class="text-danger">
+                                            Start date is required
+                                        </div> -->
+                                            <!-- <span class="error-wrap" *ngIf="duplicateForm.get('start_date').dirty || duplicateForm.get('start_date').touched"><small *ngIf="duplicateForm.get('start_date').hasError('required')" class="error text-left">Start Date is required.</small></span> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="tb-data heading-table" fxFlex="15">
+                                        <!-- <mat-select class="form-control clr-black custom-fc-width" formControlName="start_time">
+                                            <mat-option value="{{i}}" (onSelectionChange)="onChangeStartTime(i)" *ngFor="let time of fullDayTimeSlote; let i=index">{{transformTime24To12(time)}}</mat-option>
+                                        </mat-select> -->
+                                        <mat-select placeholder="HH:MM" *ngIf="!startdateToday" formControlName="start_time"  class="form-control clr-black custom-fc-width">
+                                            <mat-option (onSelectionChange)="onChangeStartTime(i)" *ngFor="let fullDayTimeSlote of fullDayTimeSlote; let i=index" value="{{i}}">{{transformTime24To12(fullDayTimeSlote)}}</mat-option>
+                                        </mat-select>
+                                        <mat-select placeholder="HH:MM" *ngIf="startdateToday" formControlName="start_time"  class="form-control clr-black custom-fc-width">
+                                            <mat-option [ngClass]="{'hidden-slot':currentTime > transformTime24To12(fullDayTimeSlote)}" (onSelectionChange)="onChangeStartTime(i)" *ngFor="let fullDayTimeSlote of fullDayTimeSlote; let i=index" value="{{i}}">{{transformTime24To12(fullDayTimeSlote)}}</mat-option>
+                                        </mat-select>
+                                        <span *ngIf="item.get('start_time').touched || item.get('start_time').dirty">
+                                        <small *ngIf="item.get('start_time').hasError('required')" class="error"> Start time is required </small>
+                                    </span>
+                                        <!-- <div *ngIf="item.controls.start_time.invalid && item.controls.start_time.touched" class="text-danger">
+                                        Event start time is required
+                                    </div> -->
+                                    </div>
+
+                                    <div class="tb-data heading-table" fxFlex="15">
+                                        <div class="matDate">
+                                            <mat-datepicker-toggle matPrefix [for]="duplicateEndDatePicker" class="dateIcon"> </mat-datepicker-toggle>
+                                            <input type="text" [matDatepicker]="duplicateEndDatePicker" (dateChange)="fnChangeEventEndDate($event)" [min]="minTillDate" (click)="duplicateEndDatePicker.open()" class="form-control matInputdate" formControlName="end_date">
+                                            <mat-datepicker #duplicateEndDatePicker></mat-datepicker>
+                                            <span *ngIf="item.get('end_date').touched || item.get('end_date').dirty">
+                                            <small *ngIf="item.get('end_date').hasError('required')" class="error"> End date is required </small>
+                                        </span>
+                                            <!-- <div *ngIf="item.controls.end_date.invalid && item.controls.end_date.touched" class="text-danger">
+                                            End date is required
+                                        </div> -->
+
+                                            <!-- <span class="error-wrap" *ngIf="duplicateForm.get('end_date').dirty || duplicateForm.get('end_date').touched"><small *ngIf="duplicateForm.get('end_date').hasError('required')" class="error text-left">End Date is required.</small></span> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="tb-data heading-table" fxFlex="15">
+                                        <mat-select *ngIf="!startEndSameDate" class="form-control clr-black custom-fc-width" formControlName="end_time">
+                                            <mat-option value="{{i}}" (onSelectionChange)="onChangeEndTime(i)" *ngFor="let time of fullDayTimeSlote;let i=index">{{transformTime24To12(time)}}</mat-option>
+                                        </mat-select>
+
+                                        <mat-select *ngIf="startEndSameDate" class="form-control clr-black custom-fc-width" formControlName="end_time">
+                                            <mat-option [ngClass]="{'hidden-slot':item.get('start_time').value > (i-1)}" value="{{i}}" (onSelectionChange)="onChangeEndTime(i)" *ngFor="let time of fullDayTimeSlote;let i=index">{{transformTime24To12(time)}}</mat-option>
+                                        </mat-select>
+
+                                        <span *ngIf="item.get('end_time').touched || item.get('end_time').dirty">
+                                        <small *ngIf="item.get('end_time').hasError('required')" class="error"> End time is required </small>
+                                    </span>
+                                        <!-- <div *ngIf="item.controls.end_time.invalid && item.controls.end_time.touched" class="text-danger">
+                                        Event end time is required
+                                    </div> -->
+                                    </div>
+
+                                    <div class="tb-data heading-table" fxFlex="15">
+                                        <mat-select class="form-control clr-black custom-fc-width" (onSelectionChange)="onStatusChange()" id="exampleFormControlSelect1" formControlName="event_status">
+                                            <mat-option value="draft" (onSelectionChange)="onStatusChange()">Draft</mat-option>
+                                            <mat-option value="publish" (onSelectionChange)="onStatusChange()">Published</mat-option>
+                                        </mat-select>
+                                        <span *ngIf="item.get('event_status').touched || item.get('event_status').dirty">
+                                        <small *ngIf="item.get('event_status').hasError('required')" class="error"> Status is required  </small>
+                                    </span>
+                                        <!-- <div *ngIf="item.controls.event_status.invalid && item.controls.event_status.touched" class="text-danger">
+                                        Event status is required
+                                    </div> -->
+                                        <!-- <span class="error-wrap" *ngIf="duplicateForm.get('event_status').dirty || duplicateForm.get('event_status').touched"><small *ngIf="duplicateForm.get('event_status').hasError('required')" class="error text-left">Status is required.</small></span> -->
+                                        <div class="delete-duplicate">
+                                            <span class="material-icons" (click)="fnRemoveDuplicate(i)">
+                                            cancel
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+                <div *ngIf="recurringEvent == 'Y'">
+                    <form [formGroup]="duplicateForm" class="with-validation">
+                        <div class="error text-center pr-3">{{errorMessage}}</div>
+                        <div class="content" class="drageble-list" formArrayName="items" *ngFor="let item of duplicateForm.get('items')['controls']; let i = index">
+
+                            <div [formGroupName]="i">
+                                <div class="drageble-box main-drageble align-items-start" fxLayout="row">
+                                    <div class="tb-data heading-table clr-black" fxFlex="10"> New </div>
+
+                                    <div class="tb-data heading-table" fxFlex="15">
+                                        <input class="form-control" formControlName="event_title" (keyup)="onchenageformValue()" placeholder="{{eventName?eventName.event_title:''}}">
+                                        <span *ngIf="item.get('event_title').touched || item.get('event_title').dirty">
+                                        <small *ngIf="item.get('event_title').hasError('required')" class="error"> Event title is required </small>
+                                    </span>
+                                    </div>
+
+                                    <div class="tb-data heading-table" fxFlex="15">
+                                        <mat-select class="form-control clr-black custom-fc-width" (onSelectionChange)="onStatusChange()" id="exampleFormControlSelect1" formControlName="event_status">
+                                            <mat-option value="draft" (onSelectionChange)="onStatusChange()">Draft</mat-option>
+                                            <mat-option value="publish" (onSelectionChange)="onStatusChange()">Published</mat-option>
+                                        </mat-select>
+                                        <span *ngIf="item.get('event_status').touched || item.get('event_status').dirty">
+                                        <small *ngIf="item.get('event_status').hasError('required')" class="error"> Status is required  </small>
+                                    </span>
+                                        <!-- <div *ngIf="item.controls.event_status.invalid && item.controls.event_status.touched" class="text-danger">
+                                        Event status is required
+                                    </div> -->
+                                        <!-- <span class="error-wrap" *ngIf="duplicateForm.get('event_status').dirty || duplicateForm.get('event_status').touched"><small *ngIf="duplicateForm.get('event_status').hasError('required')" class="error text-left">Status is required.</small></span> -->
+                                        <div class="delete-duplicate">
+                                            <span class="material-icons" (click)="fnRemoveDuplicate(i)">
+                                            cancel
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+            <div class="w-100 my-3">
+                <a class="add-row" (click)="fnAddDuplicate()"> Add another row  </a>
+            </div>
+
+        </div>
+        <div class="form-group col-md-12 col-lg-12 col-sm-12 mt-4">
+            <div class="botttom-buttons">
+                <button mat-flat-button color="primary" (click)="fnFinalSubmit()"> Save Duplicates </button>
+            </div>
+        </div>
+    </div>
+
+</div>

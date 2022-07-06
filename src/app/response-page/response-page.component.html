@@ -1,0 +1,29 @@
+ <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+<div *ngIf="pageView == 'thankyou'">
+    <div class="sub-content text-center shadow border p-3 rounded">
+        <div class="ty-text border-bottom">
+          <p>Thank You...!</p>
+         </div>
+         <div class="mt-3">
+           {{responseMessage}}
+         </div>
+         <div class="ty-image mt-3">
+           <img class="image" src="/assets/images/logo/logo-black.png" alt="">
+         </div>
+      </div>
+</div>
+<div *ngIf="pageView == 'oops'">
+    <div class="sub-content text-center shadow border p-3 rounded">
+        <div class="oops-text border-bottom">
+          <p>Oops!</p>
+         </div>
+         <div class="mt-3">
+           {{responseMessage}}
+         </div>
+         <div class="oops-image mt-3">
+           <img class="image"  src="/assets/img/oops.png" alt="">
+           <!-- <mat-icon class="image">close</mat-icon> -->
+           <!-- <div class="image">!</div> -->
+         </div>
+      </div>
+</div>

@@ -1,0 +1,54 @@
+.delete {
+    padding: 30px 25px;
+    .page-title {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 20px;
+        text-align: left;
+        color: #181818;
+    }
+    .delete-event {
+        border: 1px solid #CECECE;
+        border-radius: 8px;
+        background: #F6F6F645;
+        h5 {
+            color: #181818;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .event-details {
+            padding: 20px 18px 27px;
+            .note-theme {
+                background: #FFE6C8;
+                border-radius: 5px;
+                padding: 16px 15px;
+                display: flex;
+                .notif-icon {
+                    color: #FF6600;
+                    margin-right: 15px;
+                    transform: rotate(-45deg);
+                }
+                .notification {
+                    align-items: center;
+                    display: flex;
+                }
+                .note-message {
+                    margin-bottom: 0px;
+                    color: #595959;
+                    .notes {
+                        color: #2C2C2C;
+                        font-weight: bold;
+                    }
+                }
+            }
+            .delete-btn {
+                background: #973c56;
+                border-radius: 5px;
+                opacity: 1;
+                margin-left: auto;
+                color: #FFFFFF;
+                padding: 0px 90px;
+            }
+        }
+    }
+}

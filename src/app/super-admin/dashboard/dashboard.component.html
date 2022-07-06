@@ -1,0 +1,225 @@
+<div id="dashboard" class="bg-white sub-container">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="left-side-view">
+        <mat-card class="setup-flow">
+            <div class="top-progess">
+                <h2 class="module-title">Complete Setup</h2>
+                <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
+                <span>{{(progressValue)}}%</span>
+
+            </div>
+            <ul class="steps" *ngIf="setupSteps">
+                <li *ngIf="setupSteps.signup" [ngClass]="{'active':setupSteps.signup == 'Y'}">
+                    <div class="top-icon">
+                        <mat-icon>done</mat-icon>
+                        <img src="../../../assets/images/admin/step-1.svg">
+                    </div>
+                    <label>Sign up</label>
+                </li>
+                <li (click)="addNewEvent()" class="pointer" *ngIf="setupSteps.add_event"
+                    [ngClass]="{'active':setupSteps.add_event == 'Y'}">
+                    <div class="top-icon">
+                        <mat-icon>done</mat-icon>
+                        <img src="../../../assets/images/admin/step-2.svg">
+                    </div>
+                    <label>Add Event</label>
+                </li>
+                <li (click)="goToCustomizeEvent()" class="pointer" *ngIf="setupSteps.customize_event"
+                [ngClass]="{'active':setupSteps.customize_event == 'Y'}">
+                    <div class="top-icon">
+                        <mat-icon>done</mat-icon>
+                        <img src="../../../assets/images/admin/step-4.svg">
+                    </div>
+                    <label>Customize Event</label>
+                </li>
+                <li (click)="goToPlans()" class="pointer" *ngIf="setupSteps.select_plan"
+                    [ngClass]="{'active':setupSteps.select_plan == 'Y'}">
+                    <div class="top-icon">
+                        <mat-icon>done</mat-icon>
+                        <img src="../../../assets/images/admin/squares.svg">
+                    </div>
+                    <label>Select Plan</label>
+                </li>
+                <li (click)="goToSetupPayment()" class="pointer" *ngIf="setupSteps.setup_payment"
+                    [ngClass]="{'active':setupSteps.setup_payment == 'Y'}">
+                    <div class="top-icon">
+                        <mat-icon>done</mat-icon>
+                        <img src="../../../assets/images/admin/step-3.svg">
+                    </div>
+                    <label>Setup Payment</label>
+                </li>
+                                                                                                                
+                <li *ngIf="setupSteps.publish" [ngClass]="{'active':setupSteps.publish == 'Y'}">
+                    <div class="top-icon">
+                        <mat-icon>done</mat-icon>
+                        <img src="../../../assets/images/admin/step-5.svg">
+                    </div>
+                    <label>Publish</label>
+                </li>
+            </ul>
+        </mat-card>
+        <mat-card class="analytic-main">
+            <div class="section-head">
+                <h2 class="module-title">Analytics</h2>
+                <mat-select [(ngModel)]="analyticsFilter" (selectionChange)="fnChangeFilterAnalytics()"
+                    class="filter-dropdown">
+                    <mat-option value="day">Daily</mat-option>
+                    <mat-option value="week">Weekly</mat-option>
+                    <mat-option value="month">Monthly</mat-option>
+                    <mat-option value="year">Yearly</mat-option>
+                </mat-select>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="analytic-box">
+                        <label class="content">
+                            <h4>Ticket Sold</h4>
+                            <span>{{analyticsStets?analyticsStets.ticket_sold:''}}</span>
+                        </label>
+                        <img src="../../../assets/images/admin/park-tickets-couple.svg">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="analytic-box">
+                        <label class="content">
+                            <h4>Revenue</h4>
+                            <span>{{analyticsStets?analyticsStets.revenue:''}}</span>
+                        </label>
+                        <img src="../../../assets/images/admin/revemue.svg">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="analytic-box">
+                        <label class="content">
+                            <h4>Order Received</h4>
+                            <span>{{analyticsStets?analyticsStets.order_receive:''}}</span>
+                        </label>
+                        <img src="../../../assets/images/admin/order-received.svg">
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+        <div class="row">
+            <div class="col-6">
+                <mat-card class="recent-pur">
+                    <div class="section-head">
+                        <h2 class="module-title mt-14">Recent Purchases</h2>
+                        <!-- <span class="action-icon">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </span> -->
+                    </div>
+                    <ul class="purchase-list" *ngIf="recentPurchaseList.length > 0">
+                        <li *ngFor="let element of recentPurchaseList; let i=index;">
+                            <div class="user-image text-uppercase">{{element.customer.customerShortName}}</div>
+                            <div class="pur-content">
+                                <label>{{element.customer.firstname}} {{element.customer.lastname}}</label>
+                                <span><i class="fa fa-ticket"></i> {{element.events.event_title}}</span>
+                            </div>
+                            <div class="ticket-detail">
+                                <label>{{element.order_item_count}} Ticket</label>
+                                <span>{{element.time_difference}} ago</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="no-data-label text-center" *ngIf="recentPurchaseList.length == 0">
+                        <div class="no-data-view">
+                            <img src="../../../assets/images/no-data-found.svg" />
+                            <label> No data available.</label>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-6">
+                <mat-card class="latest-sales">
+                    <div class="section-head">
+                        <h2 class="module-title">Latest Sales</h2>
+                        <mat-select [(ngModel)]="salesFilter" (selectionChange)="fnChangeFilterSales()"
+                            class="filter-dropdown">
+                            <mat-option value="day">Daily</mat-option>
+                            <mat-option value="week">Weekly</mat-option>
+                            <mat-option value="month">Monthly</mat-option>
+                            <mat-option value="year">Yearly</mat-option>
+                        </mat-select>
+                    </div>
+                    <div style="width:500px;"
+                        *ngIf="latestSalesStats && (latestSalesStats.ticket_sold != 0 || latestSalesStats.ticket_left != 0)"
+                        class="row ticketchart mt-4">
+                        <canvas id="ticketchart"></canvas>
+                        <ul class="chart-legends">
+                            <li class="mr-5">
+                                <div class="tag left"></div>
+                                <span>Ticket Remaining</span>
+                                <label>{{latestSalesStats?latestSalesStats.ticket_left:'-'}}</label>
+                            </li>
+                            <li>
+                                <div class="tag sold"></div>
+                                <span>Ticket Sold</span>
+                                <label>{{latestSalesStats?latestSalesStats.ticket_sold:'-'}}</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="no-data-label text-center"
+                        *ngIf="latestSalesStats && latestSalesStats.ticket_left == 0 && latestSalesStats.ticket_sold == 0">
+                        <div class="no-data-view">
+                            <img src="../../../assets/images/no-data-found.svg" />
+                            <label> No data available.</label>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <div class="right-side-view">
+        <mat-card class="">
+            <div class="welcome-banner">
+                <img src="../../../assets/images/admin/welcome-banner.png" />
+                <h3 class="text-left">Welcome to Eventsmatic</h3>
+                <p>You are just one step away from creating your beautiful event page.</p>
+                <p (click)="addNewEvent()" class="maroon-btn">Add New Event</p>
+            </div>
+            <div class="upcoming-event">
+                <div class="head-line">
+                    <h3>Upcoming Events</h3><span class="side-line"></span>
+                </div>
+                <ul class="event-list" *ngIf="allUpcomingEventListData.length > 0">
+                    <li class="single-event" *ngFor="let element of allUpcomingEventListData; let i=index;">
+                        <div class="date-block" *ngIf="element.event_occurrence_type == 'N'">
+                            <small>{{element.shortStartDate}} </small>
+                            <span>{{element.shortStartDay}}</span>
+                        </div>
+                        <div class="date-block" *ngIf="element.event_occurrence_type == 'Y'">
+                            R
+                            <!-- <span>{{element.shortStartDay}}</span> -->
+                        </div>
+                        <div class="content">
+                            <label>{{element.event_title}}</label>
+                            <div class="ticket-sales">
+                                <div class="ticker-des">
+                                    <span>Ticket
+                                        Sold</span><span>{{element.ticket_sold?element.ticket_sold:0}}/{{element.total_ticket?element.total_ticket:0}}</span>
+                                </div>
+                                <mat-progress-bar mode="determinate" [value]="element.soldPer"></mat-progress-bar>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="no-data-label text-center" *ngIf="allUpcomingEventListData.length == 0">
+                    <div class="no-data-view">
+                        <img src="../../../assets/images/no-data-found.svg" />
+                        <label> No data available.</label>
+                    </div>
+                </div>
+                <div class="bottom-event-list">
+                    <div class="text">
+                        <label *ngIf="totalUpcomingEvents > 3">{{(totalUpcomingEvents - 3)}} events more</label>
+                        <p *ngIf="totalUpcomingEvents > 3" (click)="viewAllEvent()">View More <span
+                                class="material-icons">arrow_right_alt</span></p>
+                    </div>
+                    <button (click)="addNewEvent()" mat-flat-button class="add-event-btn mt-2 px-3">
+                        Add New Event
+                    </button>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>

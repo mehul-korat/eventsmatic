@@ -1,0 +1,100 @@
+<div class="add-occurrence-form">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="modal-header pl-3 py-0 border-0">
+        <p class="font-weight-bold">Add repeating occurrences</p>
+        <button class="close-btn" type="button" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+        <span aria-hidden="true" class="white-text">&times;</span>
+      </button>
+
+    </div>
+
+    <div class="modal-body">
+        <div class="">
+            <form [formGroup]="dayTimeForm" class="with-validation">
+                <div class="row mx-0">
+                    <div class="section-head">Times per day</div>
+                    <div formArrayName="dayTimeArr" *ngFor="let a of dayTimeForm.get('dayTimeArr')['controls']; let i = index">
+                        <div [formGroupName]="i" class="single-form-row mt-3">
+                            <label>Start</label>
+                            <div class="form-group">
+                                <mat-select placeholder="HH:MM" [disabled]="!checkAllDayValue" formControlName="start_time" class="col-10 ml-2 form-control d-inline-block" (selectionChange)="onEnableEndTime($event,i)">
+                                    <mat-option *ngFor="let fullDayTimeSlote of fullDayTimeSlote; let i=index" value="{{fullDayTimeSlote}}">{{transformTime24To12(fullDayTimeSlote)}}</mat-option>
+                                </mat-select>
+                            </div>
+
+                            <label>End</label>
+                            <div class="form-group">
+                                <mat-select placeholder="HH:MM" formControlName="end_time" class="col-10 ml-2 form-control d-inline-block" [disabled]="disabledEndSlote || !checkAllDayValue">
+                                    <mat-option *ngFor=" let tse of fullDayTimeSloteEnd[i]; let i=index " value="{{tse}} ">{{transformTime24To12(tse)}}</mat-option>
+                                </mat-select>
+                            </div>
+
+                            <div *ngIf="startEndTime.length==1 " class="whole-day-check ml-auto ">
+                                <mat-checkbox (change)="fnChangeWholeDay($event) ">All Day</mat-checkbox>
+                            </div>
+                            <div *ngIf="startEndTime.length> 1" class="whole-day-check ml-auto ">
+                                <span *ngIf="i>0" class="delete-daytime "><mat-icon (click)="fnDeleteDayTime(i)">delete_outline</mat-icon></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-100 mt-2" *ngIf="checkAllDayValue">
+                    <button mat-button (click)="fnAddStartEndTime()" class="date-time-add-btn">Add another time</button>
+                </div>
+            </form>
+            <form [formGroup]="repeatForm">
+                <div class="date-section-head py-2 mt-2">Dates</div>
+                <div formArrayName="repeatDataArr" *ngFor="let a of repeatForm.get('repeatDataArr')['controls'];let i = index">
+                    <div [formGroupName]="i">
+                        <div class="col-md-4 d-inline-block">
+                            <div class="w-100">
+                                <label for="">Start Date</label>
+                                <input placeholder="MM/DD/YYYY" (click)="select_start_date_picker.open()" [min]="minSelectStartDate" [matDatepicker]="select_start_date_picker" type="text" formControlName="start_date" class=" col-12 form-control d-inline-block" placeholder="DD/MM/YY"
+                                    readonly (dateChange)="changeEvent($event,i)">
+                                <mat-datepicker #select_start_date_picker></mat-datepicker>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 d-inline-block">
+                            <div class="w-100">
+                                <label for="">Repeat</label>
+                                <div class="form-group">
+                                    <mat-select formControlName="repeat" [ngModel]="selected" class="col-12 form-control d-inline-block" (selectionChange)="onChangeRepeat($event,i)">
+                                        <mat-option value="na">n/a</mat-option>
+                                        <mat-option value="Daily">Daily Until...</mat-option>
+                                        <mat-option value="Weekly">Weekly Until...</mat-option>
+                                    </mat-select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="dateSelectfield[i]" class="col-md-4 d-inline-block">
+                            <div class="w-100">
+                                <label for="">End Date</label>
+                                <input placeholder="MM/DD/YYYY" (click)="select_end_date_picker.open()" [min]="minSelectEndDate[i]" [matDatepicker]="select_end_date_picker" type="text" formControlName="end_date" class=" col-12 form-control d-inline-block" placeholder="DD/MM/YY" readonly>
+                                <mat-datepicker #select_end_date_picker></mat-datepicker>
+                            </div>
+                        </div>
+                        <div *ngIf="finalRepeatData.length > 1" class="col-md-1 d-inline-block">
+                            <span *ngIf="i>0" class="delete-daytime "><mat-icon (click)="fnDeleteDayDate(i)">delete_outline</mat-icon></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-100 mt-2">
+                    <button mat-button (click)="fnAddRepeat()" class="date-time-add-btn">Add another date</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="text-right">
+        <button mat-flat-button class="cancel-btn" (click)="onNoClick()">Cancel</button>
+        <button mat-flat-button (click)="onSubmit()" class="save-btn ml-3" [disabled]="saveDisabled">
+            <span *ngIf="!saveDisabled">Save</span>
+            <div *ngIf="saveDisabled" class="button-spinner">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div> 
+        </button>
+    </div>
+</div>

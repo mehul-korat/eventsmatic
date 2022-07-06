@@ -1,0 +1,117 @@
+<div id="checkout_form" class="main-section">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="checkout-form main-work-area main">
+        <div class="page-title">Global checkout form</div>
+        <p class="col-md-12 instruction-text p-0">
+            Customize the questions that you ask customers when they are placing an order. You can also override this message for particular events if you wish by going to  <span class="speacil-black-text">Events -> Your Event -> Edit checkout form</span>.
+        <div class="buyer-que">
+            <div class="byr-qn">
+                <h5>Buyer only questions</h5>
+                <button mat-raised-button class="byr-qn-btn" (click)="fnAddBuyerQuestion()">Add a buyer only question</button>
+            </div>
+            <div class="col-md-12 mt-3 p-0">
+                <p>Buyer questions are asked once per order.</p>
+            </div>
+            <div class="col-md-12 p-0">
+                <div class="">
+                    <div flexLayout="row" cdkDropList class="buyerqn-list" (cdkDropListDropped)="buyerQuestionDrop($event)">
+                        <div class="" *ngFor="let element of buyerQuestionList; let i=index" cdkDrag>
+                            <div class="" *cdkDragPlaceholder></div>
+                            <div class="buyer">
+                                <div class="buyer-card">
+                                    <div class="main-buyer-wrap">
+                                        <div class="">
+                                            <p class="mb-0">{{element.label}}<span class="asterisk-icon">
+                                              <i *ngIf="element.required" class="fa fa-asterisk asterisk" aria-hidden="true"></i></span> </p>
+                                        </div>
+                                        <div class="">
+                                            <div class="ml-auto buyer-action ">
+
+                                                <button (click)="fnEditBuyerQuestion(element, i)" mat-raised-button class="tooltip-btn pointer mx-1">
+                                                    <span class="info"><i class="fa fa-pencil pencil-icone pointer" aria-hidden="true"></i></span>
+                                                </button>
+                                                <!-- [ngStyle]="{'pointer-events':element.default == true ? 'none' : ''}" mat-raised-button matTooltip="This question can't be deleted"  -->
+                                                <button [ngClass]="{'btn-disabled' : element.default == true}" [disabled]="element.default == true" *ngIf="!element.is_deleted && !element.hide" (click)="fnDeleteBuyerQuestion(element, i)" mat-raised-button mat-raised-button class="tooltip-btn pointer mx-1">
+                                                  <span class="info"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                                                </button>
+
+                                                <button *ngIf="element.hide && element.hide == 'false'" (click)="fnUndoBuyerQuestion(i, true)" mat-raised-button matTooltip="Hide this field" matTooltipPosition="above" class="tooltip-btn pointer mx-1">
+                                                    <span class="info"><i class="fa fa-eye-slash" aria-hidden="true"></i></span> 
+                                                </button>
+                                                <button *ngIf="element.hide && element.hide == 'true'" (click)="fnUndoBuyerQuestion(i, false)" mat-raised-button matTooltip="Unhide this field" matTooltipPosition="above" class="tooltip-btn pointer mx-1">
+                                                    <span class="info"><i class="fa fa-eye" aria-hidden="true"></i></span> 
+                                                </button>
+
+                                                <button [ngClass]="{'btn-disabled' : element.default == true}" [disabled]="element.default == true" [ngStyle]="{'pointer-events':element.default == true ? 'none' : ''}" cdkDragHandle mat-raised-button class="tooltip-btn pointer mx-1">
+                                                  <span class="info"><i class="fa fa-arrows" aria-hidden="true"></i></span>
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="att-qn">
+            <div class="d-flex byr-qn">
+                <h5>Attendee questions</h5>
+                <button mat-raised-button class="byr-qn-btn" (click)="fnAddAttendeeQuestion()">Add an attendee question</button>
+            </div>
+            <div class="col-md-12 mt-3 p-0">
+                <p>Attendee questions are asked for every ticket purchased.</p>
+            </div>
+            <div class="col-md-12 p-0">
+                <div class="">
+                    <div flexLayout="row" cdkDropList class="buyerqn-list" (cdkDropListDropped)="attendeeQuestionDrop($event)">
+                        <div class="" *ngFor="let element of attendeeQuestionList; let i=index" cdkDrag>
+                            <div class="" *cdkDragPlaceholder></div>
+                            <div class="buyer">
+                                <div class="buyer-card">
+                                    <div class="main-buyer-wrap">
+                                        <div class="">
+                                            <p class="mb-0">{{element.label}}<span *ngIf="element.required" class="asterisk-icon"><i class="fa fa-asterisk asterisk" aria-hidden="true"></i></span> </p>
+                                        </div>
+                                        <div class="">
+                                            <div class="ml-auto buyer-action ">
+                                                <button (click)="fnEditAttendeeQuestion(element, i)" mat-raised-button class="tooltip-btn pointer mx-1">
+                                                    <span class="info"><i class="fa fa-pencil pencil-icone pointer" aria-hidden="true"></i></span>
+                                                  </button>
+                                                <button [ngClass]="{'btn-disabled' : element.default == true}" *ngIf="!element.hide" [disabled]="element.default == true" (click)="fnDeleteAttendeeQuestion(element, i)" [ngStyle]="{'pointer-events':element.default == true ? 'none' : ''}" mat-raised-button class="tooltip-btn pointer mx-1">
+                                                      <span class="info"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                                                    </button>
+                                                    <button *ngIf="element.hide && element.hide == 'false'" (click)="fnUndoAtteQuestion(i, true)" mat-raised-button matTooltip="Hide this field" matTooltipPosition="above" class="tooltip-btn pointer mx-1">
+                                                        <span class="info"><i class="fa fa-eye-slash" aria-hidden="true"></i></span> 
+                                                    </button>
+                                                    <button *ngIf="element.hide && element.hide == 'true'" (click)="fnUndoAtteQuestion(i, false)" mat-raised-button matTooltip="Unhide this field" matTooltipPosition="above" class="tooltip-btn pointer mx-1">
+                                                        <span class="info"><i class="fa fa-eye" aria-hidden="true"></i></span> 
+                                                    </button>
+                                                <button [ngClass]="{'btn-disabled' : element.default == true}" [disabled]="element.default == true" [ngStyle]="{'pointer-events':element.default == true ? 'none' : ''}" cdkDragHandle mat-raised-button class="tooltip-btn pointer mx-1">
+                                                      <span class="info"><i class="fa fa-arrows" aria-hidden="true"></i></span>
+                                                    </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-action-btn">
+        <div class="can-save">
+            <button mat-raised-button class="cancel-btn" (click)="fnCancelSave()">Cancel</button>
+            <button mat-raised-button class="save-btn" (click)="fnSaveCheckoutForm()">Save</button>
+        </div>
+    </div>
+
+
+</div>

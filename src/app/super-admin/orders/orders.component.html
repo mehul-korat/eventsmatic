@@ -1,0 +1,176 @@
+<div class="main bg-white sub-container order">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="col-12">
+        <div class="row">
+            <div class="page-title">
+                Orders
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mt-3 manage-order">
+        <div class="manage-order-details">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row align-items-center">
+                        <div class="page-sub-title">
+                            Manage
+                        </div>
+
+                        <div class="ml-auto ">
+                            <button *ngIf="subPermission == 'admin' || (subPermission != 'admin' && subPermission.indexOf('AUER') > -1)" mat-flat-button class=" px-3 mr-2 bg-primary text-light" (click)="exportOredr()">Export orders</button>
+                            <button *ngIf="subPermission == 'admin' || (subPermission != 'admin' && subPermission.indexOf('AUEC') > -1)" mat-flat-button class=" px-3 ml-2 bg-primary text-light" (click)="addNewOredr()">Add new order</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 searchbox p-0 search-bar rounded">
+                    <i class="fa fa-search "></i>
+                    <input matInput type="text" class="form-control" [(ngModel)]="search" (keyup)="fngetallOrders(false)" placeholder="Search by name, email, transaction id, or ticket code">
+                </div>
+                <div class="col-12 p-0 order-event">
+                    <div class="" fxFlex="34" *ngIf="!selectedEvent && !selectedOccurrence">
+                        <label class="mb-0">Event</label>
+                        <div class="">
+                            <mat-select class="form-control" [(ngModel)]="single_order_event" (selectionChange)="fngetallOrders(false); selectedEventOrder($event)">
+                                <mat-option value="all">All Events</mat-option>
+                                <mat-option *ngFor="let val of allEventlist;let i = index;" value="{{val.unique_code}}">
+                                    {{val.event_title}} {{val.start_date}} - {{transformTime24To12(val.start_time)}}
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                    <div class="" fxFlex="34" *ngIf="selectedEvent && selectedOccurrence">
+                        <label class="mb-0">Occurrence</label>
+                        <div class="">
+                            <mat-select class="form-control" [(ngModel)]="selectedOccurrence" (selectionChange)="fnChangeOccurrence()">
+                                <mat-option value="">All Occurrence</mat-option>
+                                <mat-option *ngFor="let element of allOccurrenceList;let i = index;" value="{{element.unique_code}}">
+                                    <span *ngIf="element.occurance_start_date!=element.occurance_end_date">
+                                        {{element.occurance_start_date |date :'mediumDate'}} {{element.occurance_start_time}} To {{element.occurance_end_date |date :'mediumDate':''}} {{element.occurance_end_time}}
+                                    </span>
+                                    <span *ngIf="element.occurance_start_date==element.occurance_end_date">
+                                        {{element.occurance_start_date |date :'mediumDate'}} {{element.occurance_start_time}} {{element.occurance_start_time?'-':''}} {{element.occurance_end_time}}
+                                    </span>
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+
+                    <div class="ml-4" fxFlex="20">
+                        <label class="mb-0">Order date from</label>
+                        <div class="matDate">
+                            <mat-datepicker-toggle matPrefix [for]="ticketIssuedDatePicker" class="dateIcon"> </mat-datepicker-toggle>
+                            <input placeholder="MM/DD/YYYY" type="text" (dateChange)="fngetallOrders(false)" [(ngModel)]="start_date" [matDatepicker]="ticketIssuedDatePicker" (click)="ticketIssuedDatePicker.open()" class="form-control matInputdate">
+                            <mat-datepicker #ticketIssuedDatePicker></mat-datepicker>
+                        </div>
+                    </div>
+
+                    <div class="mx-4" fxFlex="20">
+                        <label class="mb-0">Order date to</label>
+                        <div class="matDate">
+                            <mat-datepicker-toggle matSuffix [for]="ticketIssuedTo" class="dateIcon"></mat-datepicker-toggle>
+                            <input placeholder="MM/DD/YYYY" type="text" (dateChange)="fngetallOrders(false)" [(ngModel)]="end_date" [matDatepicker]="ticketIssuedTo" [min]="orderToDate" (click)="ticketIssuedTo.open()" class="form-control matInputdate">
+                            <mat-datepicker #ticketIssuedTo></mat-datepicker>
+                        </div>
+                    </div>
+
+                    <div class="" fxFlex="20">
+                        <label class="mb-0">Order Status</label>
+                        <div class="">
+                            <mat-select class="form-control" [(ngModel)]="order_status" (selectionChange)="fngetallOrders(false)">
+                                <mat-option value="all">All Orders</mat-option>
+                                <mat-option value="CO">Completed orders</mat-option>
+                                <mat-option value="P">Pending orders</mat-option>
+                                <mat-option value="C">Cancelled orders</mat-option>
+                                <mat-option value="VO">Void</mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="events ">
+            <div class="service-listing">
+                <div class="main-table-content main-cust-table-content ">
+                    <div class="listing-table">
+                        <div class="heads main-heading-content drageble py-3" fxLayout="row">
+                            <div class="ml-5" fxFlex="10">Order ID</div>
+                            <div class="" fxFlex="10">Status</div>
+                            <!-- <div class="" fxFlex="7">Payment Status</div>
+                            <div class="" fxFlex="7">Payment Mode</div> -->
+                            <div class="" fxFlex="16">Name</div>
+                            <div class="" fxFlex="24">Date / Time</div>
+                            <div class="" fxFlex="27">Event Name</div>
+                            <div class="" fxFlex="8">Value</div>
+                            <div class="" fxFlex="5">Action</div>
+                        </div>
+
+                        <div class="drageble-list" *ngIf="allorderlist && allorderlist.length != 0">
+                            <div class="drageble-box" fxLayout="row" *ngFor="let element of allorderlist">
+                                <div class="tb-data ml-5 " fxFlex="10" (click)="eventSummary(element)"> <a class="">
+                                     {{element.order_id}}</a>
+                                </div>
+                                <div class="tb-data" fxFlex="10">
+                                    <span class="" [ngStyle]="{'color': element.order_status=='P' ? '#848484' : element.order_status=='C' ? '#FF0000' :  element.order_status=='CO' ? '#2BB800' : '#FF0000'}">
+                                        {{element.order_status=='P' ? 'Pending' : element.order_status=='C' ? 'Cancel' :  element.order_status=='CO' ? 'Completed' : 'Void'}}
+                                    </span>
+                                </div>
+                                <div class="tb-data" fxFlex="16">{{element.customer.firstname + " " +element.customer.lastname}}</div>
+                                <div class="tb-data" fxFlex="24">{{element.order_date |date :'mediumDate'}} / {{transformTime24To12(element.order_time)}}</div>
+                                <div class="tb-data" fxFlex="27" *ngIf="element.events && element.events.event_occurrence_type == 'N'">{{element.events.event_title}} <span class="order-data-date"> ({{element.events.start_date |date :'mediumDate'}} {{transformTime24To12(element.events.start_time)}} to {{element.events.end_date |date :'mediumDate'}} {{transformTime24To12(element.events.end_time)}}) </span></div>
+                                <div class="tb-data" fxFlex="27" *ngIf="element.events && element.events.event_occurrence_type == 'Y'">{{element.events.event_title}} <span class="order-data-date">({{element.occurrence.start_label}} - {{element.occurrence.end_label}}) </span></div>
+                                <div class="tb-data" fxFlex="27" *ngIf="!element.events">-</div>
+                                <div class="tb-data" fxFlex="8">{{element.grand_total| currency:element.events?element.events.event_setting.currency:'symbol'}}</div>
+                                <div class="tb-data" fxFlex="5">
+                                    <mat-icon [ngbPopover]="popContent" placement="bottom" aria-hidden="false" aria-label="Example home icon" class="action-icon">more_horiz</mat-icon>
+                                    <!-- <i class="fa fa-ellipsis-h action-icon" aria-hidden="true"></i> -->
+                                    <ng-template class="popover" #popContent>
+                                        <div *ngIf="element.order_status!='C'" class="px-3 border-bottom py-1">
+                                            <i class="fa fa-repeat mr-2 pointer"></i><span class="pointer" (click)="resendOrder(element.unique_code)">Resend</span>
+                                        </div>
+
+                                        <div *ngIf="(element.order_status!='C') && (subPermission == 'admin' || (subPermission != 'admin' && subPermission.indexOf('AUEC') > -1))" class="px-3 border-bottom py-1">
+                                            <i class="fa fa-pencil mr-2 pointer"></i><span (click)="editOrder(element)" class="pointer">Edit</span>
+                                        </div>
+
+                                        <div class="px-3 border-bottom py-1">
+                                            <i class="fa fa-ticket mr-2"></i><span class="pointer" (click)="DownloadTickets(element)">Download Tickets</span>
+                                        </div>
+
+                                        <div *ngIf="(element.order_status!='C') && (subPermission == 'admin' || (subPermission != 'admin' && subPermission.indexOf('AUEC') > -1))" class="px-3 py-1">
+                                            <i class="fa fa-times-circle mr-2 pointer"></i> <span class="pointer" (click)="cancelOrder(element)">Cancel</span>
+                                        </div>
+
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="no-data-label" *ngIf="allorderlist && allorderlist.length == 0">
+                            <div class="no-data-view">
+                                <img src="../../../assets/images/no-data-found.svg" />
+                                <label> No data available.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-center" *ngIf="allorderlist && allorderlist.length != 0">
+                        <div class="table_pagination mt-4 pagination-class" *ngIf="allorderlist != ''">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-end">
+                                    <li class="page-item" (click)="navigateTo_orders(first_page_url_orders)"><a class="page-link"><i class="fa fa-angle-double-left arrow-icon" aria-hidden="true"></i></a></li>
+                                    <li class="page-item" (click)="navigateTo_orders(prev_page_url_orders)"><a class="page-link"><i class="fa fa-angle-left arrow-icon" aria-hidden="true"></i></a></li>
+                                    <li class="page-item" [ngClass]="{'active':current_page_orders == i+1}" *ngFor="let pagenumber of arrayOne_orders(last_page_orders); let i = index;" (click)="navigateToPageNumber_orders(i+1)"><a class="page-link">{{i+1}}</a></li>
+                                    <li class="page-item" (click)="navigateTo_orders(next_page_url_orders)"><a class="page-link"><i class="fa fa-angle-right arrow-icon" aria-hidden="true"></i></a></li>
+                                    <li class="page-item" (click)="navigateTo_orders(last_page_url_orders)"><a class="page-link"><i class="fa fa-angle-double-right arrow-icon" aria-hidden="true"></i></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

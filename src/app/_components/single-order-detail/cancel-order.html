@@ -1,0 +1,56 @@
+<div class="modal-dialog modal-notify modal-info export-order modal-lg" role="document">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="modal-content ">
+        <div class="modal-header modal-bcolor-primary px-0 pt-0">
+            <p class="heading lead  work-content">Cancel order</p>
+            <button type="button" class="close-btn" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+        </div>
+        <div class="cancel-order mt-3">
+            <div class="col-md-12 px-0 cancel-warn">
+                <div class="note-theme m-0">
+                    <div class="notification">
+                        <mat-icon aria-hidden="false" aria-label="" class="notif-icon">cancel</mat-icon>
+                    </div>
+                    <div>
+                        <p class="note-message">Cancelling the order will void all tickets and they won't appear on your door entry list. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="cancel-order-detail">
+                <div class="order-det" *ngIf="singleorderCustomer">
+                    <div class="row">
+                        <label class="col-md-2">Order Id:</label>
+                        <p class="col-md-10">{{singleorderCustomer.unique_code}}</p>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-2"> Event: </label>
+                        <!-- <p class="col-md-10"> {{eventData.event_title}} ({{singleorderCustomer.order_date |date :'fullDate'}})</p> -->
+                        <p class="col-md-10"> {{eventData.event_title}}</p>
+                    </div>
+                    <div class="row" *ngIf="singleorderCustomer.customer">
+                        <label class="col-md-2"> Name:</label>
+                        <p class="col-md-10" *ngIf="singleorderCustomer.customer.name"> {{singleorderCustomer.customer.name}}</p>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-2"> Email:</label>
+                        <p class="col-md-10" *ngIf="singleorderCustomer.customer.email"> {{singleorderCustomer.customer.email}}</p>
+                    </div>
+                </div>
+
+                <div class="cancel-order-note">
+                    <div class="form-group">
+                        <label for="">Please provide a reason for this cancellation below. This information will be added to the cancellation email sent to the customer <span><i class="fa fa-asterisk" aria-hidden="true"></i></span> </label>
+                        <textarea class="form-control" [(ngModel)]="cancelreason" id="" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="order-cancel">
+                    <button mat-raised-button class="d-flex ml-auto order-cancel-btn" (click)="cancelthisOrder()">Cancel This Order</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="delete main">
+    <h5 class="page-title">Delete {{eventName?eventName.event_title:''}}</h5>
+    <div class="delete-event">
+        <div class="event-details">
+            <div class="col-md-12 px-0">
+                <div class="note-theme m-0">
+                    <div class="notification">
+                        <mat-icon aria-hidden="false" aria-label="Example home icon" class="notif-icon">notifications</mat-icon>
+                    </div>
+                    <div>
+                        <p class="note-message">Please note, there are orders associated with this event. If you delete this event you will also delete the orders associated with it. </p>
+                    </div>
+                </div>
+            </div>
+            <h5 class="col-md-12 px-0 mb-0 py-3">Are you sure you wish to delete this event?</h5>
+            <section class="">
+                <mat-checkbox class="" (change)="fnDeleteEvents($event)">Please tick to confirm</mat-checkbox>
+            </section>
+            <div class="d-flex">
+                <button mat-raised-button class="delete-btn" (click)="deleteEvent()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,435 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+main {
+    font-family: Poppins, Regular;
+}
+
+::ng-deep .checkout-form {
+    .comm-btn {
+        background: #973c56;
+        font-size: 14px;
+        color: #FFFFFF;
+        border-radius: 5px;
+        text-align: center;
+    }
+    .checkout-form-main {
+        height: calc(100vh - 200px);
+        overflow-y: scroll;
+        padding: 15px 25px;
+        .checkout-form-content {
+            .page-title {
+                font-size: 18px;
+                font-weight: 500;
+                margin-bottom: 5px;
+                text-align: left;
+                color: #181818;
+            }
+            .sub-title {
+                color: #808080;
+                font-size: 14px;
+            }
+            .form-radio-btn {
+                border: 1px solid #CECECE;
+                padding: 25px 15px;
+                border-radius: 4px;
+                margin: 0px 15px;
+            }
+            .global-checkout {
+                .mat-radio-label {
+                    margin-bottom: 0px;
+                }
+                .mat-radio-label-content {
+                    font-weight: 600
+                }
+                p {
+                    margin-bottom: 0px;
+                    margin-left: 27px;
+                    color: #808080;
+                }
+            }
+            .event-checkout {
+                .mat-radio-label {
+                    margin-bottom: 0px;
+                }
+                .mat-radio-label-content {
+                    font-weight: 600
+                }
+                p {
+                    margin-bottom: 0px;
+                    margin-left: 27px;
+                    color: #808080;
+                }
+            }
+        }
+        .global-checkout-preview {
+            border: 1px solid #CECECE;
+            padding: 15px 15px;
+            border-radius: 4px;
+            margin: 20px 15px;
+            h5 {
+                color: #181818;
+                font-size: 16px;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+            }
+            .preview-form {
+                border: 1px solid #CECECE;
+                border-radius: 4px;
+                background: #F7F7F7;
+                padding: 0px 80px;
+                margin: 15px 0px 5px;
+                .global-checkout-form {
+                    background: #FFFFFF;
+                    border-left: 1px solid #CECECE;
+                    border-right: 1px solid #CECECE;
+                    display: flow-root;
+                    padding: 0px 15px;
+                    pointer-events: none;
+                    .checkout-form {
+                        padding: 15px 0px 25px 15px;
+                        .fa-asterisk {
+                            color: #FF0000;
+                            font-size: 5px;
+                            position: relative;
+                            bottom: 6px;
+                        }
+                    }
+                    .general-admission {
+                        .main-head {
+                            color: #181818;
+                            font-size: 16px;
+                            font-weight: 500;
+                        }
+                        .fa-asterisk {
+                            color: #FF0000;
+                            font-size: 5px;
+                            position: relative;
+                            bottom: 6px;
+                        }
+                    }
+                }
+            }
+        }
+        .event-checkout-preview {
+            .checkout-form {
+                padding: 0px 16px;
+                .main-head {
+                    text-align: left;
+                    font-size: 16px;
+                    letter-spacing: 0px;
+                    color: #181818;
+                    opacity: 1;
+                    font-weight: 500;
+                }
+                .buyer-que {
+                    .byr-qn {
+                        position: relative;
+                        float: right;
+                        top: -15px;
+                        padding: 0px 15px;
+                    }
+                    h5 {
+                        font-size: 17px;
+                        font-weight: 400;
+                    }
+                    .byr-qn-btn {
+                        // width: 300px;
+                        // height: 50px;
+                        background: #973c56;
+                        border-radius: 5px;
+                        opacity: 1;
+                        margin-left: auto;
+                        color: #FFFFFF;
+                        ;
+                    }
+                    .buyer {
+                        background: #E6E6E6;
+                        box-shadow: none;
+                        padding: 4px 16px;
+                        margin: 10px 0px 10px;
+                        border-radius: 4px;
+                        .buyer-card {
+                            margin: 12px 0px;
+                            .asterisk-icon {
+                                padding: 2px;
+                                .asterisk {
+                                    color: #FF0000;
+                                    font-size: 5px;
+                                    position: relative;
+                                    bottom: 6px;
+                                }
+                            }
+                            .mat-expansion-indicator {
+                                display: none;
+                            }
+                            .mat-expansion-panel-header-description {
+                                margin-right: 0px;
+                            }
+                            .mat-expansion-panel-header-title {
+                                align-items: center;
+                            }
+                            .buyer-action {
+                                .tooltip-btn.mat-raised-button {
+                                    padding: 0px;
+                                    height: 0px;
+                                    box-shadow: none !important;
+                                }
+                                i {
+                                    font-size: 22px;
+                                    padding: 0px 10px;
+                                    // color: #2c2c2c5c;
+                                }
+                                .pencil-clr {
+                                    color: #2c2c2cd1;
+                                }
+                            }
+                        }
+                    }
+                }
+                .att-qn {
+                    .byr-qn {
+                        position: relative;
+                        float: right;
+                        top: -15px;
+                        padding: 0px 15px;
+                    }
+                    h5 {
+                        font-size: 17px;
+                        font-weight: 400;
+                    }
+                    .byr-qn-btn {
+                        background: #973c56;
+                        border-radius: 5px;
+                        opacity: 1;
+                        margin-left: auto;
+                        color: #FFFFFF;
+                        ;
+                    }
+                    .buyer {
+                        background: #E6E6E6;
+                        box-shadow: none;
+                        padding: 4px 16px;
+                        margin: 10px 0px 10px;
+                        border-radius: 4px;
+                        .buyer-card {
+                            margin: 12px 0px;
+                            .hidden-name {
+                                text-decoration: line-through;
+                            }
+                            .mat-expansion-indicator {
+                                display: none;
+                            }
+                            .mat-expansion-panel-header-description {
+                                margin-right: 0px;
+                            }
+                            .mat-expansion-panel-header-title {
+                                align-items: center;
+                            }
+                            .asterisk-icon {
+                                padding: 2px;
+                                .asterisk {
+                                    color: #FF0000;
+                                    font-size: 5px;
+                                    position: relative;
+                                    bottom: 6px;
+                                }
+                            }
+                            .buyer-action {
+                                 ::ng-deep .tooltip-btn.mat-raised-button {
+                                    padding: 0px;
+                                    height: 0px;
+                                    box-shadow: none !important;
+                                }
+                                i {
+                                    font-size: 22px;
+                                    padding: 0px 10px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// --------- add-buyer-question dialog css----------
+::ng-deep .modal-content .modal-header {
+    border: none;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+::ng-deep .modal-content {
+    border: none;
+}
+
+::ng-deep .mat-dialog-container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+::ng-deep .heading {
+    margin-bottom: 0px;
+    letter-spacing: 0px;
+    color: #181818;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+::ng-deep .close-btn {
+    background: #FFE6C8 !important;
+    opacity: 1;
+    border-radius: 50%;
+    padding: 4px 6px !important;
+    font-size: 14px;
+    color: #973c56;
+}
+
+::ng-deep .modal-body {
+    padding-bottom: 0px;
+}
+
+::ng-deep .modal-dialog .form-group label {
+    color: #595959;
+    font-size: 14px;
+}
+
+::ng-deep .fa-asterisk {
+    color: #FF0000;
+    font-size: 5px;
+    position: relative;
+    bottom: 6px;
+}
+
+::ng-deep .add-question-form {
+    .fa-asterisk {
+        color: #FF0000;
+        font-size: 5px;
+        position: relative;
+        bottom: 6px;
+    }
+    .fa-question {
+        // background: #e8e8e8;
+        border-radius: 50%;
+        font-size: 9px;
+        padding: 3px 5px;
+        background: #CECECE;
+        opacity: 0.47;
+    }
+    .cancel-btn {
+        background: #FFE6C8;
+        font-size: 14px;
+        color: #181818;
+    }
+    .info {
+        position: relative;
+        bottom: 2px;
+    }
+    .save-btn {
+        background: #973c56;
+        font-size: 16px;
+        color: #FFFFFF;
+    }
+}
+
+// ---------end add-buyer-question dialog css----------
+// --------- edit-buyer-name dialog css----------
+::ng-deep .edit-buyer-qn {
+    .cancel-btn {
+        background: #FFE6C8;
+        font-size: 14px;
+        color: #181818;
+    }
+    .save-btn {
+        background: #973c56;
+        font-size: 16px;
+        color: #FFFFFF;
+    }
+}
+
+// ---------end edit-buyer-name dialog css----------
+// --------- edit-attendee-name dialog css----------
+::ng-deep .edit-attendee-qn {
+    .cancel-btn {
+        background: #FFE6C8;
+        font-size: 14px;
+    }
+    .save-btn {
+        background: #973c56;
+        font-size: 16px;
+        color: #FFFFFF;
+    }
+}
+
+// ---------end  edit-attendee-name dialog css----------
+.example-list {
+    max-width: 100%;
+    border: solid 1px #ccc;
+    min-height: 60px;
+    display: block;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.example-box {
+    padding: 20px 10px;
+    border-bottom: solid 1px #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    background: white;
+    font-size: 14px;
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+    border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-custom-placeholder {
+    background: #ccc;
+    border: dotted 3px #999;
+    min-height: 60px;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+ ::ng-deep .asterisk-icon {
+    padding: 2px;
+    .asterisk {
+        color: #FF0000;
+        font-size: 5px;
+        position: relative;
+        bottom: 6px;
+    }
+}
+
+.footer-action-btn {
+    background-color: white;
+    position: fixed;
+    bottom: 0;
+    width: calc(100% - 380px);
+    z-index: 59;
+    height: 75px;
+    border-top: 1px solid #FFE6C8;
+    margin: 16px 0px 0px 0px;
+    left: 380px;
+}

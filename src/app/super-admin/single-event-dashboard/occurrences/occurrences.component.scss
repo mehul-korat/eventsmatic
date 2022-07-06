@@ -1,0 +1,269 @@
+.text-green {
+    color: #30A81E !important;
+}
+
+.text-purple {
+    color: #6B1FC0 !important;
+}
+
+.clr-black {
+    color: #000!important;
+}
+
+#occurrence {
+    font-family: Poppins;
+    .top-heading-main {
+        .page-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            text-align: left;
+            color: #181818;
+        }
+        p {
+            color: #808080;
+        }
+    }
+    .bottom-occurrence-wrap {
+        margin-top: 10px;
+        .occurrence-notification {
+            padding: 14px;
+            background-color: #973c561c;
+            border-radius: 4px;
+            display: flex;
+            i {
+                margin-right: 10px;
+                color: #FF6600;
+                transform: rotate(-40deg);
+                font-size: 16px;
+                margin-left: 8px;
+            }
+            p {
+                margin-bottom: 0px;
+            }
+        }
+        .manage-occurrence-table {
+            // margin-top: 26px;
+            border: 1px solid #CECECE;
+            border-radius: 4px;
+            background-color: #F6F6F645;
+            .add-occurrence-main {
+                border-bottom: solid 1px #DDDDDD;
+                padding: 14px 18px 24px 14px;
+                display: flex;
+                align-items: center;
+                h3 {
+                    margin: 0px;
+                    text-align: justify;
+                    color: #000;
+                    font-weight: 500;
+                }
+            }
+            .drageble-list {
+                width: 100%;
+                border-top: solid 1px #dddddd00;
+                display: block;
+                background: #f6f6f645;
+                border-radius: 4px;
+                overflow: hidden;
+                font-size: 14px;
+                font-weight: 500;
+            }
+            .main-heading-content {
+                border-bottom: solid 2px #DDDDDD;
+                padding: 14px 20px;
+                align-items: center;
+                font-size: 14px;
+                color: #595959;
+                flex-direction: row;
+                box-sizing: border-box;
+                display: flex;
+            }
+            .heading-table {
+                flex: 1 1 100%;
+                box-sizing: border-box;
+                max-width: 25%;
+            }
+            .drageble-box {
+                align-items: center;
+                flex-direction: row;
+                box-sizing: border-box;
+                display: flex;
+                padding: 10px 20px;
+                a {
+                    color: #973c56;
+                    cursor: pointer;
+                }
+            }
+            .tb-data {
+                padding: 6px 0px;
+                color: #595959;
+            }
+            .cpn-title {
+                color: #181818;
+            }
+            .cpn-code {
+                color: #973c56;
+            }
+            .cpn-bor {
+                border: 1px dashed #973c56;
+                padding: 6px 12px;
+                border-radius: 5px;
+            }
+        }
+    }
+}
+
+// end css
+ ::ng-deep .cancel-btn {
+    background: #FFE6C8;
+    font-size: 14px;
+    color: #181818;
+}
+
+ ::ng-deep .save-btn {
+    background-color: #973c56;
+    color: #fff;
+}
+
+ ::ng-deep .close-btn {
+    background: #FFE6C8 !important;
+    opacity: 1;
+    border-radius: 50%;
+    padding: 4px 6px !important;
+    font-size: 14px;
+    color: #973c56;
+}
+
+ ::ng-deep .comm-btn {
+    background: #973c56;
+    font-size: 14px;
+    color: #FFFFFF;
+    border-radius: 5px;
+    text-align: center;
+}
+
+::ng-deep .comg-btn {
+    background: #DDDDDD;
+    font-size: 14px;
+    color: #181818;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.botttom-buttons {
+    text-align: end;
+    padding: 10px 2px;
+    .save-draf-btn {
+        background-color: #E1E1E1;
+        color: #000000;
+    }
+}
+
+.action-icon {
+    color: #e9684a;
+    border-radius: 50%;
+    padding: 16px 16px;
+    background: #FFE6C8;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-size: 30px;
+    &[aria-describedby]{
+        background:#70C0C1;
+        color:#fff;
+    }
+}
+
+::ng-deep .add-occurrence-form {
+    .section-head {
+        width: 100%;
+        font-size: 16px;
+        font-weight: 500;
+    }
+    .date-section-head {
+        width: 100%;
+        font-size: 16px;
+        font-weight: 500;
+        // background-color: #f9f9fa;
+    }
+    .single-form-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        .form-group {
+            width: 180px;
+        }
+    }
+    .date-time-add-btn {
+        background-color: #973c56;
+        color: #fff;
+    }
+    .fa-asterisk {
+        color: #FF0000;
+        font-size: 5px;
+        position: relative;
+        bottom: 6px;
+    }
+}
+
+::ng-deep .cdk-global-overlay-wrapper {
+    .cdk-overlay-pane {
+        // max-width: 650px !important;
+        // width: 80vw !important;
+    }
+}
+
+::ng-deep .popover {
+    border: none;
+    .popover-body {
+        padding: 0px !important;
+        color: #595959;
+        box-shadow: 0px 0px 12px #973c5626;
+        border-radius: 6px;
+        .border-bottom {
+            border-bottom: 1px solid #7070701a !important;
+            padding: 5px 0px;
+            cursor: pointer;
+            .material-icons {
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+.selected-label {
+    font-size: 16;
+}
+
+::ng-deep .occurrence-action {
+    width: 300px;
+    margin-left: auto;
+    display: flex;
+    flex-wrap: wrap;
+    p.selected-label {
+        margin-bottom: 0;
+    }
+    .mat-form-field-infix {
+        padding: 10px 0 10px 10px;
+        border-top: 0px;
+    }
+    .mat-select-trigger {
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+    .mat-select-value {
+        max-width: unset;
+    }
+}
+
+.occurrence-list {
+    .status-icon {
+        font-size: 18px;
+        margin: 0 3px;
+    }
+}

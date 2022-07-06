@@ -1,0 +1,11 @@
+<div class="modal-dialog my-0 modal-notify modal-info" role="document" id="confirmation_dialog">
+    <div class="modal-content ">
+        <div class="modal-body pb-0 text-center">
+            <p class="mb-0">{{message}}</p>
+            <div class="my-4">
+                <button mat-button class="yes-btn mr-2" [mat-dialog-close]="true">Yes</button>
+                <button mat-button class="cancel-btn" (click)="onNoClick()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

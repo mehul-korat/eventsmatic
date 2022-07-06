@@ -1,0 +1,108 @@
+<div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+<div class="app-user-view">
+    <div class="modal-header pl-3 py-0 border-0">
+        <p class="">Check-in app user {{singleUserData.firstname}} {{singleUserData.lastname}}</p>
+        <button class="close-btn" type="button" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+
+    </div>
+
+    <div class="modal-body view-modal-body p-0">
+        <div class="button-header add-app-user my-3 d-flex">
+            <button *ngIf="singleUserData.role == 'AU'" mat-flat-button class="create-btn mr-3" (click)="fnEdit()">Edit</button>
+            <button *ngIf="singleUserData.role == 'AU'" mat-flat-button class="cancel-btn" (click)="fnDelete()">Delete</button>
+            <button [ngClass]="{'ml-auto':singleUserData.role == 'AU'}" mat-flat-button class="cancel-btn mat-flat-button" (click)="fnPrint()">Print</button>
+        </div>
+        <div>
+            <div class="user-detail">
+                <div class="header-title">
+                    <label>User details</label>
+                </div>
+                <div class="detail-body">
+                    <p class="mt-2">Email : <span>{{singleUserData.email}}</span></p>
+                    <p>
+                        Password :
+                        <span *ngIf="!passwordView">**************  <span (click)="passwordView=!passwordView" class="material-icons pointer">visibility</span></span>
+                        <span *ngIf="passwordView">{{singleUserData.app_user_pwd}} 
+                        <span (click)="passwordView=!passwordView" class="material-icons pointer">visibility_off</span></span>
+                    </p>
+                    <p *ngIf="singleUserData.all_status == 'N' && singleUserData.role == 'AU'">Event access :
+                        <span *ngFor="let event of selectedEventList">{{event}}, </span>
+                        <span *ngFor="let occurrence of selectedOccurrenceList">{{occurrence}}, </span>
+                    </p>
+                    <p *ngIf="singleUserData.all_status == 'Y' || singleUserData.role == 'A'">Event access : <span>All Events </span></p>
+                    <p>Date created : <span>{{singleUserData.created_at}}</span></p>
+                </div>
+            </div>
+            <div class="set-up-app instruction">
+                <div class="header-title">
+                    <label>Set up instruction</label>
+                </div>
+                <div class="row mx-0 my-3">
+                    <div class="col-12 col-md-6 pl-0 border-right">
+                        <div class="d-flex flex-wrap justify-content-center align-items-center section-div my-3">
+                            <label class="d-block text-center w-100">1. Download the app</label>
+                            <p class="d-block text-center w-100">Download and install the FREE check-in app.</p>
+                            <div class="store-icons">
+                                <img src="../../../../assets/images/settings/app-user/apple-store.png" />
+                                <img src="../../../../assets/images/settings/app-user/play-store.png" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 pr-0">
+                        <div class="d-flex flex-wrap justify-content-center align-items-center my-3 section-div">
+                            <label class="d-block text-center w-100">2. Log in</label>
+                            <p class="d-block text-center w-100">Log in to the app by using the email and password shown above.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="app_user_detail">
+            <div class="user-detail">
+                <div class="header-title">
+                    <label>User details</label>
+                </div>
+                <div class="detail-body">
+                    <p class="mt-2">Email : <span>{{singleUserData.email}}</span></p>
+                    <p>
+                        Password :
+                        <span>{{singleUserData.app_user_pwd}} 
+                        </span>
+                    </p>
+                    <p *ngIf="singleUserData.all_status == 'N' && singleUserData.role == 'AU'">Event access :
+                        <span *ngFor="let event of selectedEventList">{{event}}, </span>
+                        <span *ngFor="let occurrence of selectedOccurrenceList">{{occurrence}}, </span>
+                    </p>
+                    <p *ngIf="singleUserData.all_status == 'Y' || singleUserData.role == 'A'">Event access : <span>All Events </span></p>
+                    <p>Date created : <span>{{singleUserData.created_at}}</span></p>
+                </div>
+            </div>
+            <div class="set-up-app instruction">
+                <div class="header-title">
+                    <label>Set up instruction</label>
+                </div>
+                <div class="row mx-0 my-3">
+                    <div class="col-12 col-md-6 pl-0 border-right">
+                        <div class="d-flex flex-wrap justify-content-center align-items-center section-div my-3">
+                            <label class="d-block text-center w-100">1. Download the app</label>
+                            <p class="d-block text-center w-100">Download and install the FREE check-in app.</p>
+                            <div class="store-icons">
+                                <img src="../../../../assets/images/settings/app-user/apple-store.png" />
+                                <img src="../../../../assets/images/settings/app-user/play-store.png" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 pr-0">
+                        <div class="d-flex flex-wrap justify-content-center align-items-center my-3 section-div">
+                            <label class="d-block text-center w-100">2. Log in</label>
+                            <p class="d-block text-center w-100">Log in to the app by using the email and password shown above.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

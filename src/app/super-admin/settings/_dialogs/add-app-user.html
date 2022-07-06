@@ -1,0 +1,69 @@
+<div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+<div class="add-app-user">
+    <div class="modal-header pl-3 py-0 border-0">
+        <p class="">Add check-in app user</p>
+        <button class="close-btn" type="button" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+
+    </div>
+
+    <div class="modal-body">
+        <form [formGroup]="addAppUser" class="with-validation">
+            <div class="mt-3">
+                <div class="row m-0">
+                    <div class="w-100 form-group mb-3">
+                        <label for="">First Name<span><i class="fa fa-asterisk"></i></span>  </label>
+                        <input class="form-control p-2" formControlName="firstname" type="text" placeholder="Enter first name">
+                        <span class="error-wrap" *ngIf="addAppUser.get('firstname').touched || addAppUser.get('firstname').dirty">
+                            <small *ngIf="addAppUser.get('firstname').hasError('required')" class="error">First name is required.</small>
+                        </span>
+                    </div>
+                    <div class="w-100 form-group mb-3">
+                        <label for="">Last Name<span><i class="fa fa-asterisk"></i></span>  </label>
+                        <input class="form-control p-2" formControlName="lastname" type="text" placeholder="Enter last name">
+                        <span class="error-wrap" *ngIf="addAppUser.get('lastname').touched || addAppUser.get('lastname').dirty">
+                            <small *ngIf="addAppUser.get('lastname').hasError('required')" class="error">Last name is required.</small>
+                        </span>
+                    </div>
+                    <div class="w-100 form-group mb-3">
+                        <label for="">Email<span><i class="fa fa-asterisk"></i></span>  </label>
+                        <input class="form-control p-2" formControlName="email" type="text" placeholder="Enter email">
+                        <span class="error-wrap" *ngIf="addAppUser.get('email').touched || addAppUser.get('email').dirty">
+                            <small *ngIf="addAppUser.get('email').hasError('required')" class="error">Email address is required.</small>
+                            <small *ngIf="addAppUser.get('email').hasError('pattern')" class="error">Email address is invalid.</small>
+                        </span>
+                    </div>
+                    <div class="w-100 mt-4">
+                        <label class="mb-2">Event Access</label>
+                        <div class="event-list-main">
+                            <div class="w-100 pl-3">
+                                <mat-checkbox [checked]="alleventchecked" (change)="fnAssignEvent($event, 'all')" class="">All Events</mat-checkbox>
+                            </div>
+                            <div class="w-100 pl-3" *ngFor="let event of allEventList">
+                                <div *ngIf="event.event_occurrence_type == 'N'">
+                                    <mat-checkbox [checked]="selectedEvents.indexOf(event.id) > -1 || event.is_selected" (change)="fnAssignEvent($event, event.id)" class="">{{event.event_title}}</mat-checkbox>
+                                </div>
+                                <div *ngIf="event.event_occurrence_type == 'Y'">
+                                    <div class="" *ngFor="let occurrence of event.occurrence">
+                                        <mat-checkbox [checked]="selectedOccurrences.indexOf(occurrence.id) > -1 || occurrence.is_selected" (change)="fnAssignOccurrence($event, occurrence.id)" class="">{{occurrence.occurrencefulldate}} - {{occurrence.occurrenceenddate}} {{event.event_title}}</mat-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="text-right">
+        <button mat-flat-button class="cancel-btn" (click)="onNoClick()">Cancel</button>
+        <button mat-flat-button class="create-btn ml-3" (click)="fnOnSubmit()">Create</button>
+    </div>
+
+
+
+</div>

@@ -1,0 +1,512 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+@import '../styling/variables';
+.main-container {
+    width: 100vw;
+    height: 100vh;
+    font-family: Poppins, Regular;
+}
+.main-menu::-webkit-scrollbar-thumb {
+    background-color: #77273E;
+}
+// mat-icon{
+//     font-size: 30px;
+// } 
+.left-side-container{
+    .circle-icon {
+        background-color: #e9684a;
+        border-radius: 100%;
+        height: 40px;
+        text-align: center;
+        width: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        margin: 0 auto;
+        img {
+            width: 15px !important;
+        }
+    }
+}
+
+.plus-sign {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-weight: bold;
+}
+
+.left-side-container .icon {
+    width: 50px;
+    height: 50px;
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    cursor: pointer;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.active-icon {
+    // border-right: 3px solid skyblue;
+    // opacity: 1 !important;
+    .icon{
+        background-color: #F9EDDF;
+    }
+}
+
+.company-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 8px 0px;
+    // padding: 15px 0px;
+    .company-img {
+        width: 45px !important;
+    }
+    opacity: 1 !important;
+}
+
+.company-logo {
+    padding: 15px 0px;
+}
+
+.app-title {
+    font-size: 18px;
+    font-family: Poppins, Regular;
+    background-color: #77273E;
+    padding: 0px 5px;
+    height: 60px;
+}
+
+.main-menu {
+    height: calc(100vh - 135px);
+    overflow-y: scroll;
+}
+
+.add-btn {
+    border-radius: 50px;
+}
+
+.left-side-container {
+    width: 80px;
+    background-color: #973C56
+}
+
+.left-side-container img {
+    width: 25px !important;
+}
+
+// .add-btn{
+//     width: 10px;
+//     border-radius: 10%;
+//     background-color: #fff;
+// }
+.setting-btn {
+    position: absolute;
+    bottom: 0px;
+    left: 0%;
+    background-color: #973C56;
+    padding-bottom: 40px !important;
+}
+
+.common-menu {
+    padding: 20px;
+    display: block;
+}
+
+.common-icon {
+    display: inline-grid;
+    cursor: pointer;
+    img{
+       opacity: 0.5;
+    }
+    .no-active-img{
+        display: block;
+    }
+    .active-img{
+        display: none;
+    }
+    &.active-icon{
+        .no-active-img{
+            display: none;
+        }
+        .active-img{
+            display: block;
+            opacity: 1;
+        }
+    }
+}
+
+.right-toolbar {
+    font-size: 16px;
+    background-color: #ffffff;
+    position: fixed;
+    width: calc(100% - 80px);
+    z-index: 9999;
+    padding: 10px 35px;
+    box-shadow: 0px 0px 12px #00000014;
+    height: 60px;
+    &.business_toolbar {
+        width: 100%;
+    }
+}
+
+// .right-toolbar-content{height: calc(100vh - 60px);}
+.modal-lg {
+    max-width: 1050px !important;
+    margin: 0px !important;
+    border: none !important;
+}
+
+.example-fill-remaining-space {
+    flex: 1 1 auto;
+}
+
+.selected-boxoffice-btn-main {
+    display: table;
+    margin: 0 auto;
+    .selected-boxoffice{
+        color: #77273E;
+    }
+}
+
+.modal-content .modal-header {
+    border: none !important;
+}
+
+.modal-content .modal-header .heading {
+    margin-bottom: 0px !important;
+}
+
+.user-image-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 100%;
+    background-size: cover;
+    img {
+        border-radius: 30px;
+    }
+}
+
+.head-dropdown {
+    border: none;
+    width: 170px;
+}
+
+ ::ng-deep .main-menu-tooltip {
+    background: #FF8800;
+}
+
+.bottom_admin_menu {
+    position: absolute;
+    width: 100%;
+    height: 55px;
+    bottom: 10px;
+    background-color: #973C56;
+}
+
+//Import Files
+// ::ng-deep .mat-dialog-container {
+//     padding: 0px !important;
+// }
+ ::ng-deep .file-upload {
+    background-color: #ffffff;
+    margin: 0 auto;
+    padding: 20px;
+    .image-upload-wrap {
+        margin-top: 20px;
+        border: 2px dashed #973c56;
+        position: relative;
+        padding: 30px 0;
+        .fileuploadinput {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            outline: none;
+            opacity: 0;
+            cursor: pointer;
+            top: 0px;
+            margin-top: -30px;
+        }
+    }
+    .drag-text {
+        text-align: center;
+        h6 {
+            font-size: 18px;
+        }
+        h3 {
+            font-size: 14px;
+        }
+    }
+    .imgbtn {
+        margin: 15px auto;
+        display: table;
+        padding: 8px 16px;
+        border-radius: 50px;
+    }
+}
+
+.profile-img-wrap {
+    border-radius: 100%;
+    height: 120px;
+    max-width: 120px;
+    overflow: hidden;
+    position: relative;
+    transition: 0.3s all;
+    cursor: pointer;
+    &:hover .camera-alt {
+        transition: 0.3s all;
+        display: flex;
+    }
+    .customer-profile-img {
+        width: 100%;
+        height: 100%;
+    }
+    .camera-alt {
+        display: none;
+        position: absolute;
+        top: 0;
+        border-radius: 100%;
+        width: 100%;
+        height: 100%;
+        background-color: #00000070;
+        justify-content: center;
+        align-items: center;
+        i {
+            font-size: 45px;
+            width: auto;
+            color: #ffffff;
+        }
+    }
+}
+
+ ::ng-deep .upload-preview-img {
+    max-width: 200px;
+    margin: 0 auto;
+    display: table;
+}
+
+.user-name-menu {
+    min-width: 150px;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    margin-bottom: 0;
+    position: relative;
+    white-space: nowrap;
+    max-width: 250px;
+    // overflow: hidden;
+    text-overflow: ellipsis;
+    mat-icon {
+        margin-left: auto;
+        cursor: pointer;
+    }
+    .sub-menubox {
+        position: absolute;
+        top: 40px;
+        left: 0;
+        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+        background-color: #fff;
+        width: 170px;
+        border-radius: 4px;
+        z-index: 99;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        label {
+            width: 100%;
+            margin-bottom: 0;
+            padding: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            &:hover {
+                background-color: #e3e3e3;
+            }
+        }
+    }
+}
+
+// for modal auto
+ ::ng-deep .cdk-global-overlay-wrapper .cdk-overlay-pane {
+    overflow: auto;
+}
+
+// for Error messages
+ ::ng-deep .with-validation {
+    .form-group {
+        position: relative;
+        // padding-bottom: 20px;
+        margin-bottom: 5px;
+        // .error-wrap {
+        //     position: absolute;
+        //     bottom: 0;
+        // }
+    }
+    .error {
+        color: $error;
+        font-size: 12px;
+        display: block;
+    }
+    .error-wrap {
+        width: 100%;
+    }
+}
+
+ ::ng-deep .close-btn {
+    background: #FFE6C8 !important;
+    opacity: 1;
+    font-weight: 300;
+    border-radius: 50%;
+    padding: 4px 6px !important;
+    font-size: 20px;
+    color: #973c56;
+    border: 0;
+    width: 30px;
+    height: 30px;
+}
+
+.mat-dialog-container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+ ::ng-deep #re-athentication-dialog {
+    .submit-btn {
+        width: 130px;
+        height: 37px;
+        border-radius: 29px;
+        background-color: #973c56;
+        color: white;
+    }
+}
+
+ ::ng-deep .admin-right-menu-select {
+    .mat-form-field-underline {
+        display: none !important;
+    }
+    .mat-form-field-infix {
+        border-top: 0px;
+    }
+}
+
+ ::ng-deep .mat-tab-label-active {
+    opacity: 1 !important;
+}
+
+ ::ng-deep textarea {
+    border: 1px solid #ced4da !important;
+    border-radius: 0.25rem !important;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+::ng-deep .modal-header {
+    p {
+        font-weight: 700;
+        font-size: 16px;
+    }
+}
+
+::ng-deep .description_field {
+    // height: 230px;
+    display: flex;
+    .angular-editor-textarea {
+        height: 150px !important;
+    }
+}
+
+::ng-deep .mat-drawer-content{
+    overflow-x: hidden !important;
+}
+
+.add-content {
+    .bottom-border {
+        border-bottom: 1px solid black;
+    }
+    .add-new {
+        padding: 7px 11px;
+    }
+}
+
+.admin-add-menu {
+    mat-list-item {
+        padding: 7px 30px;
+        cursor: pointer;
+        display: flex;
+        &:hover {
+            background-color: #FFD8AA;
+            // color: #417bff;
+        }
+        .add-common-menu{
+            font-size: 16px;
+            // margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .add-new-img{
+            width: 20px;
+            margin-right: 12px;
+        }
+    }
+}
+::ng-deep .mde-popover-above .mde-popover-direction-arrow{
+    border-color: transparent transparent rgb(255 255 255) !important;
+}
+.new-primary-btn{
+    background: #77273E;
+    border-radius: 5px;
+    opacity: 1;
+    color: #FFFFFF;
+    text-align: center;
+    width: auto;
+    margin-left: 15px;
+    font-weight: 400;
+}
+
+
+.action-icon {
+    &[aria-describedby]{
+        background:#70C0C1;
+        color:#fff;
+    }
+}
+
+::ng-deep .confirmation-dialog{
+    .mat-dialog-container{
+        padding: 0;
+    }
+}
+::ng-deep .no-main-sidebar{
+    .right-toolbar{
+        width: 100% !important;
+    }
+}
+
+
+::ng-deep angular-editor{
+    .angular-editor-wrapper{
+        p{
+            width: 100% !important;
+            img{
+                max-width: 100% !important;
+            }
+        }
+        img{
+            max-width: 100% !important;
+        }
+    }
+}

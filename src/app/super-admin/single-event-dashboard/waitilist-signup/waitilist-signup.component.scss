@@ -1,0 +1,134 @@
+#waitilist-signup {
+    .top-heading-main {
+        .page-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            text-align: left;
+            color: #181818;
+            align-items: center;
+        }
+        p {
+            color: #808080;
+        }
+    }
+    .bottom-waitlist-main {
+        margin-top: 20px;
+        padding: 14px;
+        border: 1px solid #CECECE;
+        border-radius: 4px;
+        background-color: #F6F6F645;
+        .waitilist-deatils-top {
+            h4 {
+                font-size: 16px;
+                color: #000;
+                text-align: justify;
+                font-weight: 500;
+                margin-bottom: 14px;
+            }
+        }
+        .fileds-main {
+            margin-top: 18px;
+            label {
+                color: #595959;
+                i {
+                    color: #b5b5b5;
+                    margin-left: 10px;
+                    font-size: 15px;
+                }
+            }
+            input::placeholder {
+                /* Chrome, Firefox, Opera, Safari 10.1+ */
+                color: #ababab;
+                font-size: 14px;
+            }
+        }
+        .bottom-deatils-save-btn {
+            text-align: end;
+            margin-top: 24px;
+        }
+    }
+}
+
+::ng-deep .bottom-hide-waiting {
+    margin-top: 20px;
+    border: 1px solid #CECECE;
+    border-radius: 4px;
+    background-color: #F6F6F645;
+    padding-top: 8px;
+    .side-common-btn {
+        position: absolute;
+        right: 92px;
+        z-index: 9;
+        margin-top: 6px;
+        button {
+            margin-left: 12px;
+        }
+    }
+    .mat-tab-label {
+        min-width: 60px;
+    }
+    .mat-tab-header,
+    .mat-tab-nav-bar {
+        border-bottom: none;
+        padding: 0px 14px;
+    }
+    .top-search-bar {
+        margin-top: 16px;
+        .search-form {
+            position: absolute;
+            top: 12px;
+            color: #808080ad;
+            left: 24px;
+        }
+        .form-control {
+            padding-left: 32px;
+        }
+    }
+    .waitlist-table {
+        .main-heading-content {
+            border-top: solid 1px #DDDDDD;
+            padding: 12px 16px;
+            align-items: center;
+            font-size: 14px;
+            color: #595959;
+            border-bottom: solid 1px #DDDDDD;
+        }
+        .tb-data {
+            padding: 5px 0px;
+            color: #181818;
+            display: flex;
+            align-items: center;
+            p {
+                color: #181818;
+            }
+        }
+        .content {
+            padding: 2px 16px;
+        }
+    }
+}   
+
+// .form-control::placeholder {
+//     color: red;
+//     opacity: 1; /* Firefox */
+//   }
+  
+//   .form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+//    color: red;
+//   }
+  
+//   .form-control::-ms-input-placeholder { /* Microsoft Edge */
+//    color: red;
+//   }
+.delete-btn{
+    height: 40px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 0 10px;
+    width: 90px;
+    font-weight: 300;
+}

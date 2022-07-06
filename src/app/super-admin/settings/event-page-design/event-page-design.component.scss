@@ -1,0 +1,1842 @@
+@import "../../../../styling/variables";
+#event_page_design {
+  height: calc(100vh - 60px);
+  position: relative;
+
+  .box-office-title {
+    font-weight: bold;
+    font-size: 18px;
+    background-color: #abe6fd;
+    height: 50px;
+  }
+  .select-option {
+    width: 30%;
+  }
+  .Sparking_Events-img img {
+    border-bottom-left-radius: 6px;
+    border-top-left-radius: 6px;
+  }
+  .br-6 {
+    border-radius: 6px;
+  }
+  .mb-0 {
+    margin-bottom: 0px;
+  }
+  .top-event-page {
+    display: flex;
+    align-items: center;
+  }
+  .list-events {
+    display: flex;
+    // pointer-events: none;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    // margin-top: 195px;
+    height: 100%;
+    width: 100%;
+    align-items: flex-start;
+    .signle-event {
+      height: 140px;
+      width: 800px;
+      margin-top: 20px;
+    }
+  }
+  .preview-area {
+    height: calc(100vh - 150px);
+    // overflow-y: scroll;
+    width: 95%;
+    margin: auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    // &.mobile-view {
+    //     position: relative;
+    //     width: 500px;
+    //     .mobile-mockup-img {
+    //         position: relative;
+    //         &::after {
+    //             content: "";
+    //             position: absolute;
+    //             width: 500px;
+    //             height: 100%;
+    //             background-image: url('../../../../assets/images/admin/mobile-mockup-screen.png');
+    //             background-repeat: no-repeat;
+    //             background-size: cover;
+    //             z-index: 9;
+    //             left: 0;
+    //             top: 0;
+    //         }
+    //     }
+    // }
+  }
+  .mobile-preview-device {
+    padding: 60px 18px;
+    border-radius: 42px;
+    width: 320px;
+    height: 568px;
+    background: #bcbcbc;
+    z-index: 1;
+    position: absolute;
+    top: 50px;
+    .top-bar {
+      border-radius: 37px;
+      width: calc(100% - 10px);
+      height: calc(100% - 10px);
+      top: 5px;
+      left: 5px;
+      background: radial-gradient(rgba(0, 0, 0, 0.02) 20%, transparent 60%) 0 0,
+        radial-gradient(rgba(0, 0, 0, 0.02) 20%, transparent 60%) 3px 3px;
+      background-color: white;
+      background-size: 4px 4px;
+      background-position: center;
+      z-index: 2;
+      position: absolute;
+      &::after,
+      &::before {
+        width: calc(100% - 48px);
+        content: "";
+        display: block;
+        height: 26px;
+        background: inherit;
+        position: absolute;
+        border-radius: 500px / 40px;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+      }
+      &::before {
+        top: -7px;
+      }
+      &::before {
+        bottom: -7px;
+      }
+    }
+    .sleep {
+      width: 3px;
+      position: absolute;
+      left: -3px;
+      top: 100px;
+      height: 100px;
+      background: #cecece;
+      border-radius: 2px 0px 0px 2px;
+    }
+    .camera {
+      display: block;
+      position: absolute;
+      top: 24px;
+      right: 42px;
+      background: black;
+      border-radius: 100%;
+      width: 10px;
+      height: 10px;
+      z-index: 3;
+      &::before {
+        width: 4px;
+        height: 4px;
+        background: #3c3d3d;
+        border-radius: 100%;
+        position: absolute;
+        content: "";
+        top: 50%;
+        left: 50%;
+        margin-top: -2px;
+        margin-left: -2px;
+      }
+    }
+    .Sparking_Events-img {
+      background-size: cover;
+      background-repeat: no-repeat;
+      img {
+        border-bottom-left-radius: 6px;
+        border-top-left-radius: 6px;
+      }
+    }
+    .sensor {
+      display: block;
+      position: absolute;
+      top: 20px;
+      right: 100px;
+      background: #3c3d3d;
+      border-radius: 100%;
+      width: 8px;
+      height: 8px;
+      z-index: 3;
+      &::after {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 0px;
+        right: 12px;
+        background: #3c3d3d;
+        border-radius: 100%;
+        width: 8px;
+        height: 8px;
+        z-index: 3;
+      }
+    }
+    .speaker {
+      width: 68px;
+      height: 8px;
+      position: absolute;
+      top: 20px;
+      display: block;
+      z-index: 3;
+      left: 50%;
+      margin-left: -34px;
+      background-color: #bcbcbc;
+      background-position: top left;
+      border-radius: 4px;
+    }
+    .screen {
+      width: 100%;
+      position: relative;
+      height: 100%;
+      z-index: 2;
+      background: white;
+      overflow: hidden;
+      display: block;
+      border-radius: 1px;
+      -webkit-box-shadow: 0 0 0 3px #111;
+      box-shadow: 0 0 0 3px #111;
+      overflow-y: scroll;
+      .signle-event {
+        height: auto;
+        width: 100%;
+        margin-top: 20px;
+        .event-image {
+          width: 90px;
+          height: 90px;
+          background-size: cover;
+        }
+        .event-des {
+          width: calc(100% - 90px);
+          .event-title {
+            white-space: nowrap;
+            width: 170px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+    .home {
+      position: absolute;
+      z-index: 3;
+      bottom: 17px;
+      left: 50%;
+      width: 70px;
+      height: 20px;
+      background: white;
+      border-radius: 18px;
+      display: block;
+      margin-left: -35px;
+      border: 2px solid black;
+    }
+    &::after,
+    &::before {
+      width: calc(100% - 52px);
+      content: "";
+      display: block;
+      height: 26px;
+      background: inherit;
+      position: absolute;
+      border-radius: 500px / 40px;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+    }
+    &::before {
+      top: -7px;
+    }
+    &::before {
+      bottom: -7px;
+    }
+  }
+  .customize-area {
+    text-align: left;
+    background-color: #404047;
+    height: 0px;
+    padding: 0px 30px;
+    position: fixed;
+    bottom: 0;
+    width: calc(100% - 380px);
+    box-sizing: border-box;
+    z-index: 5;
+    transition: all 0.5s;
+    // display: flex;
+    align-items: center;
+    &.opened {
+      padding: 13px 30px;
+      height: 186px;
+      // bottom: 0;
+      .handler {
+        .material-icons {
+          transform: rotate(180deg);
+        }
+      }
+    }
+    .handler {
+      position: absolute;
+      top: -30px;
+      width: 115px;
+      height: 30px;
+      background-color: #404047;
+      border-radius: 5px 5px 0 0;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+      color: #fff;
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 2.5;
+      .material-icons {
+        color: #fff;
+        transition: all 0.5s;
+      }
+    }
+    .theme-customization {
+      display: flex;
+      padding: 0 25px;
+      .custom-theme-box {
+        height: 145px;
+        width: 145px;
+        background-color: #fff;
+        padding: 10px;
+        border: 5px solid transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        float: left;
+        &.active {
+          border-color: #70c0c1;
+        }
+      }
+      .customization-box {
+        width: calc(100% - 100px);
+        float: left;
+        padding-left: 20px;
+        .first-column,
+        .second-column,
+        .third-column {
+          width: 33%;
+          float: left;
+        }
+        .color-code {
+          background-color: #4a4a4a;
+          margin-bottom: 5px;
+          color: #fff;
+          &.font-selection-main {
+            width: calc(100px + 0.5rem);
+            margin-bottom: 0.5rem;
+            ::ng-deep .mat-select-value {
+              max-width: 100% !important;
+              color: #fff !important;
+            }
+            ::ng-deep .mat-select-arrow {
+              color: #fff !important;
+            }
+          }
+        }
+        .color-box {
+          width: 20px;
+          height: 20px;
+          border: none;
+          border-radius: 2px;
+          cursor: pointer;
+        }
+        label {
+          margin-bottom: 5px;
+          color: #fff;
+          display: flex;
+          align-items: center;
+        }
+        .color-code-text {
+          width: 80px;
+        }
+      }
+      h3 {
+        margin-bottom: 0;
+        color: #fff;
+        padding-top: 8px;
+      }
+    }
+    .theme-selection {
+      overflow-x: scroll;
+      display: flex;
+      padding: 0 18px;
+      align-items: stretch;
+      justify-content: center;
+      .theme-box {
+        padding: 5px 10px;
+        width: 190px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        &.active {
+          img {
+            border: 5px solid #70c0c1;
+          }
+        }
+        img {
+          width: 100%;
+          height: auto;
+        }
+        h3 {
+          margin-bottom: 0;
+          color: #fff;
+          padding-top: 8px;
+        }
+      }
+      .custom-theme-box {
+        width: 170px;
+        background-color: #fff;
+        padding: 10px;
+        border: 5px solid transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        float: left;
+        margin: 5px 10px;
+        &.active {
+          border: 5px solid #70c0c1;
+        }
+      }
+      h3 {
+        color: #fff;
+        margin-bottom: 0px;
+        padding-top: 8px;
+      }
+    }
+    .side-arrow {
+      width: 40px;
+      height: 40px;
+      background-color: #fff;
+      border-radius: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      cursor: pointer;
+      top: calc(50% - 20px);
+      &.got-to-themeselection {
+        left: 10px;
+      }
+      &.got-to-themecustomization {
+        right: 10px;
+      }
+      .material-icons {
+        width: 18px;
+      }
+    }
+    &:not(.opened) .side-arrow {
+      bottom: -50px;
+      top: 100%;
+    }
+  }
+  .preview-option-main {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    h5 {
+      font-size: 20px;
+      width: 100%;
+      text-align: center;
+    }
+    a {
+      color: #fff !important;
+    }
+  }
+}
+
+.theme-save-btn {
+  width: 130px;
+  margin-left: 20px;
+}
+
+.header-bg {
+  background-color: $headerColor;
+}
+#preview-event {
+  background-color: #eeeeee;
+  height: 100vh;
+  overflow: auto;
+  width: 100%;
+  .preview-bg {
+    background: url(/assets/images/Event-preview/preview-main.png);
+    background-size: cover;
+    height: 270px;
+    backdrop-filter: blur(4px);
+    position: relative;
+    background-position: center;
+    .preview-blur {
+      background: url(/assets/images/Event-preview/preview-main.png);
+      background-size: cover;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      z-index: -1;
+      filter: blur(4px);
+      display: flex;
+    }
+    .close-preview {
+      .close-btn {
+        background-color: #fff;
+        padding: 2px;
+        border-radius: 50%;
+        width: 26px;
+        height: 26px;
+        z-index: 99999999;
+        margin: 16px 24px;
+        opacity: 1;
+      }
+    }
+    .main-preview-section {
+      padding: 0px 28px;
+      .top-preview-image {
+        background: url(/assets/images/Event-preview/preview-main.png);
+        height: 240px;
+        display: flex;
+        align-items: flex-end;
+        background-position: center;
+        background-size: 100%;
+        background-repeat: no-repeat !important;
+        .draf-btn-side {
+          text-align: end;
+          padding: 12px;
+          .btn {
+            background-color: #cfe7ff !important;
+            color: #973c56;
+          }
+        }
+      }
+      .main-preview-wrap {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        &.event-past-step {
+          background-color: #fff;
+        }
+      }
+      .bottom-deatils {
+        // background-color: #fff;
+        padding: 34px 26px;
+        display: flow-root;
+        .heading-preview-name {
+          h3 {
+            font-size: 28px;
+            color: #000;
+            margin: 0px;
+          }
+        }
+        .bottom-booking-deatils {
+          margin-top: 4rem;
+          border-bottom: 0.5px solid #7070703d;
+          display: flow-root;
+          padding-bottom: 20px;
+          .side-form-deatils {
+            border-right: 2px dashed #cccc;
+            padding: 18px 32px;
+            .preview-datetime {
+              margin-bottom: 32px;
+            }
+            .preview-common-deatils {
+              background-color: #d9d9d942;
+              display: flex;
+              align-items: center;
+              padding: 14px 36px;
+              border-radius: 5px;
+              p {
+                margin: 0px;
+                // color: #2C2C2C;
+                margin-left: 12px;
+                font-weight: 600;
+              }
+            }
+          }
+          .book-ticket-side {
+            padding: 18px 32px;
+            .book-tickets-btn {
+              text-align: center;
+              margin-top: 14px;
+              .btn {
+                background-color: #004fa1;
+                color: #fff;
+                padding: 6px 14px;
+                border-radius: 30px;
+                width: 250px;
+              }
+            }
+            .share-link-main {
+              margin-top: 18px;
+              text-align: center;
+              p {
+                margin: 0px;
+                font-size: 18px;
+                // color: #2C2C2C;
+                margin-bottom: 8px;
+              }
+              .event-icone-link {
+                i {
+                  font-size: 32px;
+                  margin: 0 8px;
+                  cursor: pointer;
+                }
+                .fa-facebook-square {
+                  color: #375096;
+                }
+                .fa-twitter-square {
+                  color: #359df7;
+                }
+                .fa-linkedin-square {
+                  color: #357b9e;
+                }
+              }
+            }
+          }
+        }
+        .deatils-preview-events {
+          padding: 48px;
+          .commmon-top-main {
+            h3 {
+              text-align: justify;
+              font-weight: 500;
+              font-size: 16px;
+              // color: #2C2C2C;
+              margin-bottom: 6px;
+            }
+            p {
+              // color: #595959;
+              font-size: 14px;
+            }
+            .map-main-div {
+              height: 300px;
+              margin-top: 20px;
+            }
+          }
+        }
+      }
+      .bottom-help-tickets {
+        // background-color: #FFE6C8;
+        padding: 34px 26px;
+        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h3 {
+          font-weight: 500;
+          // color: #2C2C2C;
+        }
+        .privacy-policy {
+          text-decoration: underline;
+        }
+        .btn {
+          padding: 4px 20px;
+          // color: #fff !important;
+          display: inline-block;
+        }
+        .right-logo-section {
+          text-decoration: none;
+          p {
+            margin-bottom: 0px;
+            text-align: end;
+            font-size: 10px;
+          }
+          img {
+            width: 120px;
+          }
+        }
+        &.default-footer {
+          background-color: #ffe6c8;
+          h3 {
+            color: #2c2c2c;
+          }
+          .btn {
+            background-color: #973c56;
+            color: #fff !important;
+          }
+          a {
+            color: #973c56 !important;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}
+.mobile-preview-device {
+  #preview-event {
+    overflow: unset;
+    .preview-bg {
+      .container {
+        padding: 0;
+      }
+      .main-preview-section {
+        padding: 0;
+        .top-preview-image {
+          height: 130px;
+          width: auto;
+          background-position: center;
+        }
+        .bottom-deatils {
+          // background-color: #fff;
+          padding: 34px 5px;
+          display: flow-root;
+          .heading-preview-name {
+            h3 {
+              font-size: 28px;
+              color: #000;
+              margin: 0px;
+            }
+          }
+          .bottom-booking-deatils {
+            margin-top: 1rem;
+            border-bottom: 0.5px solid #7070703d;
+            display: flow-root;
+            padding-bottom: 20px;
+            .side-form-deatils {
+              border-right: 0px;
+              padding: 0;
+              .preview-datetime {
+                margin-bottom: 32px;
+              }
+              .preview-common-deatils {
+                background-color: transparent;
+                display: flex;
+                align-items: center;
+                padding: 0;
+                border-radius: 0;
+                p {
+                  margin: 0px;
+                  margin-left: 12px;
+                  font-weight: 600;
+                }
+              }
+            }
+            .book-ticket-side {
+              padding: 0px;
+              .book-tickets-btn {
+                text-align: center;
+                margin: 20px auto;
+                .btn {
+                  background-color: #004fa1;
+                  color: #fff;
+                  padding: 6px 14px;
+                  border-radius: 30px;
+                  width: 250px;
+                }
+              }
+              .share-link-main {
+                margin-top: 18px;
+                text-align: center;
+                flex-direction: column;
+                p {
+                  margin: 0px;
+                  font-size: 18px;
+                  margin-bottom: 12px !important;
+                  margin-right: 0px !important;
+                }
+                .event-icone-link {
+                  i {
+                    font-size: 32px;
+                    margin: 0 8px;
+                    cursor: pointer;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .deatils-preview-events {
+          padding: 10px;
+        }
+      }
+      .bottom-help-tickets {
+        padding: 10px 15px;
+        flex-direction: column;
+        .btn {
+          padding: 4px 10px;
+        }
+        .right-logo-section {
+          text-decoration: none;
+          p {
+            margin-bottom: 0px;
+            text-align: end;
+            font-size: 10px;
+          }
+          img {
+            width: 120px;
+          }
+        }
+        &.default-footer {
+          background-color: #ffe6c8;
+          h3 {
+            color: #2c2c2c;
+          }
+          .btn {
+            background-color: #973c56;
+            color: #fff !important;
+          }
+          a {
+            color: #973c56 !important;
+          }
+        }
+      }
+    }
+  }
+  .res-mobile-col {
+    width: 100%;
+    max-width: 100%;
+    flex: auto;
+  }
+  // #preview-event.theme2 {
+  //     .preview-bg {
+  //         .main-preview-section {
+  //             .top-preview-image {
+  //                 height: 300px;
+  //             }
+  //         }
+  //     }
+  // }
+  .pb-14 {
+    padding-bottom: 14px;
+  }
+  #preview-event {
+    &.theme2,
+    &.theme3,
+    &.theme4,
+    &.theme6 {
+      .preview-bg {
+        .main-preview-section {
+          .top-preview-image {
+            height: 300px;
+          }
+        }
+      }
+    }
+  }
+  #preview-event.theme5 {
+    .bottom-booking-deatils {
+      .book-ticket-side {
+        .share-link-main {
+          margin-bottom: 15px;
+        }
+      }
+    }
+  }
+  #preview-event.theme6 {
+    #theme_6 {
+      .heading-preview-name {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+    }
+  }
+  #preview-event {
+    #theme_4,
+    #theme_2 {
+      .bottom-booking-deatils {
+        .event-date-time.border-bottom {
+          border-bottom: 0px !important;
+        }
+        .side-form-deatils {
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+  .bottom-help-tickets {
+    padding: 10px 15px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    .btn {
+      padding: 4px 10px;
+      margin: 10px 12px;
+    }
+    .right-logo-section {
+      text-decoration: none;
+      p {
+        margin-bottom: 0px;
+        text-align: end;
+        font-size: 10px;
+      }
+      img {
+        width: 120px;
+      }
+    }
+    &.default-footer {
+      background-color: #ffe6c8;
+      h3 {
+        color: #2c2c2c;
+      }
+      .btn {
+        background-color: #973c56;
+        color: #fff !important;
+      }
+      a {
+        color: #973c56 !important;
+        text-decoration: none;
+      }
+    }
+  }
+  #preview-event {
+    .preview-bg {
+      #theme_4 {
+        .bottom-booking-deatils {
+          .side-form-deatils {
+            padding: 0px 0px !important;
+            .preview-common-deatils {
+              padding: 4px 0px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  .verticle-view{
+    margin-top: 15px;
+    .events-venue-date{
+      margin: 0px 10px;
+    }
+    .events-title{
+      padding: 14px 10px !important;
+    }
+    .display-col-2{
+      width: 100%;
+      flex: 100%;
+      max-width: 100%;
+      .Event-price-view{
+        padding: 16px 10px!important;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .common-priceview{
+          p{
+            font-size: 12px;
+            margin: 0;
+          }
+        }
+      }
+      .top-event-img{
+        background-size: cover;
+      }
+    }
+    .display-col-4{
+      width: 100%;
+      flex: 100%;
+      max-width: 100%;
+      .Event-price-view{
+        padding: 16px 10px!important;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .common-priceview{
+          p{
+            font-size: 12px;
+            margin: 0;
+          }
+        }
+      }
+      .top-event-img{
+        background-position: center;
+        height: 240px;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    }
+    .Event-price-view {
+      .common-priceview {
+          button {
+              width: auto;
+          }
+      }
+    }
+  }
+  .horizontal-view {
+    margin-top: 15px;
+    .display-col-4{
+      width: 100%;
+      flex: 100%;
+      max-width: 100%;
+    }
+    .display-col-2{
+      width: 100%;
+      flex: 100%;
+      max-width: 100%;
+    }
+    .Event-price-view {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+        .common-priceview {
+            p{
+              font-size: 12px;
+              margin: 0;
+            }
+            button {
+                width: auto !important;
+            }
+        }
+    }
+    .common-events-listing {
+      display: flex;
+      flex-wrap: wrap;
+      h3 {
+          display: flex;
+          flex-direction: column;
+          .btn {
+              margin: 12px 12px;
+          }
+      }
+      .top-event-img {
+          background-position: center;
+          width: 100%;
+          background-size: cover;
+          height: 200px;
+          background-repeat: no-repeat;
+      }
+      .event-details {
+          width: 100%;
+          margin-left: 0px;
+      }
+      .bottom-card {
+          .events-venue-date {
+              border-bottom: none !important;
+              width: 100%;
+          }
+      }
+    }
+  }
+  .bottom-help-tickets .right-logo-section {
+      text-decoration: none !important;
+  }
+  .bottom-help-tickets .privacy-policy{
+    text-decoration: underline;
+  }
+  .horizontal-view .display-col-2 .common-events-listing .event-details .boxoffice-desc{
+    padding: 14px;
+  }
+}
+::ng-deep .no-sidebar {
+  .customize-area {
+    width: 100% !important;
+  }
+}
+
+.exit-btn {
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  color: #fff;
+  text-align: center;
+  box-shadow: 4px 4px 12px #00000042;
+  position: absolute;
+  right: 7px;
+  border-radius: 100px;
+  top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+//  main banner theme wisestyle
+#preview-event {
+  &.theme2 {
+    .preview-bg {
+      .main-preview-section {
+        .top-preview-image {
+          height: 400px;
+        }
+      }
+    }
+  }
+  &.theme3,
+  &.theme4,
+  &.theme6 {
+    .preview-bg {
+      .main-preview-section {
+        .top-preview-image {
+          height: 500px;
+        }
+      }
+    }
+  }
+}
+
+#theme_2 {
+  .heading-preview-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h3 {
+      display: inline-block;
+      padding: 20px 40px;
+      border-radius: 10px;
+      margin-top: -70px !important;
+    }
+  }
+  .bottom-booking-deatils {
+    display: flex !important;
+    border-bottom: 0px !important;
+    .side-form-deatils {
+      border-right: 0px !important;
+      .preview-common-deatils {
+        background-color: transparent !important;
+      }
+    }
+    .border-bottom {
+      border-bottom: 2px dashed #000 !important;
+    }
+  }
+  .deatils-preview-events {
+    padding: 15px 25px;
+  }
+}
+
+#preview-event {
+  .preview-bg {
+    #theme_5 {
+      .bottom-booking-deatils {
+        display: flex !important;
+        border-bottom: 0px !important;
+        .side-form-deatils {
+          border-right: 0px !important;
+          padding: 0px !important;
+        }
+        .border-bottom {
+          border-bottom: none !important;
+        }
+        .pl-30 {
+          padding-left: 30px !important;
+        }
+        .pr-30 {
+          padding-right: 30px !important;
+        }
+        .book-ticket-side {
+          padding: 0px !important;
+          .book-tickets-btn {
+            padding: 0px 30px;
+            margin-top: 24px !important;
+            button {
+              width: 100% !important;
+              border-radius: 5px !important;
+            }
+          }
+          .share-link-main {
+            border-bottom: 2px dashed #000 !important;
+            border-top: 2px dashed #000 !important;
+            padding: 26px 0px;
+          }
+        }
+      }
+      .deatils-preview-events {
+        padding: 15px 25px;
+      }
+      .preview-common-deatils {
+        margin-bottom: 0px !important;
+      }
+    }
+    #theme_2{
+      .book-tickets-btn {
+        button{
+          border-radius: 50px !important;
+        }
+      }
+    }
+    #theme_1{
+      .book-tickets-btn {
+        button{
+          border-radius: 50px !important;
+        }
+      }
+    }
+  }
+}
+
+#preview-event {
+  .preview-bg {
+    #theme_6 {
+      .heading-preview-name {
+        margin-left: -26px;
+        margin-right: -26px;
+        h3 {
+          padding: 20px 40px;
+          margin-top: -35px !important;
+          width: 100%;
+        }
+      }
+      .bottom-booking-deatils {
+        margin-top: 38px !important;
+        display: flex !important;
+        border-bottom: 0px !important;
+        .side-form-deatils {
+          border-right: 0px !important;
+          padding: 0px !important;
+          .preview-datetime {
+            margin-bottom: 10px !important;
+          }
+        }
+        .pl-30 {
+          padding-left: 30px !important;
+        }
+        .pr-30 {
+          padding-right: 30px !important;
+        }
+        .border-bottom {
+          border-bottom: 2px dashed #000 !important;
+        }
+        .book-ticket-side {
+          .book-tickets-btn {
+            button {
+              width: 100% !important;
+              border-radius: 5px !important;
+            }
+          }
+        }
+      }
+      .deatils-preview-events {
+        padding: 15px 25px;
+      }
+    }
+  }
+}
+
+#preview-event {
+  .preview-bg {
+    #theme_4 {
+      .bottom-booking-deatils {
+        margin-top: 0rem !important;
+        display: flex !important;
+        border-bottom: 0px !important;
+        .side-form-deatils {
+          border-right: 0px !important;
+          padding: 0px 32px !important;
+          .preview-common-deatils {
+            background-color: transparent !important;
+            padding: 4px 36px !important;
+          }
+        }
+        .book-ticket-side {
+          .book-tickets-btn {
+            button {
+              width: 100% !important;
+              border-radius: 5px !important;
+            }
+          }
+        }
+        .border-bottom {
+          border-bottom: 2px dashed #000 !important;
+        }
+      }
+      .deatils-preview-events {
+        padding: 15px 25px;
+      }
+    }
+  }
+}
+
+#preview-event {
+  &.theme3 {
+    .heading-preview-name {
+      h3 {
+        font-size: 28px;
+        margin-bottom: 0;
+        padding: 15px 25px;
+      }
+    }
+  }
+  &.theme4 {
+    .heading-preview-name {
+      h3 {
+        font-size: 28px;
+        margin-bottom: 0;
+        padding: 15px 25px;
+      }
+    }
+  }
+}
+
+.verticle-view {
+  
+  justify-content: center;
+  .events-venue-date {
+    display: flex;
+    margin: 0px 10px;
+    border-bottom: 1px solid #ccc;
+    padding: 20px 0px;
+    .common-datevenue {
+      display: flex;
+      align-items: center;
+      margin-right: 30px;
+      i{
+        padding-top: 5px
+      }
+      &:last-child {
+        margin-right: 0px;
+      }
+      p {
+        margin-bottom: 0px;
+        margin-left: 10px;
+      }
+    }
+  }
+  .display-col-2 {
+    .common-priceview {
+      button {
+        width: 300px;
+      }
+    }
+    .top-event-img {
+      height: 240px !important;
+    }
+    .events-title {
+      padding: 14px 10px !important;
+    }
+    .events-venue-date{
+      .common-datevenue{
+        width: 50%;
+          align-items: flex-start !important;
+          i{
+            padding-top: 5px
+          }
+          p{
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              height: fit-content;
+              min-height: 40px;
+          }
+      }
+    }
+  }
+  .display-col-4 {
+    .events-title {
+      padding: 18px 10px !important;
+    }
+    .events-venue-date {
+      // padding: 10px 10px !important;
+      // margin: 0px 6px;
+    }
+    .events-venue-date{
+      .common-datevenue{
+        width: 50%;
+          align-items: flex-start !important;
+          i{
+            padding-top: 5px
+          }
+          p{
+              display: -webkit-box;
+              -webkit-line-clamp: 3;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              height: fit-content;
+              min-height: 60px;
+          }
+      }
+  }
+  }
+}
+.horizontal-view {
+  justify-content: center;
+  width: 100%;
+  .common-events-listing {
+    display: flex;
+    .top-event-img {
+      background-position: center;
+      width: 250px;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .event-details {
+      width: calc(100% - 250px);
+      margin-left: 10px;
+    }
+    .bottom-card {
+      border-bottom: none;
+      .events-venue-date {
+        border-bottom: none !important;
+        display: flex;
+        padding: 6px 10px;
+        .common-datevenue {
+          margin-right: 30px;
+          display: flex;
+          align-items: center;
+          &:last-child {
+            margin-right: 0px;
+          }
+          p {
+            margin-bottom: 0px;
+            margin-left: 10px;
+          }
+        }
+      }
+      // .Event-price-view {
+      //     flex-direction: column;
+      // }
+      .common-priceview {
+        margin-bottom: 6px;
+      }
+    }
+  }
+  .display-col-1 {
+    .top-event-img {
+      width: 400px;
+    }
+    .event-details {
+      padding: 10px 0px;
+      .events-title {
+        padding: 14px 10px;
+      }
+    }
+  }
+  .display-col-2 {
+    .top-event-img {
+      width: 180px;
+    }
+    .event-details {
+      width: calc(100% - 180px);
+      .bottom-card {
+        padding: 0px 10px;
+        .events-venue-date {
+          border-bottom: 1px solid #ccc !important;
+          padding: 10px 0px !important;
+          .common-datevenue {
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            p {
+              margin-bottom: 0px;
+              margin-left: 10px;
+            }
+          }
+        }
+        .Event-price-view {
+          padding: 10px 0px !important;
+          .common-priceview {
+            button {
+              width: 200px;
+            }
+          }
+        }
+      }
+    }
+    .events-venue-date{
+      .common-datevenue{
+          width: 50%;
+          align-items: flex-start !important;
+          i{
+            padding-top: 5px
+          }
+          p{
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              height: fit-content;
+              min-height: 40px;
+          }
+      }
+    }
+  }
+}
+
+.list-events {
+  .verticle-view {
+    .top-event-img {
+      background-position: center;
+      height: 200px;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+  }
+  .top-heading-event {
+    h3 {
+      font-size: 20px;
+      text-align: justify;
+      margin: 24px 0px;
+      padding: 10px;
+    }
+  }
+  .common-events-listing {
+    box-shadow: 0 1px 14px 0px #005eff26;
+    border-radius: 6px;
+    overflow: hidden;
+    .events-title {
+      // background-color: #EFF5FF;
+      padding: 10px;
+      h3 {
+        font-size: 16px;
+        margin: 0px;
+        font-weight: 500;
+        text-align: justify;
+      }
+      p {
+        font-size: 12px;
+        margin: 0px;
+        ::ng-deep p {
+          margin-bottom: 0 !important;
+        }
+      }
+      .boxoffice-desc {
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 100px;
+      }
+    }
+    .events-venue-date {
+      padding: 10px 0;
+      border-bottom: 1px solid #ccc;
+      .common-datevenue {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        p {
+          margin: 0px;
+          margin-left: 12px;
+        }
+      }
+    }
+    .Event-price-view {
+      padding: 10px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .common-priceview {
+        p {
+          font-size: 12px;
+          margin: 0px;
+        }
+        h3 {
+          font-weight: 600;
+          text-align: initial;
+          font-size: 20px;
+          margin: 0px;
+        }
+        .viewevents-btn {
+          background-color: #0d66ff;
+          color: #fff;
+        }
+      }
+    }
+  }
+  .bottom-help-tickets {
+    width: 100%;
+    // background-color: #FFE6C8;
+    padding: 34px 26px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h3 {
+      font-weight: 500;
+      // color: #2C2C2C;
+      margin-bottom: 0px;
+    }
+    .privacy-policy {
+      text-decoration: underline;
+    }
+    .btn {
+      padding: 4px 20px;
+      // color: #fff !important;
+      display: inline-block;
+      margin: 0px 12px;
+    }
+    .right-logo-section {
+      text-decoration: none;
+      p {
+        margin-bottom: 0px;
+        text-align: end;
+        font-size: 10px;
+      }
+      img {
+        width: 120px;
+      }
+    }
+    &.default-footer {
+      background-color: #ffe6c8;
+      h3 {
+        color: #2c2c2c;
+      }
+      .btn {
+        background-color: #973c56;
+        color: #fff !important;
+      }
+      a {
+        color: #973c56 !important;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.default-setting-btn {
+  background-color: #fff;
+  color: #000;
+  margin-left: auto;
+  display: flex;
+}
+#theme_6,
+#theme_2,
+#theme_5,
+#theme_4 {
+  .share-link-main {
+    margin-top: 40px !important;
+    p {
+      margin-right: 30px !important;
+      margin-bottom: 0px !important;
+    }
+  }
+}
+#theme_6 {
+  .share-link-main {
+    margin-top: 34px !important;
+    margin-bottom: 8px !important;
+    p {
+      margin-right: 30px;
+    }
+  }
+}
+
+.loader-main{
+  
+  background: rgba(255, 255, 255, 1)  !important;
+}
+
+
+/*no events design css starts*/
+.empty-events-template{
+  border-radius: 5px;
+  margin-bottom: 20px;
+  .event-image-main{
+      background-color: #d6d6d6;
+      height: 145px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      img{
+          width: 45px;
+          height: 45px;
+      }
+  }
+  .events-empty-content-main{
+      padding: 20px;
+      background-color: #fff;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+      .custom-empty-lines-wrap{
+          display: inline-grid;
+          width: 100%;
+          span:nth-child(1){
+              background-color: #b8b8b8;
+              width: 40%;
+              height: 8px;
+              border-radius: 50px;
+              margin-bottom: 12px;
+          }
+          span:nth-child(2){
+              background-color: #cfcfcf;
+              width: 95%;
+              height: 8px;
+              border-radius: 50px;
+              margin-bottom: 7px;
+          }
+          span:nth-child(3){
+              background-color: #cfcfcf;
+              width: 55%;
+              height: 8px;
+              border-radius: 50px;
+          }
+      }
+      .empty-detail-main{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 30px;
+          width: 90%;
+          .calendar-wrap{
+              display: flex;
+              align-items: center;
+              img{
+                  width: 16px;
+                  height: 16px;
+              }
+              span{
+                  background-color: #b8b8b8;
+                  width: 75px;
+                  height: 7px;
+                  border-radius: 50px;
+                  margin-left: 7px;
+              }
+          }
+          .time-wrap{
+              display: flex;
+              align-items: center;
+              img{
+                  width: 16px;
+                  height: 16px;
+              }
+              span{
+                  background-color: #b8b8b8;
+                  width: 45px;
+                  height: 7px;
+                  border-radius: 50px;
+                  margin-left: 7px;
+              }
+          }
+          .location-wrap{
+              display: flex;
+              align-items: center;
+              img{
+                  width: 16px;
+                  height: 16px;
+              }
+              span{
+                  background-color: #b8b8b8;
+                  width: 65px;
+                  height: 7px;
+                  border-radius: 50px;
+                  margin-left: 7px;
+              }
+          }
+      }
+      .empty-footer-main{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 35px;
+          .left-side-wrap{
+              display: grid;
+              span:nth-child(1){
+                  background-color: #b8b8b8;
+                  width: 30px;
+                  height: 8px;
+                  border-radius: 50px;
+                  margin-bottom: 4px;
+              }
+              span:nth-child(2){
+                  background-color: #b8b8b8;
+                  width: 15px;
+                  height: 8px;
+                  border-radius: 50px;
+              }
+          }
+          .right-side-wrap{
+              background-color: #973c56;
+              width: 60%;
+              height: 30px;
+              border-radius: 3px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              span{
+                  background-color: #fff;
+                  width: 40%;
+                  height: 6px;
+                  border-radius: 50px;
+              }
+          }
+      }
+  }
+}
+.verticle-view{
+  .display-col-4{
+    .empty-events-template{
+      .empty-detail-main{
+        span{
+          width: 30px;
+          height: 7px;
+          border-radius: 50px;
+          margin-left: 7px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
+.verticle-mobile-view{
+    .empty-events-template{
+      .empty-detail-main{
+        flex-wrap: wrap;
+        span{
+          width: 30px;
+          height: 7px;
+          border-radius: 50px;
+          margin-left: 7px;
+          margin-right: 10px;
+        }
+      }
+  }
+}
+@media only screen and (min-width: 320px) and (max-width: 374px) {
+ .custom-col{
+    padding: 0px;
+  }
+  .events-empty-content-main{
+      .empty-detail-main{
+          flex-flow: wrap;
+          .location-wrap{
+              margin-top: 7px;
+          }
+      }
+  }
+}
+
+.horizontal-view{
+  .empty-events-mian{
+    .empty-events-template{
+      display: flex;
+      align-items: stretch;
+      height: 200px;
+    }
+    .display-col-1{
+      .event-image-main{
+        width: 200px;
+        height: 100%;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 5px;
+      }
+    }
+    .display-col-2{
+      .event-image-main{
+        width: 400px;
+        height: 100%;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 5px;
+      }
+    }
+    
+    .display-col-2{
+      .events-empty-content-main{
+        width: calc(100% - 200px);
+      }
+    }
+    .events-empty-content-main{
+      width: calc(100% - 250px);
+      border-top-right-radius: 5px;
+      border-bottom-left-radius: 0px;
+    }
+  }
+}

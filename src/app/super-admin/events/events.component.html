@@ -1,0 +1,650 @@
+<div #new_event_start>
+</div>
+<div id="events" class="bg-white sub-container">
+
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div *ngIf="addNewEvents" class="bg-white events">
+        <div class="row mx-0 p-3">
+            <div class="page-title">
+                Manage Events
+            </div>
+
+            <div class="ml-auto mt-2 pr-3">
+                <button (click)="addNewEvents=!addNewEvents; addNewEvent();" mat-flat-button class="add-event-button px-5">Add New Event</button>
+            </div>
+        </div>
+
+        <div class="row mx-0 code-tab">
+            <mat-tab-group (selectedTabChange)="onTabChange($event)" class="col-sm-12 col-12 col-lg-12 col-md-12 col-xl-12 float-left p-0 event-tabs">
+                <mat-tab label="Upcoming Events ({{totalUpcomingEvents}})" class="">
+                    <div class="service-listing events">
+                        <div class="main-table-content main-cust-table-content">
+                            <div class="">
+                                <div class="heads main-heading-content drageble py-3" fxLayout="row">
+                                    <div class="" fxFlex="25">Events</div>
+                                    <div class="" fxFlex="20">Status</div>
+                                    <div class="" fxFlex="13">Sold</div>
+                                    <div class="" fxFlex="15">Remaining</div>
+                                    <div class="" fxFlex="17">Revenue</div>
+                                    <div class="" fxFlex="10">Action</div>
+                                </div>
+
+                                <div class="content" class="drageble-list" *ngIf="allUpcomingEventListData && allUpcomingEventListData.length != 0">
+                                    <div class="drageble-box" fxLayout="row" *ngFor="let element of allUpcomingEventListData">
+                                        <div class="tb-data " fxFlex="25"> <a class="event-title" (click)="fnSelectSingleEvent(element.unique_code)"> {{element.event_title}} </a> <br>
+                                            <span *ngIf="element.event_occurrence_type == 'Y' && element.upcoming_count != 1">{{element.upcoming_count>0?'+':''}} {{element.upcoming_count>0?element.upcoming_count-1:'No'}} more upcoming occurrences</span>
+                                            <span *ngIf="element.event_occurrence_type == 'Y' && element.upcoming_count == 1">1 upcoming occurrences</span>
+                                            <span *ngIf="element.event_occurrence_type == 'N'">{{element.start_date}}</span>
+                                        </div>
+                                        <div class="tb-data mat-common-radius" fxFlex="20">
+                                            <mat-select (selectionChange)="fnChangeEventStatus(element.unique_code, $event.value)" [(value)]="element.event_status" class="form-control event-status-select status-select" [ngStyle]="{'backgroundColor':element.event_status === 'draft' ? '#85938D' : '#FE6A4D'}">
+                                                <mat-option value="draft">Draft</mat-option>
+                                                <mat-option value="publish">Published</mat-option>
+                                            </mat-select>
+                                        </div>
+                                        <div class="tb-data" fxFlex="13" *ngIf="element.event_occurrence_type == 'N' && element.soldout !== undefined">{{element.soldout[0].Sold}}</div>
+                                        <div class="tb-data" fxFlex="13" *ngIf="element.event_occurrence_type == 'Y'">{{element.totalOccurrencSold}}</div>
+                                        <div class="tb-data" fxFlex="13" *ngIf="element.event_occurrence_type == 'N' && element.soldout === undefined">No Tickets</div>
+                                        <!-- <div class="tb-data" fxFlex="13" *ngIf="element.soldout !== undefined && element.occurrences !== 'Occurrence not created'">{{element.soldout[0].Sold}}</div>
+                                        <div class="tb-data" fxFlex="13" *ngIf="element.occurrences === 'Occurrence not created'">Occurrence not created</div>
+                                        <div class="tb-data" fxFlex="13" *ngIf="element.soldout === undefined && element.occurrences !== 'Occurrence not created'">No Tickets</div> -->
+                                        <div class="tb-data" fxFlex="15" *ngIf="element.event_occurrence_type == 'N' && element.remaining !== undefined">{{element.remaining[0].Remaining}}</div>
+                                        <div class="tb-data" fxFlex="15" *ngIf="element.event_occurrence_type == 'Y'">{{element.totalOccurrencRemaining}}</div>
+                                        <div class="tb-data" fxFlex="15" *ngIf="element.event_occurrence_type == 'N' && element.remaining === undefined">No Tickets</div>
+                                        <div class="tb-data" fxFlex="17" *ngIf="element.event_occurrence_type == 'N' && element.final_revenue !== undefined">{{element.final_revenue[0].Revenue| currency:element.event_setting.currency:'symbol'}}</div>
+                                        <div class="tb-data" fxFlex="17" *ngIf="element.event_occurrence_type == 'Y'">
+                                            <span *ngIf="element.totalOccurrencRevenue !== 'Occurrence not created' && element.totalOccurrencRevenue !== 'No Tickets'">{{element.totalOccurrencRevenue| currency:element.event_setting.currency:'symbol'}}</span>
+                                            <span *ngIf="element.totalOccurrencRevenue === 'Occurrence not created' || element.totalOccurrencRevenue === 'No Tickets'">{{element.totalOccurrencRevenue}}</span>
+                                        </div>
+                                        <div class="tb-data" fxFlex="17" *ngIf="element.event_occurrence_type == 'N' && element.final_revenue === undefined">No Tickets</div>
+                                        <div class="tb-data" fxFlex="10">
+                                            <mat-icon [ngbPopover]="popContent" placement="auto" aria-hidden="false" aria-label="Example home icon" class="action-icon pointer">more_horiz</mat-icon>
+                                            <ng-template class="popover custom-popover" #popContent>
+                                                <div (click)="viewEventPage(element.unique_code)" class="px-3  border-bottom">
+                                                    <i class="fa fa-eye mr-2"></i><span>View event page</span>
+                                                </div>
+
+                                                <div (click)="singleEventShorcut(element.unique_code,'/super-admin/single-event-dashboard/event-summary')" class="px-3  border-bottom">
+                                                    <i class="fa fa-bar-chart-o mr-2"></i><span>Event Summary</span>
+                                                </div>
+
+                                                <div (click)="singleEventShorcut(element.unique_code,'/super-admin/single-event-dashboard/event-and-ticket-types')" class="px-3  border-bottom">
+                                                    <i class="fa fa-pencil mr-2"></i><span>Edit event & tickets</span>
+                                                </div>
+
+                                                <div *ngIf="(subPermission == 'admin' || (subPermission != 'admin' && subPermission.indexOf('AACD') > -1))" (click)="singleEventShorcut(element.unique_code,'/super-admin/single-event-dashboard/issued-ticket')" class="px-3  border-bottom">
+                                                    <i class="fa fa-shopping-bag mr-2"></i><span>Orders</span>
+                                                </div>
+
+                                                <div (click)="singleEventShorcut(element.unique_code,'/super-admin/single-event-dashboard/duplicate')" class="px-3  border-bottom">
+                                                    <i class="fa fa-copy mr-2"></i><span>Duplicate</span>
+                                                </div>
+
+                                                <div (click)="singleEventShorcut(element.unique_code,'/super-admin/single-event-dashboard/delete')" class="px-3  border-bottom">
+                                                    <i class="fa fa-trash mr-2"></i><span>Delete</span>
+                                                </div>
+
+                                            </ng-template>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="no-data-label" *ngIf="allUpcomingEventListData && allUpcomingEventListData.length == 0">
+                                    <div class="no-data-view">
+                                        <img src="../../../assets/images/no-data-found.svg" />
+                                        <label> No data available.</label>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="allUpcomingEventListData && allUpcomingEventListData.length != 0" class="col-12 text-center">
+                                    <div class="table_pagination mt-4 pagination-class" *ngIf="allUpcomingEventListData != ''">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination justify-content-end">
+                                                <li class="page-item" (click)="navigateToUpcomming(first_page_url_upCommintEvent)"><a class="page-link"><i class="fa fa-angle-double-left arrow-icon" aria-hidden="true"></i></a></li>
+                                                <li class="page-item" (click)="navigateToUpcomming(prev_page_url_upCommintEvent)"><a class="page-link"><i class="fa fa-angle-left arrow-icon" aria-hidden="true"></i></a></li>
+                                                <li class="page-item" [ngClass]="{'active':current_page_upCommintEvent == i+1}" *ngFor="let pagenumber of arrayOneUpcomming(last_page_upCommintEvent); let i = index;" (click)="navigateToPageNumberUpcomming(i+1)"><a class="page-link">{{i+1}}</a></li>
+                                                <li class="page-item" (click)="navigateToUpcomming(next_page_url_upCommintEvent)"><a class="page-link"><i class="fa fa-angle-right arrow-icon" aria-hidden="true"></i></a></li>
+                                                <li class="page-item" (click)="navigateToUpcomming(last_page_url_upCommintEvent)"><a class="page-link"><i class="fa fa-angle-double-right arrow-icon" aria-hidden="true"></i></a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </mat-tab>
+                <mat-tab label="Past Events ({{totalPastEvents}})">
+                    <div class="service-listing events">
+                        <div class="main-table-content main-cust-table-content">
+                            <div class="">
+                                <div class="heads main-heading-content drageble py-3" fxLayout="row">
+                                    <div class="" fxFlex="25">Events</div>
+                                    <div class="" fxFlex="20">Status</div>
+                                    <div class="" fxFlex="13">Sold</div>
+                                    <div class="" fxFlex="15">Remaining</div>
+                                    <div class="" fxFlex="17">Revenue</div>
+                                    <div class="" fxFlex="10">Action</div>
+                                </div>
+
+                                <div class="content" class="drageble-list" *ngIf="allPastEventListData && allPastEventListData.length != 0">
+                                    <div class="drageble-box" fxLayout="row" *ngFor="let element of allPastEventListData">
+                                        <div class="tb-data" fxFlex="25"><a class="event-title past-event"> {{element.event_title}} </a> <br>
+                                            <span *ngIf="element.event_occurrence_type == 'Y' && element.past_count != 1">{{element.past_count>0?'+':''}} {{element.past_count>0?element.past_count-1:'No'}} more past occurrences</span>
+                                            <span *ngIf="element.event_occurrence_type == 'Y' && element.past_count == 1">1 past occurrences</span>
+                                            <span *ngIf="element.event_occurrence_type == 'N'">{{element.start_date}}</span>
+                                        </div>
+                                        <div class="tb-data" fxFlex="20">
+                                            <mat-select (selectionChange)="fnChangeEventStatus(element.unique_code, $event.value)" [(value)]="element.event_status" class="form-control event-status-select status-select" [ngStyle]="{'backgroundColor':element.event_status === 'draft' ? '#85938D' : '#FE6A4D'}">
+                                                <mat-option value="draft">Draft</mat-option>
+                                                <mat-option value="publish">Published</mat-option>
+                                            </mat-select>
+                                        </div>
+                                        <div class="tb-data" fxFlex="13" *ngIf="element.event_occurrence_type == 'N' && element.soldout !== undefined">{{element.soldout[0].Sold}}</div>
+                                        <div class="tb-data" fxFlex="13" *ngIf="element.event_occurrence_type == 'Y'">{{element.totalOccurrencSold}}</div>
+                                        <div class="tb-data" fxFlex="13" *ngIf="element.event_occurrence_type == 'N' && element.soldout === undefined">No Tickets</div>
+                                        <div class="tb-data" fxFlex="15" *ngIf="element.event_occurrence_type == 'N' && element.remaining !== undefined">{{element.remaining[0].Remaining}}</div>
+                                        <div class="tb-data" fxFlex="15" *ngIf="element.event_occurrence_type == 'Y'">{{element.totalOccurrencRemaining}}</div>
+                                        <div class="tb-data" fxFlex="15" *ngIf="element.event_occurrence_type == 'N' && element.remaining === undefined">No Tickets</div>
+                                        <div class="tb-data" fxFlex="17" *ngIf="element.event_occurrence_type == 'N' && element.final_revenue !== undefined">{{element.final_revenue[0].Revenue| currency:element.event_setting.currency:'symbol'}}</div>
+                                        <div class="tb-data" fxFlex="17" *ngIf="element.event_occurrence_type == 'Y'">
+                                            <span *ngIf="element.totalOccurrencRevenue !== 'Occurrence not created' && element.totalOccurrencRevenue !== 'No Tickets'">{{element.totalOccurrencRevenue| currency:element.event_setting.currency:'symbol'}}</span>
+                                            <span *ngIf="element.totalOccurrencRevenue === 'Occurrence not created' || element.totalOccurrencRevenue === 'No Tickets'">{{element.totalOccurrencRevenue}}</span>
+                                        </div>
+                                        <div class="tb-data" fxFlex="17" *ngIf="element.event_occurrence_type == 'N' && element.final_revenue === undefined">No Tickets</div>
+                                        <div class="tb-data" fxFlex="10">
+                                            <mat-icon [ngbPopover]="popContent" placement="bottom" aria-hidden="false" aria-label="Example home icon" class="action-icon">more_horiz</mat-icon>
+                                            <!-- <i class="fa fa-ellipsis-h action-icon" aria-hidden="true"></i> -->
+                                            <ng-template class="popover custom-popover" #popContent>
+                                                <div class="px-3  border-bottom" (click)="singleEventShorcut(element.unique_code,'/super-admin/single-event-dashboard/duplicate')">
+                                                    <i class="fa fa-copy mr-2"></i><span>Duplicate</span>
+                                                </div>
+                                                <div class="px-3  border-bottom" (click)="singleEventShorcut(element.unique_code,'/super-admin/single-event-dashboard/delete')">
+                                                    <i class="fa fa-trash mr-2"></i><span>Delete</span>
+                                                </div>
+
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="no-data-label" *ngIf="allPastEventListData && allPastEventListData.length == 0">
+                                    <div class="no-data-view">
+                                        <img src="../../../assets/images/no-data-found.svg" />
+                                        <label> No data available.</label>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="allPastEventListData && allPastEventListData.length != 0" class="col-12 text-center">
+                                    <div class="table_pagination mt-4 pagination-class" *ngIf="allPastEventListData != ''">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination justify-content-end">
+                                                <li class="page-item" (click)="navigateToPageNumberPast(first_page_url_pastEvent)"><a class="page-link"><i class="fa fa-angle-double-left arrow-icon" aria-hidden="true"></i></a></li>
+                                                <li class="page-item" (click)="navigateToPageNumberPast(prev_page_url_pastEvent)"><a class="page-link"><i class="fa fa-angle-left arrow-icon" aria-hidden="true"></i></a></li>
+                                                <li class="page-item" [ngClass]="{'active':current_page_pastEvent == i+1}" *ngFor="let pagenumber of arrayOnePast(last_page_pastEvent); let i = index;" (click)="navigateToPageNumberPast(i+1)"><a class="page-link">{{i+1}}</a></li>
+                                                <li class="page-item" (click)="navigateToPageNumberPast(next_page_url_pastEvent)"><a class="page-link"><i class="fa fa-angle-right arrow-icon" aria-hidden="true"></i></a></li>
+                                                <li class="page-item" (click)="navigateToPageNumberPast(last_page_url_pastEvent)"><a class="page-link"><i class="fa fa-angle-double-right arrow-icon" aria-hidden="true"></i></a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+
+
+    <!-- ----------------------------------Add new events form------------------------------------------ -->
+
+    <div *ngIf="!addNewEvents" class="add-new-event p-3 bg-white">
+        <div class="col-12 py-3 page-title">
+            <mat-icon (click)="fnCancelNewEvent();" class="mr-3 pointer">west</mat-icon><span>Add New Event</span>
+        </div>
+
+        <div class="add-new-event-form">
+
+            <form [formGroup]="addEventForm" class="with-validation">
+                <div class="px-5 py-3 border rounded bg-light">
+                    <div class="py-2 mb-3">
+                        <div class="page-sub-title">Add event info</div>
+                    </div>
+                    <label for=""> Event Name  <span><i class="fa fa-asterisk"></i></span> </label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" formControlName="event_name" placeholder="Enter the name of your event">
+                        <span class="error-wrap" *ngIf="addEventForm.get('event_name').touched || addEventForm.get('event_name').dirty">
+                            <small *ngIf="addEventForm.get('event_name').hasError('required')" class="error">Event Name is required.</small>
+                        </span>
+                    </div>
+
+
+                    <div class="w-100 mt-3">
+                        <div class="form-group">
+                            <!-- <input type="checkbox" class="from-control mr-2"> This is on online event -->
+                            <mat-checkbox class="" (change)="fnRecurringEvent($event)">This is a recurring event.</mat-checkbox>
+                        </div>
+                    </div>
+                    <div *ngIf="recurringEvent == 'Y'" class="p-3 mt-3 mb-2 add-ticket-notification rounded">
+                        <div> <i class="fa fa-bell mr-3"></i><span>Dates and times for recurring events are managed separately. Once you save your event, you will be able to set these up.</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="row mx-0" *ngIf="recurringEvent == 'N'">
+                            <div class=" date-and-time mt-3">
+                                <div class="w-100">
+                                    <label for="">Start Date <span><i class="fa fa-asterisk"></i></span> </label>
+                                    <div class="form-group">
+                                        <input (dateChange)="fnChangeEventStartDate()" (click)="event_start_date_picker.open()" [min]="minEventStartDate" [matDatepicker]="event_start_date_picker" type="text" formControlName="event_start_date" class="col-12 form-control d-inline-block" placeholder="MM/DD/YYYY"
+                                            readonly>
+                                        <span style="left:0" class="error-wrap" *ngIf="addEventForm.get('event_start_date').touched || addEventForm.get('event_start_date').dirty">
+                                    <small *ngIf="addEventForm.get('event_start_date').hasError('required')" class="error">Event Start Date is required.</small>
+                                </span>
+                                    </div>
+                                </div>
+                                <div class="w-100">
+                                    <label class="ml-2" for="">Start Time<span><i class="fa fa-asterisk"></i></span> </label>
+                                    <div class="form-group">
+                                        <mat-datepicker #event_start_date_picker></mat-datepicker>
+                                        <mat-select placeholder="HH:MM" *ngIf="!startdateToday" formControlName="event_start_time" class="col-10 ml-2 form-control d-inline-block">
+                                            <mat-option (onSelectionChange)="fnChangeStartTime(i)" *ngFor="let fullDayTimeSlote of fullDayTimeSlote; let i=index" value="{{i}}">{{transformTime24To12(fullDayTimeSlote)}}</mat-option>
+                                        </mat-select>
+                                        <mat-select placeholder="HH:MM" *ngIf="startdateToday" formControlName="event_start_time" class="col-10 ml-2 form-control d-inline-block">
+                                            <mat-option [ngClass]="{'hidden-slot':currentTime > fullDayTimeSlote}" (onSelectionChange)="fnChangeStartTime(i)" *ngFor="let fullDayTimeSlote of fullDayTimeSlote; let i=index" value="{{i}}">{{transformTime24To12(fullDayTimeSlote)}}</mat-option>
+                                        </mat-select>
+                                        <span style="left:0" class="error-wrap offset-7 pl-2" *ngIf="addEventForm.get('event_start_time').touched || addEventForm.get('event_start_time').dirty">
+                                    <small *ngIf="addEventForm.get('event_start_time').hasError('required')" class="error">Event Start Time is required.</small>
+                                </span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class=" date-and-time ml-2 mt-3">
+                                <div class="w-100">
+                                    <label for="">End Date<span><i class="fa fa-asterisk"></i></span> </label>
+                                    <input (dateChange)="fnChangeEventEndDate()" (click)="event_end_date_picker.open()" [min]="minEventEndDate" [matDatepicker]="event_end_date_picker" type="text" formControlName="event_end_date" class=" col-12 form-control d-inline-block" placeholder="MM/DD/YYYY"
+                                        readonly>
+                                    <mat-datepicker #event_end_date_picker></mat-datepicker>
+                                    <span style="left:0" class="error-wrap" *ngIf="addEventForm.get('event_end_date').touched || addEventForm.get('event_end_date').dirty">
+                                    <small *ngIf="addEventForm.get('event_end_date').hasError('required')" class="error">Event End Date is required.</small>
+                                </span>
+                                </div>
+                                <div class="w-100">
+                                    <label class="ml-2" for="">End Time <span><i class="fa fa-asterisk"></i></span> </label>
+                                    <!-- <input type="time" formControlName="event_end_time" class="col-4 ml-2 form-control d-inline-block"> -->
+
+                                    <mat-select placeholder="HH:MM" *ngIf="!startEndSameDate" formControlName="event_end_time" class="col-10 ml-2 form-control d-inline-block">
+                                        <mat-option *ngFor="let fullDayTimeSlote of fullDayTimeSlote; let i=index" value="{{i}}">{{transformTime24To12(fullDayTimeSlote)}}</mat-option>
+                                    </mat-select>
+
+
+                                    <mat-select placeholder="HH:MM" *ngIf="startEndSameDate" formControlName="event_end_time" class="col-10 ml-2 form-control d-inline-block">
+                                        <mat-option *ngFor="let fullDayTimeSlote of fullDayTimeSlote; let i=index" [ngClass]="{'hidden-slot':addEventForm.get('event_start_time').value > (i-1)}" value="{{i}}">{{transformTime24To12(fullDayTimeSlote)}}</mat-option>
+                                    </mat-select>
+                                    <span style="left:0" class="error-wrap offset-7 pl-2" *ngIf="addEventForm.get('event_end_time').touched || addEventForm.get('event_end_time').dirty">
+                                        <small *ngIf="addEventForm.get('event_end_time').hasError('required')" class="error">Event End Time is required.</small>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100 mt-3">
+                            <div class="form-group">
+                                <mat-checkbox class="" (change)="fnolPlatform($event)">This is on online event</mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="w-100" *ngIf="olPlatForm == 'N'">
+                            <div class="row m-0 mt-3">
+                                <div class="venue-info">
+                                    <label for="">Venue <span><i class="fa fa-asterisk"></i></span></label>
+                                    <div class="form-group">
+                                        <input formControlName="vanue_name" type="text" class="form-control" placeholder="e.g. Blues Star">
+                                        <span class="error-wrap" *ngIf="addEventForm.get('vanue_name').touched || addEventForm.get('vanue_name').dirty">
+                                            <small *ngIf="addEventForm.get('vanue_name').hasError('required')" class="error">Vanue is required.</small>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="venue-info ml-2">
+                                    <label for="">Venue Zip/postal code <span><i class="fa fa-asterisk"></i></span></label>
+                                    <div class="form-group">
+                                        <input formControlName="vanue_zip" type="text" class="form-control" placeholder="e.g. 400001">
+                                        <span class="error-wrap" *ngIf="addEventForm.get('vanue_zip').touched || addEventForm.get('vanue_zip').dirty">
+                                            <small *ngIf="addEventForm.get('vanue_zip').hasError('required')" class="error">Zip is required.</small>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="venue-info ml-2">
+                                    <label for="">Venue Country<span><i class="fa fa-asterisk"></i></span></label>
+                                    <div class="form-group">
+                                        <mat-select formControlName="vanue_country" class="form-control">
+                                            <mat-option *ngFor="let allCountry of allCountry; let i=index" [value]="allCountry.id">{{allCountry.name}}</mat-option>
+                                        </mat-select>
+                                        <span class="error-wrap" *ngIf="addEventForm.get('vanue_country').touched || addEventForm.get('vanue_country').dirty">
+                                            <small *ngIf="addEventForm.get('vanue_country').hasError('required')" class="error">Country is required.</small>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="w-100" *ngIf="olPlatForm == 'Y'">
+                            <div class="row m-0 mt-3">
+                                <div class="online-info-field">
+                                    <label for="">Platform <span><i class="mr-1 fa fa-asterisk"></i></span> </label>
+                                    <div class="form-group">
+                                        <mat-select formControlName="online_platform" class="form-control" placeholder="Please select platform">
+                                            <mat-option value="Z">Zoom</mat-option>
+                                            <mat-option value="GH">Google Hangout</mat-option>
+                                            <mat-option value="YU">Youtube</mat-option>
+                                            <mat-option value="HP">Hopin</mat-option>
+                                            <mat-option value="VM">Vimeo</mat-option>
+                                            <mat-option value="SKY">Skype</mat-option>
+                                            <mat-option value="OTH">Other</mat-option>
+                                        </mat-select>
+                                        <span style="left:0" class="error-wrap" *ngIf="addEventForm.get('online_platform').touched || addEventForm.get('online_platform').dirty">
+                                            <small *ngIf="addEventForm.get('online_platform').hasError('required')" class="error">Platform is required.</small>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="online-info-field ml-2">
+                                    <label for="">Online event link (Can be added later) <span class="ml-2"><i class="fa fa-question"   matTooltip="Enter the link where attendees can join your online event. If you don't know this yet, just leave this blank." aria-hidden="true"></i></span> </label>
+                                    <div class="form-group">
+                                        <input formControlName="online_link" type="text" class="form-control">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="w-100 mt-3">
+                            <label class="w-100" for="">Description <span><i class="mr-1 fa fa-asterisk"></i></span> <span class=""><i class="fa fa-question"   matTooltip="You may like to add a short description for your customers.This is used in event listings." aria-hidden="true"></i></span> </label>
+                            <div class="form-group">
+                                <angular-editor class="description_field" [config]="editorConfig" formControlName="description"></angular-editor>
+                                <span class="error-wrap" *ngIf="addEventForm.get('description').touched || addEventForm.get('description').dirty">
+                                <small *ngIf="addEventForm.get('description').hasError('required')" class="error">Description is required.</small>
+                            </span>
+                            </div>
+                        </div>
+
+                        <div class="w-100 mt-3">
+                            <label class="w-100" for="">Choose or upload an image (Recommended upload size is 1500 x 384)</label>
+                            <div class="row">
+                                <img *ngFor="let allDefaultImages of allDefaultImages;" [ngClass]="{'active-image':eventImageType == allDefaultImages.id}" (click)="fnSelectImage(allDefaultImages.id); fnSelectDefaultImage(allDefaultImages.name)" src="{{allDefaultImages.path}}" class="event-images m-2"
+                                    alt="">
+                                <div [ngClass]="{'active-image':eventImageType == 'newUploadImage'}" (click)="fnSelectImage('newUploadImage'); fnUploadEventImage()" class="event-images m-2 text-center pointer">
+                                    <i class="fa fa-cloud-upload fa-2x pt-2 "></i>
+                                    <p>Upload</p>
+                                </div>
+                                <div [ngClass]="{'active-image':eventImageType == 'noImage'}" (click)="fnSelectImage('noImage')" class="event-images m-2 text-center pointer">
+                                    <i class="fa fa-ban fa-2x pt-2 "></i>
+                                    <p>No image</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12 mt-3" *ngIf="eventImageType!='noImage'">
+                            <label for="">Edit thumbnail/logo size <span class="info" matTooltip="Used as a thumbnail image on your event listings page.Dimensions : 108px X 108px."
+                            matTooltipPosition="above" class="tooltip-btn"><i class="fa fa-question" aria-hidden="true"></i></span>
+                            </label>
+                            <div class="select-event-img-sm row mx-0">
+                                <div *ngIf="selecetdDefaultImage !== 'newUploadImage' && !newEventImageUrl" [ngStyle]="{'background-size': thumbZoomLavel+'%', 'background-image': 'url(' + apiUrl +'/default-event-images/'+ selecetdDefaultImage + ')'}" class="select-event-image">
+                                </div>
+                                <div *ngIf="eventImageType == 'newUploadImage' && newEventImageUrl" [ngStyle]="{'background-size': thumbZoomLavel+'%', 'background-image': 'url(' + newEventImageUrl + ')'}" class="select-event-image">
+                                </div>
+                                <div class="d-flex justify-content-center align-items-center mx-3">
+                                    <div>
+                                        <div class="image-status">
+                                            <mat-slider (change)="fnChangeThumbZoom($event)" class="image-slider" min="100" max="200" step="10" value="{{thumbZoomLavel}}"></mat-slider>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12  mt-3" *ngIf="eventImageType!='noImage'">
+                            <label for="">Edit banner size<span class="info" matTooltip="Used as a thumbnail image on your event listings page.Dimensions : 1500 x 384."
+                                 matTooltipPosition="above" class="tooltip-btn"><i class="fa fa-question" aria-hidden="true"></i></span>
+                            </label>
+                            <div class="select-event-img-lg row mx-0">
+                                <div *ngIf="selecetdDefaultImage && !newEventImageUrl" [ngStyle]="{'background-size': bannerZoomLavel+'%', 'background-image': 'url(' + apiUrl +'/default-event-images/'+ selecetdDefaultImage + ')'}" class="select-event-image">
+                                </div>
+                                <div *ngIf="eventImageType == 'newUploadImage' && newEventImageUrl" [ngStyle]="{'background-size': bannerZoomLavel+'%', 'background-image': 'url(' + newEventImageUrl + ')'}" class="select-event-image">
+                                </div>
+                                <div class="d-flex justify-content-center align-items-center mx-3">
+                                    <div>
+                                        <div class="image-status">
+                                            <mat-slider (change)="fnChangeBannerZoom($event)" class="image-slider" min="100" max="200" step="10" value="{{bannerZoomLavel}}"></mat-slider>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="px-5 py-3 mt-3 border rounded create-ticket-types bg-light" id="jump">
+                    <div class=" py-2">
+                        <div class="page-sub-title">Create ticket types</div>
+                    </div>
+                    <div class="mt-2">
+                        <button mat-flat-button (click)="openAddNewTicketTypeDialog()" class="mr-1">Add a new ticket type</button>
+                        <!-- <button mat-flat-button (click)="openAddNewTicketGroupDialog()" class="ml-1">Add a new ticket group</button> -->
+                    </div>
+
+                    <div *ngIf="eventTicketAlertMSG" class="p-3 mt-3 mb-2 add-ticket-notification rounded">
+                        <div> <i class="fa fa-bell mr-3"></i><span>Click the <b>Add a new ticket type</b> button above to add a ticket to your event.</span>
+                        </div>
+                    </div>
+
+                    <div *ngFor="let eventTicketList of eventTicketList; let i=index;" class="after-save-general-admission p-3 mt-2 mb-2 rounded">
+                        <div class="tickets-main-wrap">
+                            <div>
+                                {{eventTicketList.ticket_name}}
+                            </div>
+                            <div class="ticket-status ml-auto">
+                                <div class="d-inline-block ">
+                                    <i class="fa fa-ticket fa-lg mr-2"></i><span>{{eventTicketList.remaining ? eventTicketList.remaining.sold : 0}} Ticket Sold</span>
+                                </div>
+                                <div class="d-inline-block ml-2 mr-2">
+                                    <i class="fa fa-ticket fa-lg mr-2"></i><span>{{eventTicketList.qty}} Tickets Remaining</span>
+                                </div>
+                                <button mat-flat-button class="mr-1 edit-btn" (click)="fnEditTicket(i)"><i
+                                    class="fa fa-pencil pr-2"></i>Edit</button>
+                                <button mat-flat-button class="ml-1 delete-btn" (click)="fnDeleteTicket(i)"><i
+                                    class="fa fa-trash pr-2"></i>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="px-5 py-3 mt-3 border rounded event-settings bg-light">
+                    <div class=" py-2">
+                        <div class="page-sub-title">Event Settings</div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="mt-3" for="">Timezone <span><i class="fa fa-asterisk"></i></span>  </label>
+                        <mat-select formControlName="timezone" class="form-control col-8 d-block" #singleSelect>
+                            <mat-option>
+                                <ngx-mat-select-search placeholderLabel="Search" noEntriesFoundLabel="No record found" [formControl]="timeZoneFilterCtrl"></ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let listTimeZone of listTimeZoneList | async" [value]="listTimeZone.id">({{listTimeZone?.utc}}){{listTimeZone.name}}</mat-option>
+                        </mat-select>
+                        <span class="error-wrap" *ngIf="addEventForm.get('timezone').touched || addEventForm.get('timezone').dirty">
+                            <small *ngIf="addEventForm.get('timezone').hasError('required')" class="error">Timezone is required.</small>
+                        </span>
+                    </div>
+                    <div class="row mx-0">
+                        <div class="form-group col-md-6 pl-0 mt-3">
+                            <label for="">Transaction fee<span matTooltip="You can add a transaction fee to each order. Please note this differs from ticket booking fees that are charged once per ticket."
+                            matTooltipPosition="above" class="tooltip-btn info"><i class="fa fa-question" aria-hidden="true"></i></span></label>
+                            <input formControlName="transaction_fee" type="text" class="form-control" id="" placeholder="0.00">
+                            <span class="error-wrap" *ngIf="addEventForm.get('transaction_fee').touched || addEventForm.get('transaction_fee').dirty">
+                                <small *ngIf="addEventForm.get('transaction_fee').hasError('pattern')" class="error">Enter valid transaction fee.</small>
+                            </span>
+                        </div>
+                        <div class="form-group col-md-6 pr-0 mt-3">
+                            <label for="">Currency <span><i class="fa fa-asterisk"></i></span>  <span class="info tooltip-btn" matTooltip="Note that once your tickets have gone on sale you won't be able to change the currency."
+                            matTooltipPosition="above"><i class="fa fa-question" aria-hidden="true"></i></span></label>
+                            <mat-select formControlName="currency" class="form-control" id="">
+                                <mat-option value="{{getCurrancy.CurrencyCode}}" *ngFor="let getCurrancy of getCurrancy; let i=index"> {{getCurrancy.CurrencyName}}</mat-option>
+                            </mat-select>
+                            <span class="error-wrap" *ngIf="addEventForm.get('currency').touched || addEventForm.get('currency').dirty">
+                                <small *ngIf="addEventForm.get('currency').hasError('required')" class="error">Currency is required.</small>
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="mt-3">
+                        <!-- <input type="checkbox" class="from-control mr-2"> Allow customers to make a donation -->
+                        <mat-checkbox (change)="fnChangeDonation($event)" [checked]="false">Allow customers to make a donation</mat-checkbox>
+                    </div>
+
+                    <div class="w-100" *ngIf="donation == 'Y'">
+                        <div class="row mt-2 m-0">
+                            <div class="donation-field mt-2">
+                                <label for="">Donation title  <span><i class="fa fa-asterisk"></i></span></label>
+                                <input formControlName="donation_title" type="text" class="form-control" placeholder="Please make a donation">
+                                <span class="error-wrap" *ngIf="addEventForm.get('donation_title').touched || addEventForm.get('donation_title').dirty">
+                                    <small *ngIf="addEventForm.get('donation_title').hasError('required')" class="error">Donation title is required.</small>
+                                </span>
+                            </div>
+                            <div class="donation-field ml-auto mt-2">
+                                <label for="">Donation amount  <span><i class="mr-1 fa fa-asterisk"></i></span> <i class="fa fa-question-circle" matTooltipPosition="above" matTooltip="Set an amount you would like people to donate. This will be pre-filled to the value you set but the customer will be able to change it to whatever they want."></i></label>
+                                <input formControlName="donation_amount" type="text" class="form-control" placeholder="0.00">
+                                <span class="error-wrap" *ngIf="addEventForm.get('donation_amount').touched || addEventForm.get('donation_amount').dirty">
+                                    <small *ngIf="addEventForm.get('donation_amount').hasError('required')" class="error">Amount is required.</small>
+                                    <small *ngIf="addEventForm.get('donation_amount').hasError('pattern')" class="error">Enter valid amount.</small>
+                                </span>
+                            </div>
+                            <div class="donation-field mt-3">
+                                <label for="">Donation description <i class="fa fa-question-circle" matTooltipPosition="above" matTooltip="Tell people more about the donation here."></i></label>
+                                <input formControlName="donation_description" type="text" class="form-control">
+                                <span class="error-wrap" *ngIf="addEventForm.get('donation_description').touched || addEventForm.get('donation_description').dirty">
+                                    <small *ngIf="addEventForm.get('donation_description').hasError('required')" class="error">Description is required.</small>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <label for="">Customize the text that appears on the event button and in the title of the event page <span><i class="fa fa-asterisk"></i></span> </label>
+                        <div class="form-group">
+                            <input formControlName="book_btn_title" type="text" class="form-control" placeholder="Book Tickets">
+                            <span class="error-wrap" *ngIf="addEventForm.get('book_btn_title').touched || addEventForm.get('book_btn_title').dirty">
+                                <small *ngIf="addEventForm.get('book_btn_title').hasError('required')" class="error">Button title is required.</small>
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class=" py-2 ">
+                        <div class="page-sub-title">Advanced settings</div>
+                    </div>
+
+                    <div class="mt-3">
+                        <mat-checkbox (change)="fnRedirectURL($event)" [checked]="false">Redirect order confirmation page</mat-checkbox>
+                    </div>
+
+                    <div class="mt-2" *ngIf="redirectURL == 'Y'">
+                        <label for="">Redirect to URL</label>
+                        <div class="pb-3">
+                            <input formControlName="redirect_url" type="text" class="form-control col-6" placeholder="Type the URL here">
+                            <span class="error-wrap" *ngIf="addEventForm.get('redirect_url').touched || addEventForm.get('redirect_url').dirty">
+                                <small *ngIf="addEventForm.get('redirect_url').hasError('required')" class="error">Redirect URL is required.</small>
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="mt-1">
+                        <mat-checkbox (change)="fnHideEventSearch($event)">Hide this event from your box office listings and search engines.</mat-checkbox>
+                    </div>
+
+                    <div class="mt-1">
+                        <mat-checkbox (change)="fnAccessCode($event)" [checked]="false">Customers need to enter an access code to buy tickets for this event.</mat-checkbox>
+                    </div>
+
+                    <div class="mt-2" *ngIf="accessCode == 'Y'">
+                        <label for="">Access Code</label>
+                        <div class="pb-3">
+                            <input formControlName="access_code" type="text" class="form-control col-6">
+                            <span class="error-wrap" *ngIf="addEventForm.get('access_code').touched || addEventForm.get('access_code').dirty">
+                                <small *ngIf="addEventForm.get('access_code').hasError('required')" class="error">Access Code is required.</small>
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="mt-1">
+                        <mat-checkbox (change)="fnShareButtonStatus($event)">Hide the share button on the event page.</mat-checkbox>
+                    </div>
+
+                    <div class="mt-1">
+                        <mat-checkbox (change)="fnCustomSalesTax($event)" [checked]="customSalesTax == 'Y'">Set custom sales tax for this event</mat-checkbox>
+                    </div>
+
+
+                </div>
+            </form>
+            <div class="px-5 pb-3 border rounded sales-tax-container bg-light">
+                <div *ngIf="customSalesTax == 'Y'">
+                    <div class="row mx-0">
+                        <form class="w-100" [formGroup]="customSalesTaxForm">
+                            <div class=" w-100" formArrayName="customSalesTaxArr" *ngFor="let a of customSalesTaxForm.get('customSalesTaxArr')['controls']; let i = index">
+                                <div *ngIf="deletedSalesTaxIndex.length == 0 || deletedSalesTaxIndex.indexOf(i,0) < 0" [formGroupName]="i" class="row m-0">
+                                    <div class="tax-input">
+                                        <label for="">Sales tax percentage</label>
+                                        <div class="form-group">
+                                            <input formControlName="amount" type="number" class="form-control" placeholder="0.00">
+                                        </div>
+                                    </div>
+
+                                    <div class="tax-input ml-auto">
+                                        <label for="">Sales tax label</label>
+                                        <div class="form-group">
+                                            <input formControlName="label" type="text" class="form-control" placeholder="VAT">
+                                        </div>
+                                    </div>
+                                    <span class="delete-tax"><mat-icon (click)="fnDeleteTax(i)">delete_outline</mat-icon></span>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="w-100">
+                            <div (click)="fnSalesTaxAdd()" class="tax-add-btn">
+                                <i class="fa fa-plus-circle"></i><span class="ml-2">Add Tax</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="py-3 mt-3 event-setting-btn text-right normal-btns">
+                <div class="action-btns">
+                    <button (click)="fnCancelNewEvent()" mat-flat-button class="cancel-btn mr-2">Cancel</button>
+                    <button [disabled]="saveDisabled" (click)="fnAddNewEvent()" mat-flat-button class="save-btn ml-2 px-3">
+                        <span *ngIf="!saveDisabled">Save Event</span>
+                        <div *ngIf="saveDisabled" class="button-spinner">
+                            <div class="double-bounce1"></div>
+                            <div class="double-bounce2"></div>
+                        </div>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

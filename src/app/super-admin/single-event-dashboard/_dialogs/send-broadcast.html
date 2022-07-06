@@ -1,0 +1,58 @@
+<div class="modal-dialog modal-notify modal-info export-order modal-lg" role="document">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="modal-content ">
+        <div class="modal-header modal-bcolor-primary px-0 pt-0">
+            <p class="heading lead  work-content">Preview and send Broadcast</p>
+            <button type="button" class="close-btn" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+           <span aria-hidden="true" class="white-text">&times;</span>
+         </button>
+        </div>
+
+        <div class="modal-body px-0">
+            <div class="common-heading-preview">
+                <h3> Details </h3>
+            </div>
+            <div class="main-deatils-preview">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-12 common-preview">
+                    <div class="col-md-12 col-lg-4 col-sm-12 col-12 float-left">
+                        <h3> Subject: </h3>
+                    </div>
+                    <div class="col-md-12 col-lg-8 col-sm-12 col-12 float-left">
+                        <p> {{createBroadcastData.subject}} </p>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-12 common-preview">
+                    <div class="col-md-12 col-lg-4 col-sm-12 col-12 float-left">
+                        <h3> Reciepients: </h3>
+                    </div>
+                    <div class="col-md-12 col-lg-8 col-sm-12 col-12 float-left">
+                        <p *ngIf="createBroadcastData.recipients == 'BUY'"> All ticket buyers({{allWaitingListData.BUY}})</p>
+                        <p *ngIf="createBroadcastData.recipients == 'ALL'"> All waitlist signups({{allWaitingListData.ALL}})</p>
+                        <p *ngIf="createBroadcastData.recipients == 'NEW'"> New waitlist signups({{allWaitingListData.NEW}})</p>
+                        <p *ngIf="createBroadcastData.recipients == 'NOTIFY'"> Notified waitlist signups({{allWaitingListData.NOTIFY}})</p>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-12 common-preview">
+                    <div class="col-md-12 col-lg-4 col-sm-12 col-12 float-left">
+                        <h3> From: </h3>
+                    </div>
+                    <div class="col-md-12 col-lg-8 col-sm-12 col-12 float-left">
+                        <p> {{currentUser.email}} </p>
+                    </div>
+                </div>
+                <div class="common-heading-preview preview-main">
+                    <h3> Preview </h3>
+                </div>
+                <div class="preview-deatils-describtion">
+                    <!-- <p>{{createBroadcastData.message}} </p> -->
+                    <angular-editor [config]="config"  class="description_field" [(ngModel)]="editorValue" readonly="true">
+                    </angular-editor>
+                </div>
+            </div>
+            <div class="botttom-buttons send-broadcast-wrap">
+                <button mat-flat-button class="save-draf-btn mr-2" color="primary" (click)="onNoClick()"> Cancel </button>
+                <button mat-flat-button color="primary" (click)="fnSendBroadCast()"> Send Broadcast </button>
+            </div>
+
+        </div>
+    </div>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="218px" height="87px" viewBox="0 0 218 87" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Logo</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-weight="normal">
+        <g id="Home" transform="translate(-68.000000, -51.000000)">
+            <g id="Header" transform="translate(68.000000, 40.000000)">
+                <g id="Logo" transform="translate(0.000000, 11.000000)">
+                    <text id="a-Weberr-Product" font-family="Roboto-Regular, Roboto" font-size="16" fill="#0E0E0E">
+                        <tspan x="0" y="64">a Weberr Product</tspan>
+                    </text>
+                    <text id="Eventsmatic" font-family="Arvo" font-size="36" fill="#973C56">
+                        <tspan x="0" y="35">Eventsmatic</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

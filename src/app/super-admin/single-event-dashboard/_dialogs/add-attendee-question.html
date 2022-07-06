@@ -1,0 +1,61 @@
+<div class="">
+    <div class="modal-content add-buyer-qn add-question-form">
+        <div class="modal-header modal-bcolor-primary">
+            <p class="heading lead  work-content">Attendee question</p>
+            <button type="button" class="close-btn" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+        </div>
+
+        <div class="modal-body">
+            <form [formGroup]="newAttendeeQForm" class="with-validation">
+                <div class="row">
+                    <div class="form-group col-md-12" *ngIf="!defaultQuestion">
+                        <label for="">What kind of response do you want? <span><i class="fa fa-asterisk asterisk"></i></span> </label>
+                        <mat-select (selectionChange)="fnChangeQType($event)" formControlName="type" class="form-control">
+                            <mat-option value="text">Single line text</mat-option>
+                            <mat-option value="dropdown">Select answer from drop-down</mat-option>
+                            <mat-option value="radio">Select answer from radio buttons</mat-option>
+                            <mat-option value="checkbox">Select answer from checkboxes</mat-option>
+                            <mat-option value="terms">Terms and condition agreement</mat-option>
+                            <mat-option value="marketing">Opt in to receive marketing emails</mat-option>
+                        </mat-select>
+                        <span style="left:0" class="error-wrap" *ngIf="newAttendeeQForm.get('type').touched || newAttendeeQForm.get('type').dirty">
+                            <small *ngIf="newAttendeeQForm.get('type').hasError('required')" class="error">Question type is required.</small>
+                        </span>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="">What question do you want to ask? <span><i class="fa fa-asterisk"></i></span> </label>
+                        <div class="form-group">
+                            <input formControlName="label" class="form-control" type="text">
+                            <span style="left:0" class="error-wrap" *ngIf="newAttendeeQForm.get('label').touched || newAttendeeQForm.get('label').dirty">
+                            <small *ngIf="newAttendeeQForm.get('label').hasError('required')" class="error">Label is required.</small>
+                        </span>
+                        </div>
+                    </div>
+                    <div class="col-md-12" *ngIf="optionField">
+                        <label for="">Options for answer (Enter one answer per line)</label>
+                        <div class="form-group">
+                            <textarea formControlName="options" class="form-control" type="text"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12" *ngIf="termsField">
+                        <label for="">Terms and conditions</label>
+                        <div class="form-group">
+                            <angular-editor [config]="config" class="description_field" formControlName="terms">
+                            </angular-editor>
+                        </div>
+                    </div>
+                    <section class="col-md-12">
+                        <mat-checkbox [checked]="questionRequired" (change)="fnChangeRequired($event)" class="mb-0">Required <span class="info tooltip-btn" matTooltip="Tick this box if it is compulsory for the customer to answer this qestion" matTooltipPosition="above"><i class="fa fa-question" aria-hidden="true"></i></span></mat-checkbox>
+                    </section>
+                    <div class="example-button-row ml-auto mt-3">
+                        <button mat-raised-button class="cancel-btn" (click)="onNoClick()">Cancel</button>
+                        <button mat-raised-button class="mx-3 save-btn" (click)="createNewAttendeeQuestion()">Save custom question</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

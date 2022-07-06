@@ -1,0 +1,102 @@
+<div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+<div id="app_users" class="main bg-white">
+    <div class="top-description">
+        <div class="page-title">Eventsmatic Check-in App</div>
+        <p>Quickly check-in ticket holders at your event using a tablet or smartphone to scan tickets. Find set-up instructions and log-in details for the check-in app. To use multiple check-in devices at one event, simply create multiple users below.</p>
+    </div>
+    <div class="set-up-app">
+        <h4>Set up the app</h4>
+        <div class="row mx-0">
+            <div class="col-12 col-md-6 pl-0">
+                <mat-card class="d-flex flex-wrap justify-content-center align-items-center my-3">
+                    <label class="d-block text-center w-100">1. Download the app</label>
+                    <p class="d-block text-center w-100">Download and install the FREE check-in app.</p>
+                    <div class="store-icons">
+                        <img src="../../../../assets/images/settings/app-user/apple-store.png" />
+                        <img src="../../../../assets/images/settings/app-user/play-store.png" />
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-12 col-md-6 pr-0">
+                <mat-card class="d-flex flex-wrap justify-content-center align-items-center my-3">
+                    <label class="d-block text-center w-100">2. Log in</label>
+                    <p class="d-block text-center w-100">Log in to the app by using your check-in app email and password. This isn't the same password as your Eventsmatic account password. To view your password, click on the user details below.</p>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+
+    <div class="user-list">
+        <div class="users mt-3">
+            <div class="border-bottom px-4 py-3">
+                <div class="row m-0 ">
+                    <div class="title">
+                        Check-in app users
+                    </div>
+                    <div class="ml-auto">
+                        <button mat-button class="add-user-btn" (click)="fnAddAppUser()">Add User</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-bottom px-4 pb-3">
+                <div class="mt-3" fxLayout="row">
+                    <div class="tab-title pt-2" fxFlex="30">Name</div>
+                    <!-- <div class="tab-title pt-2" fxFlex="25">Event Access</div> -->
+                    <div class="tab-title pt-2" fxFlex="40">Email Address</div>
+                    <div class="tab-title pt-2" fxFlex="20">Date Created</div>
+                    <div class="tab-title pt-2" fxFlex="10">Action</div>
+                </div>
+            </div>
+
+            <div *ngIf="allAppUsersList != null" class="border-bottom px-4 py-3">
+                <div class="mt-3" fxLayout="row" *ngFor="let user of allAppUsersList; let i=index">
+                    <div class="user-name" fxFlex="30" *ngIf="user.role == 'A'" (click)="fnUserDetail(i)">{{user.firstname ? user.firstname : '-'}}</div>
+                    <div class="user-name" fxFlex="30" *ngIf="user.role == 'AU'" (click)="fnUserDetail(i)">{{user.firstname ? user.firstname : '-'}} {{user.lastname ? user.lastname : '-'}}</div>
+                    <!-- <div class="" fxFlex="25">All Event</div> -->
+                    <div class="" fxFlex="40">{{user.email ? user.email : '-'}}</div>
+                    <div class="" fxFlex="20">{{user.created_at}}</div>
+                    <div class="" fxFlex="10">
+                        <mat-icon *ngIf="user.role == 'AU'" [mdePopoverTriggerFor]="appPopover" mdePopoverTriggerOn="click" aria-hidden="false" aria-label="Example home icon" class="action-icon pointer">more_horiz</mat-icon>
+                        <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false" [mdePopoverCloseOnClick]="false">
+                            <mat-card class=" p-0" style="max-width: 300px">
+                                <mat-card-content class="add-content">
+                                    <ul class="admin-add-menu pl-0">
+                                        <mat-list-item role="listitem" (click)="userEdit(i)">
+                                            <div class="add-common-menu">
+                                                <i class="fa fa-pencil mr-2"></i><span>Edit</span>
+                                            </div>
+                                        </mat-list-item>
+                                        <mat-list-item role="listitem" (click)="userRemove(user.unique_code)">
+                                            <div class="add-common-menu">
+                                                <i class="fa fa-trash mr-2"></i><span>Remove</span>
+                                            </div>
+                                        </mat-list-item>
+
+                                    </ul>
+                                </mat-card-content>
+                            </mat-card>
+                        </mde-popover>
+                        <!-- <ng-template class="popover custom-popover" #popContent1>
+
+                            <div (click)="editUser(i)" class="px-3  border-bottom">
+                                <i class="fa fa-pencil mr-2"></i><span>Edit</span>
+                            </div>
+
+
+                            <div (click)="removeUSer(user.unique_code)" class="px-3  border-bottom">
+                                <i class="fa fa-trash mr-2"></i><span>Remove</span>
+                            </div> 
+
+                        </ng-template> -->
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="allAppUsersList == null" class="border-bottom px-4 py-3">
+                <div class="mt-1" fxLayout="row">
+                    <p class="text-center w-100 mb-0">No data found.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

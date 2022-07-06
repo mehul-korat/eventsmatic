@@ -1,0 +1,28 @@
+<div class="" role="document">
+    <div class="">
+        <div class="modal-header pl-3 py-0 border-0">
+            <p class="heading lead  work-content">Upload Image</p>
+            <button type="button" class="close-btn" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+            <span aria-hidden="true" class="white-text">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-body">
+                <div class="file-upload">
+                    <form>
+                        <div class="image-upload-wrap">
+                            <input class="fileuploadinput" type='file' id="file" (change)="onFileChange($event)" />
+                            <div class="drag-text" *ngIf="!imageSrc">
+                                <h6>Drag and drop a files here </h6>
+                                <h3>or</h3>
+                                <h6>Click Here</h6>
+                            </div>
+                            <img [src]="imageSrc" *ngIf="imageSrc" class="upload-preview-img">
+                        </div>
+                        <button type="submit" (click)="uploadImage()" class="btn btn-primary imgbtn">Upload</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

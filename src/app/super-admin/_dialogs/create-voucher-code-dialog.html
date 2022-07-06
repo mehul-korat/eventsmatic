@@ -1,0 +1,92 @@
+<div class="" role="document">
+    <div class="loader-main" *ngIf="isLoaderAdmin"><img src="../../../assets/event-spinner.svg" /></div>
+    <div class="modal-content ">
+        <div class="modal-header modal-bcolor-primary">
+            <p class="heading lead  work-content">Create voucher code</p>
+            <button type="button" class="close-btn" data-dismiss="modal" aria-label="Close" (click)="onNoClick()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+        </div>
+
+        <div class="modal-body pb-0">
+            <form [formGroup]="createVoucherForm" class="with-validation">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="">Name <span><i class="fa fa-asterisk"></i></span> 
+                  <span mat-raised-button
+                        matTooltip="Give a name to this voucher batch."
+                        matTooltipPosition="above" class="tooltip-btn ml-1">
+                        <span class="info"><i class="fa fa-question"></i></span>
+                </span>
+                </label>
+                        <div class="form-group ">
+                            <input type="text" class="form-control" formControlName="voucher_name">
+                            <span class="error-wrap" *ngIf="createVoucherForm.get('voucher_name').touched || createVoucherForm.get('voucher_name').dirty">
+                            <small *ngIf="createVoucherForm.get('voucher_name').hasError('required')" class="error">Voucher name is required.</small>
+                            <small *ngIf="createVoucherForm.get('voucher_name').hasError('maxlength')" class="error">Voucher name should be maximum 15 character.</small>
+                        </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Value <span><i class="fa fa-asterisk"></i></span> 
+                        <span mat-raised-button
+                                matTooltip="How much money do these vouchers discount from an order?"
+                                matTooltipPosition="above" class="tooltip-btn ml-1">
+                                <span class="info"><i class="fa fa-question"></i></span>
+                        </span>
+                </label>
+                        <div class="form-group ">
+                            <input type="text" class="form-control" formControlName="voucher_value">
+                            <span class="error-wrap" *ngIf="createVoucherForm.get('voucher_value').touched || createVoucherForm.get('voucher_value').dirty">
+                  <small *ngIf="createVoucherForm.get('voucher_value').hasError('required')" class="error">Voucher value is required.</small>
+                  <small *ngIf="createVoucherForm.get('voucher_value').hasError('maxlength')" class="error">Voucher value should be maximum 15 character.</small>
+                </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>Voucher Codes <span><i class="fa fa-asterisk"></i></span> 
+                  <span mat-raised-button
+                        matTooltip="Paste the voucher codes into the box below. One voucher code per line. Max 1,000 voucher codes."
+                        matTooltipPosition="above" class="tooltip-btn ml-1">
+                        <span class="info"><i class="fa fa-question"></i></span>
+                </span>
+                </label>
+                        <div class="form-group ">
+                            <textarea class="form-control" formControlName="voucher_code" rows="3"></textarea>
+                            <span class="error-wrap" *ngIf="createVoucherForm.get('voucher_code').touched || createVoucherForm.get('voucher_code').dirty">
+                  <small *ngIf="createVoucherForm.get('voucher_code').hasError('required')" class="error">Voucher code is required.</small>
+                  <small *ngIf="createVoucherForm.get('voucher_code').hasError('maxlength')" class="error">Voucher code should be maximum 15 character.</small>
+                </span>
+                        </div>
+                    </div>
+                    <div class=" col-md-12">
+                        <label>Expiry date <span><i class="fa fa-asterisk"></i></span> </label>
+                        <div class="matDate form-group">
+                            <mat-datepicker-toggle matSuffix [for]="ticketIssuedTo" class="dateIcon"></mat-datepicker-toggle>
+                            <input type="text" [min]="minExpiryDate" [matDatepicker]="ticketIssuedTo" formControlName="expiry_date" (click)="ticketIssuedTo.open()" class="form-control matInputdate">
+                            <mat-datepicker #ticketIssuedTo></mat-datepicker>
+                        </div>
+                        <span class="error-wrap" *ngIf="createVoucherForm.get('expiry_date').touched || createVoucherForm.get('expiry_date').dirty">
+                  <small *ngIf="createVoucherForm.get('expiry_date').hasError('required')" class="error">Expiry Date is required.</small>
+                  <!-- <small *ngIf="createVoucherForm.get('voucher_code').hasError('maxlength')" class="error">Voucher code should be maximum 15 character.</small> -->
+                </span>
+                    </div>
+                    <div class="col-md-12 mt-2">
+                        <label class="mb-1 mt-2">Events these voucher codes can be redeemed against.</label>
+                    </div>
+                    <section *ngFor="let getAllEventList of getAllEventList; let i=index" class="col-md-12 ">
+                        <mat-checkbox [checked]="assignedEvent.indexOf(getAllEventList.unique_code) > -1" (change)="fnAssignEvent($event, getAllEventList.unique_code)">{{getAllEventList.start_date}} {{getAllEventList.event_title}}</mat-checkbox>
+                    </section>
+
+                    <div class="example-button-row ml-auto mt-2">
+                        <button mat-raised-button class="cancel-btn" (click)="onNoClick()">Cancel</button>
+                        <button *ngIf="!signleVoucherDetail" mat-raised-button (click)="fnOnSubmitVoucher()" class="mx-3 cupon-btn">Create voucher codes</button>
+                        <button *ngIf="signleVoucherDetail" mat-raised-button (click)="fnOnSubmitVoucher()" class="mx-3 cupon-btn">Update voucher codes</button>
+                        <!-- <button mat-raised-button class="mx-3 cupon-btn" (click)="fnOnSubmitVoucher()">Create voucher codes</button> -->
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

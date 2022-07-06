@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="23.224" height="29.4" viewBox="0 0 23.224 29.4">
+  <g id="chair" transform="translate(-41.75)">
+    <g id="Group_369" data-name="Group 369" transform="translate(41.75)">
+      <g id="Group_368" data-name="Group 368" transform="translate(0)">
+        <path id="Path_147" data-name="Path 147" d="M100.761,2.374A2.376,2.376,0,0,0,98.417,0H86.095A2.371,2.371,0,0,0,83.75,2.374v11.6h17.011Z" transform="translate(-80.644)" fill="gray"/>
+        <path id="Path_148" data-name="Path 148" d="M61.748,294.7v5.163a2.4,2.4,0,0,0,.71,1.723,2.442,2.442,0,0,0,4.171-1.723v-5.14H61.866A.335.335,0,0,1,61.748,294.7Z" transform="translate(-60.269 -272.903)" fill="gray"/>
+        <path id="Path_149" data-name="Path 149" d="M274.632,294.7a.307.307,0,0,1-.118.022H269.75v5.14a2.441,2.441,0,1,0,4.882,0h0Z" transform="translate(-252.887 -272.903)" fill="gray"/>
+        <path id="Path_150" data-name="Path 150" d="M64.967,212.291v-1.738a1.582,1.582,0,0,0-1.6-1.553H43.348a1.582,1.582,0,0,0-1.6,1.553v1.731a1.613,1.613,0,0,0,1.6,1.59H63.377a1.585,1.585,0,0,0,.584-.118l.007-.007a1.59,1.59,0,0,0,1.006-1.457Z" transform="translate(-41.75 -193.542)" fill="gray"/>
+      </g>
+    </g>
+  </g>
+</svg>

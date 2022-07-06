@@ -1,0 +1,173 @@
+<div class="event-title-bar">
+    <div *ngIf="eventDetail && eventDetail.images !== undefined" class="event-image ">
+        <img src="{{eventDetail.images[0].image}}" class="w-100" alt="">
+    </div>
+    <div *ngIf="eventDetail" class="event-title">
+        <p class="event-name mb-0 mt-2">
+            {{eventDetail?eventDetail.event_title:''}}
+        </p>
+        <p class="event-date-time-palce" *ngIf="eventDetail.event_occurrence_type == 'N'">
+            {{eventDetail?eventDetail.start_date:''}} {{eventDetail?transformTime24To12(eventDetail.start_time):''}} at 
+            <span *ngIf="eventDetail.online_event == 'N'">{{eventDetail?eventDetail.venue_name:''}}</span>
+            <span *ngIf="eventDetail.online_event == 'Y'">
+                <span *ngIf="eventDetail.platform && eventDetail.platform == 'Z'">Zoom</span>
+                <span *ngIf="eventDetail.platform && eventDetail.platform == 'GH'">Google Hangout</span>
+                <span *ngIf="eventDetail.platform && eventDetail.platform == 'YU'">Youtube</span>
+                <span *ngIf="eventDetail.platform && eventDetail.platform == 'HP'">Hopin</span>
+                <span *ngIf="eventDetail.platform && eventDetail.platform == 'VM'">Vimeo</span>
+                <span *ngIf="eventDetail.platform && eventDetail.platform == 'SKY'">Skype</span>
+                <span *ngIf="eventDetail.platform && eventDetail.platform == 'OTH'">Other</span>
+            </span>
+        </p>
+        <p class="event-date-time-palce" *ngIf="eventDetail.event_occurrence_type == 'Y'">
+            Recurring Event at 
+            <span *ngIf="eventDetail.online_event == 'N'">{{eventDetail?eventDetail.venue_name:''}}</span>
+            <span *ngIf="eventDetail.online_event == 'Y'">
+                <span *ngIf="eventDetail.platform && eventDetail.platform == 'Z'">Zoom</span>
+                <span *ngIf="eventDetail.platform && eventDetail.platform == 'GH'">Google Hangout</span>
+                <span *ngIf="eventDetail.platform && eventDetail.platform == 'YU'">Youtube</span>
+                <span *ngIf="eventDetail.platform && eventDetail.platform == 'HP'">Hopin</span>
+                <span *ngIf="eventDetail.platform && eventDetail.platform == 'VM'">Vimeo</span>
+                <span *ngIf="eventDetail.platform && eventDetail.platform == 'SKY'">Skype</span>
+                <span *ngIf="eventDetail.platform && eventDetail.platform == 'OTH'">Other</span>
+            </span>
+        </p>
+    </div>
+    <div class="event-status" [ngClass]="{'published':eventStatus == 'publish', 'draft':eventStatus == 'draft'}">
+        <mat-select [ngStyle]="{'backgroundColor':eventStatus === 'draft' ? '#595959' : '#FE6A4D'}" [(ngModel)]="eventStatus" name='eventStatus' (selectionChange)="fnChangeEventStatus($event.value)" class="custome-mat-set mt-2 form-control">
+            <mat-option value="draft">Draft</mat-option>
+            <mat-option value="publish">Published</mat-option>
+        </mat-select>
+    </div>
+    <div class="ml-auto mr-5 mt-2">
+        <div class="preview-btn d-inline-block">
+            <button (click)="previewEvent()" mat-flat-button>Preview Event Page</button>
+        </div>
+
+        <div class=" d-inline-block">
+            <!-- <i class="fa fa-link fa-lg mx-2"></i> -->
+            <a href="javascript:;" (click)="fnShare('twitter');" class=""><i class="fa fa-twitter fa-lg mx-2"></i></a>
+            <a href="javascript:;" (click)="fnShare('facebook');" class=" "><i class="fa fa-facebook fa-lg mx-2"></i></a>
+        </div>
+    </div>
+
+
+</div>
+<div class="container-fluid fixed-wrap">
+    <div class="row">
+
+        <div *ngIf="eventSideMenu" class="bg-light child-left-content">
+            <div *ngIf="!isPastEvent" class="py-2" (click)="fnPostUrl('event-summary')" [ngClass]="{'active': pageName == 'event-summary'}" routerLink="event-summary">
+                <div class="event-menu">
+                    <div class="setting-menu-icon d-inline-block mr-2">
+                        <img [ngStyle]="{'display':pageName === 'event-summary' ? 'none' : 'block'}" src="../../../assets/images/events/graph.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'event-summary' ? 'block' : 'none'}" src="../../../assets/images/events/graph_active.svg" class="w-100" alt="">
+                    </div>
+                    <span>Event Summary</span>
+                </div>
+            </div>
+
+            <div *ngIf="(subPermission == 'admin' || (subPermission != 'admin' && subPermission.indexOf('AACD') > -1)) && !isPastEvent" class="py-2 menu-title">
+                <span>Manage</span>
+            </div>
+            <div *ngIf="(subPermission == 'admin' || (subPermission != 'admin' && subPermission.indexOf('AACD') > -1)) && !isPastEvent" (click)="fnPostUrl('issued-ticket')" [ngClass]="{'active': pageName == 'issued-ticket'}" class="py-2" routerLink="issued-ticket">
+                <div class="event-menu">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'issued-ticket' ? 'none' : 'block'}" src="../../../assets/images/events/Icon awesome-ticket-alt.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'issued-ticket' ? 'block' : 'none'}" src="../../../assets/images/events/Icon awesome-ticket-alt_active.svg" class="w-100" alt="">
+                    </div>
+                    <span>Issued Tickets ({{ eventSummery.totalTicket ? eventSummery.totalTicket.issueTicket : '0' }})</span>
+                </div>
+            </div>
+
+            <div *ngIf="(subPermission == 'admin' || (subPermission != 'admin' && subPermission.indexOf('AACD') > -1)) && !isPastEvent" (click)="fnPostUrl('waitilist-signup')" [ngClass]="{'active': pageName == 'waitilist-signup'}" class="py-2" routerLink="waitilist-signup">
+                <div class="event-menu">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'waitilist-signup' ? 'none' : 'block'}" src="../../../assets/images/events/waitlist.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'waitilist-signup' ? 'block' : 'none'}" src="../../../assets/images/events/waitlist_active.svg" class="w-100" alt="">
+                    </div>
+                    <span>Waitlist Signups</span>
+                </div>
+            </div>
+
+            <div *ngIf="(subPermission == 'admin' || (subPermission != 'admin' && subPermission.indexOf('AACD') > -1)) && !isPastEvent" (click)="fnPostUrl('broadcast')" [ngClass]="{'active': pageName == 'broadcast'}" class="py-2" routerLink="broadcast">
+                <div class="event-menu">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'broadcast' ? 'none' : 'block'}" src="../../../assets/images/events/shout.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'broadcast' ? 'block' : 'none'}" src="../../../assets/images/events/shout_active.svg" class="w-100" alt="">
+                    </div>
+                    <span>Broadcast</span>
+                </div>
+            </div>
+
+
+            <div class="py-2 menu-title">
+                <span>Edit</span>
+            </div>
+
+
+            <div *ngIf="!isPastEvent" (click)="fnPostUrl('event-and-ticket-types')" [ngClass]="{'active': pageName == 'event-and-ticket-types'}" class="py-2" routerLink="/super-admin/single-event-dashboard/event-and-ticket-types">
+                <div class="event-menu">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'event-and-ticket-types' ? 'none' : 'block'}" src="../../../assets/images/events/events-tickes.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'event-and-ticket-types' ? 'block' : 'none'}" src="../../../assets/images/events/events-tickes_active.svg" class="w-100" alt="">
+                    </div>
+                    <span>Event and ticket types</span>
+                </div>
+            </div>
+            <div *ngIf="!isPastEvent && eventDetail && eventDetail.event_occurrence_type == 'Y'" (click)="fnPostUrl('manage-occurrences')" [ngClass]="{'active': pageName == 'manage-occurrences'}" class="py-2" routerLink="/super-admin/single-event-dashboard/manage-occurrences">
+                <div class="event-menu">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'manage-occurrences' ? 'none' : 'block'}" src="../../../assets/images/events/occurrence.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'manage-occurrences' ? 'block' : 'none'}" src="../../../assets/images/events/occurrence_active.svg" class="w-100" alt="">
+                    </div>
+                    <span>Occurrences</span>
+                </div>
+            </div>
+
+            <div *ngIf="!isPastEvent" (click)="fnPostUrl('order-confirmation')" [ngClass]="{'active': pageName == 'order-confirmation'}" class="py-2" routerLink="order-confirmation">
+                <div class="event-menu">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'order-confirmation' ? 'none' : 'block'}" src="../../../assets/images/events/Order-Confirmation.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'order-confirmation' ? 'block' : 'none'}" src="../../../assets/images/events/Order-Confirmation_active.svg" class="w-100" alt="">
+                    </div>
+                    <span>Order Confirmation</span>
+                </div>
+            </div>
+
+            <div *ngIf="!isPastEvent" (click)="fnPostUrl('checkout-form')" [ngClass]="{'active': pageName == 'checkout-form'}" class="py-2" routerLink="/super-admin/single-event-dashboard/checkout-form">
+                <div class="event-menu">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'checkout-form' ? 'none' : 'block'}" src="../../../assets/images/events/Checkout-form.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'checkout-form' ? 'block' : 'none'}" src="../../../assets/images/events/Checkout-form_active.svg" class="w-100" alt="">
+                    </div>
+                    <span>Checkout form</span>
+                </div>
+            </div>
+
+            <div (click)="fnPostUrl('duplicate'); fnClickOnDuplicate()" [ngClass]="{'active': pageName == 'duplicate'}" class="py-2" routerLink="duplicate">
+                <div class="event-menu">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'duplicate' ? 'none' : 'block'}" src="../../../assets/images/events/Duplicate.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'duplicate' ? 'block' : 'none'}" src="../../../assets/images/events/Duplicate_active.svg" class="w-100" alt="">
+                    </div>
+                    <span>Duplicate</span>
+                </div>
+            </div>
+
+            <div (click)="fnPostUrl('delete')" [ngClass]="{'active': pageName == 'delete'}" class="py-2" routerLink="/super-admin/single-event-dashboard/delete">
+                <div class="event-menu">
+                    <div class="setting-menu-icon d-inline-block mr-2 ">
+                        <img [ngStyle]="{'display':pageName === 'delete' ? 'none' : 'block'}" src="../../../assets/images/events/Icon material-delete.svg" class="w-100" alt="">
+                        <img [ngStyle]="{'display':pageName === 'delete' ? 'block' : 'none'}" src="../../../assets/images/events/Icon material-delete_active.svg" class="w-100" alt="">
+                    </div>
+                    <span>Delete</span>
+                </div>
+            </div>
+        </div>
+        <div [ngClass]="{'side-event':eventSideMenu === true,'col-12':eventSideMenu === false}" class="p-0 bg-white">
+            <router-outlet></router-outlet>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'Old Stamper';
+    src: url('OldStamper.eot');
+    src: url('OldStamper.eot?#iefix') format('embedded-opentype'),
+        url('OldStamper.woff') format('woff'),
+        url('OldStamper.ttf') format('truetype'),
+        url('OldStamper.svg#OldStamper') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
